@@ -15,14 +15,21 @@ namespace Bubblespace.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Bubblespace! (edit this in HomeController.cs)";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Contact Bubblespace! (edit this in HomeController.cs)";
+
+            return View();
+        }
+
+        public ActionResult Home()
+        {
+            ViewBag.Message = "This is the main page! (edit this in HomeController.cs)";
 
             return View();
         }
