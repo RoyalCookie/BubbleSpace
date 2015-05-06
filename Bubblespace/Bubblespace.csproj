@@ -195,6 +195,7 @@
     <Content Include="Content\Assets\events.png" />
     <Content Include="Content\Assets\friends.png" />
     <Content Include="Content\Assets\groups.png" />
+    <Content Include="Content\Assets\placeholder.png" />
     <Content Include="Content\Assets\settings.png" />
     <Content Include="Content\Assets\trees.png" />
     <Content Include="Content\bootstrap.css" />

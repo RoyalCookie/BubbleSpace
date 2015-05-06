@@ -16,8 +16,8 @@ namespace Bubblespace.Models
             // Add custom user claims here
             return userIdentity;
         }
-
-        public int user_status { get; set; }
+        public string NickName { get; set; }
+        public bool user_status { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

@@ -195,3 +195,14 @@ hr{
 .nav-image{
     margin-left: -3px;
 }
+
+.sidebar-nav{    
+    position: absolute;
+    right: 7px;
+}
+
+.setting-icon{
+    position: fixed;
+    bottom: 0px;
+    left: 7px;
+}
