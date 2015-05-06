@@ -150,12 +150,12 @@ namespace Bubblespace.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(users model)
+        public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.email, Email = model.email };
-                var result = await UserManager.CreateAsync(user, model.password);
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, user_status = 1};
+                var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
