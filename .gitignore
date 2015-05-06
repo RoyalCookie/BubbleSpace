@@ -88,12 +88,12 @@ ipch/
 *.opensdf
 *.sdf
 *.cachefile
-
+*.cache
 # Visual Studio profiler
 *.psess
 *.vsp
 *.vspx
-
+*.suo
 # Guidance Automation Toolkit
 *.gpState
 
