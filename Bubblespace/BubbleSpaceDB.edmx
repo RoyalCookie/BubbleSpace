@@ -35,7 +35,7 @@
           <Property Name="FK_users_userrank" Type="Int32" />
           <Property Name="profile_image" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityContainer Name="VERK2015_H17Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="VERK2015_H17Entities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="users" EntityType="Self.users" />
         </EntityContainer>
       </Schema>
@@ -43,7 +43,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="VERK2015_H17ModelStoreContainer" CdmEntityContainer="VERK2015_H17Entities">
+        <EntityContainerMapping StorageEntityContainer="VERK2015_H17ModelStoreContainer" CdmEntityContainer="VERK2015_H17Entities1">
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="VERK2015_H17Model.users">
               <MappingFragment StoreEntitySet="users">
