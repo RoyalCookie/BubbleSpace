@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="VERK2015_H17Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="_ID" />
+          </Key>
+          <Property Name="_ID" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="user_status" Type="tinyint" />
+          <Property Name="FK_users_userrank" Type="int" />
+          <Property Name="profile_image" Type="varchar" MaxLength="128" />
+        </EntityType>
+        <EntityContainer Name="VERK2015_H17ModelStoreContainer">
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VERK2015_H17Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="C_ID" />
+          </Key>
+          <Property Name="C_ID" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_status" Type="Byte" />
+          <Property Name="FK_users_userrank" Type="Int32" />
+          <Property Name="profile_image" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="VERK2015_H17Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="users" EntityType="Self.users" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VERK2015_H17ModelStoreContainer" CdmEntityContainer="VERK2015_H17Entities">
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="VERK2015_H17Model.users">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="C_ID" ColumnName="_ID" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="user_status" ColumnName="user_status" />
+                <ScalarProperty Name="FK_users_userrank" ColumnName="FK_users_userrank" />
+                <ScalarProperty Name="profile_image" ColumnName="profile_image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
