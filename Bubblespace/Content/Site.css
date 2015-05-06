@@ -1,19 +1,415 @@
-﻿body {
-    overflow-x:hidden;
-    overflow-y:hidden;
-    padding-bottom: 20px;
-    height:100%;
-    background-color: rgb(173,223,227);
+﻿/* Very Small Screens, will most like not be used but is nice to have*/
+@media (max-width: 319px) {
+    body {
+        padding-bottom: 20px;
+        height: 100%;
+        background-color: rgb(173,223,227);
+    }
+    
+    .body-content {
+        padding-top: 50px;
+        margin-left: 65px;
+        padding-right: 15px;
+    }
+
+    /* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+    .dl-horizontal dt {
+        white-space: normal;
+    }
+
+    /* Set width on the form input elements since they're 100% wide by default */
+    input,
+    select,
+    textarea {
+        max-width: 280px;
+    }
+
+    hr {
+        border-top-color: rgb(166,140,105);
+    }
+
+    /* main colour of the top of the page */
+    .navbar {
+        padding-right: 5%;
+        background-color: rgb(240,229,201);
+        border-bottom-width: medium;
+        border-bottom-color: rgb(166,140,105);
+    }
+
+    /* (B) Logo */
+    .navbar-inverse .navbar-brand {
+        color: rgb(89,68,51);
+        font-size: 30px;
+    }
+
+    /* (B) Logo on hover/focus */
+    .navbar-inverse .navbar-brand:hover,
+    .navbar-inverse .navbar-brand:focus {
+        color: rgb(166,140,105);
+        background-color: transparent;
+    }
+
+    /* The navigational links at the top of the page */
+    .navbar-inverse .navbar-nav > li > a {
+        color: rgb(89,68,51);
+        font-family: 'Lato', sans-serif;
+        font-weight: bold;
+    }
+
+    /* The navigational links during hover/focus at the top of the page */
+    .navbar-inverse .navbar-nav > li > a:hover,
+    .navbar-inverse .navbar-nav > li > a:focus {
+        color: rgb(166,140,105);
+        background-color: transparent;
+    }
+
+    .register-now, .register-now:hover, register-now:focus {
+        background-color: rgb(240,229,201);
+        border-width: medium;
+        border-color: rgb(166,140,105);
+    }
+
+    .register-now a {
+        color: rgb(89,68,51);
+        text-decoration: none;
+    }
+
+    .register-now a:hover,
+    .register-now a:focus {
+        color: rgb(166,140,105);
+    }
+
+    #list-view {
+        border: red 1px dashed;
+        height: 80vh;
+        min-width: 79vw;
+        top: 15px;
+    }
+
+    #main-view {
+        padding-top: 10px;
+        border: red 1px dashed;
+        height: 60vh;
+        left: 15px;
+        top: 15px;
+        margin-top: 1vh;
+    }
+
+    #new-post {
+        padding-top: 10px;
+        border: red 1px dashed;
+        height: 19vh;
+        min-width: 79vw;
+        left: 15px;
+        top: 15px;
+    }
+
+    .nav-image {
+        margin-left: -3px;
+    }
+
+    .sidebar-nav {
+        position: absolute;
+        right: 7px;
+    }
+
+    .setting-icon {
+        position: fixed;
+        bottom: 0px;
+        left: 7px;
+    }
+
+    .list-item, .content-item {
+        padding-top: 10px;
+        list-style: none;
+        left: -55px;
+        border: green 1px dashed;
+        margin-left: -40px;
+        margin-top: 5px;
+    }
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-top: 50px;
-    margin-left: 65px;
-    padding-right: 15px;
+
+
+
+/* Aim for phone size here */
+
+@media (min-width: 320px) and (max-width: 767px) {
+    body {
+        padding-bottom: 20px;
+        height: 100%;
+        background-color: rgb(173,223,227);
+    }
+    
+    .body-content {
+        padding-top: 50px;
+        padding-right: 15px;
+    }
+
+    /* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+    */
+    .dl-horizontal dt {
+        white-space: normal;
+    }
+
+    /* Set width on the form input elements since they're 100% wide by default */
+    input,
+    select,
+    textarea {
+        max-width: 280px;
+    }
+
+    /* main colour of the top of the page */
+    .navbar {
+        padding-right: 5%;
+        background-color: rgb(240,229,201);
+        border-bottom-width: medium;
+        border-bottom-color: rgb(166,140,105);
+    }
+
+    /* (B) Logo */
+    .navbar-inverse .navbar-brand {
+        color: rgb(89,68,51);
+        font-size: 30px;
+    }
+
+    /* (B) Logo on hover/focus */
+    .navbar-inverse .navbar-brand:hover,
+    .navbar-inverse .navbar-brand:focus {
+        color: rgb(166,140,105);
+        background-color: transparent;
+    }
+
+    /* The navigational links at the top of the page */
+    .navbar-inverse .navbar-nav > li > a {
+        color: rgb(89,68,51);
+        font-family: 'Lato', sans-serif;
+        font-weight: bold;
+    }
+
+    /* The navigational links during hover/focus at the top of the page */
+    .navbar-inverse .navbar-nav > li > a:hover,
+    .navbar-inverse .navbar-nav > li > a:focus {
+        color: rgb(166,140,105);
+        background-color: transparent;
+    }
+
+    .register-now, .register-now:hover, register-now:focus {
+        background-color: rgb(240,229,201);
+        border-width: medium;
+        border-color: rgb(166,140,105);
+    }
+
+    .register-now a {
+        color: rgb(89,68,51);
+        text-decoration: none;
+    }
+
+    .register-now a:hover,
+    .register-now a:focus {
+        color: rgb(166,140,105);
+    }
+
+    #list-view {
+        border: red 1px dashed;
+        top: 5px;
+        left: 65px;
+        width: 68vw;
+        min-width: 300px;
+        max-height: 200px;
+        overflow: scroll;
+        overflow-x: hidden;
+    }
+
+    #main-view {
+        padding-top: 10px;
+        border: red 1px dashed;
+        height: 60vh;
+        left: 80px;
+        top: 15px;
+        min-width: 300px;
+        margin-top: 1vh;
+    }
+
+    #new-post {
+        padding-top: 10px;
+        border: red 1px dashed;
+        height: 30vh;
+        left: 80px;
+        top: 10px;
+        min-width: 300px;
+        margin-top: 1vh;
+    }
+
+    .nav-image {
+        margin-left: -3px;
+    }
+
+    .sidebar-nav {
+        position: absolute;
+        right: 7px;
+    }
+
+    .setting-icon {
+        position: fixed;
+        bottom: 0px;
+        left: 7px;
+    }
+
+    .list-item, .content-item {
+        padding-top: 10px;
+        list-style: none;
+        left: -55px;
+        border: green 1px dashed;
+        margin-left: -40px;
+        margin-top: 5px;
+    }
+
+    hr {
+        border-top-color: rgb(166,140,105);
+    }
 }
 
-#bubble1{
+/* Regular size screens */
+
+@media (min-width: 768px) {
+    body {
+        overflow: hidden;
+        padding-bottom: 20px;
+        height: 100%;
+        background-color: rgb(173,223,227);
+    }
+    
+    .body-content {
+        padding-top: 50px;
+        margin-left: 65px;
+        padding-right: 15px;
+    }
+
+    /* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+    .dl-horizontal dt {
+        white-space: normal;
+    }
+
+    /* Set width on the form input elements since they're 100% wide by default */
+    input,
+    select,
+    textarea {
+        max-width: 280px;
+    }
+
+    hr {
+        border-top-color: rgb(166,140,105);
+    }
+
+    /* main colour of the top of the page */
+    .navbar {
+        padding-right: 5%;
+        background-color: rgb(240,229,201);
+        border-bottom-width: medium;
+        border-bottom-color: rgb(166,140,105);
+    }
+
+    /* (B) Logo */
+    .navbar-inverse .navbar-brand {
+        color: rgb(89,68,51);
+        font-size: 30px;
+    }
+
+    /* (B) Logo on hover/focus */
+    .navbar-inverse .navbar-brand:hover,
+    .navbar-inverse .navbar-brand:focus {
+        color: rgb(166,140,105);
+        background-color: transparent;
+    }
+
+    /* The navigational links at the top of the page */
+    .navbar-inverse .navbar-nav > li > a {
+        color: rgb(89,68,51);
+        font-family: 'Lato', sans-serif;
+        font-weight: bold;
+    }
+
+    /* The navigational links during hover/focus at the top of the page */
+    .navbar-inverse .navbar-nav > li > a:hover,
+    .navbar-inverse .navbar-nav > li > a:focus {
+        color: rgb(166,140,105);
+        background-color: transparent;
+    }
+
+    .register-now, .register-now:hover, register-now:focus {
+        background-color: rgb(240,229,201);
+        border-width: medium;
+        border-color: rgb(166,140,105);
+    }
+
+    .register-now a {
+        color: rgb(89,68,51);
+        text-decoration: none;
+    }
+
+    .register-now a:hover,
+    .register-now a:focus {
+        color: rgb(166,140,105);
+    }
+
+    #list-view {
+        border: red 1px dashed;
+        height: 80vh;
+        top: 15px;
+    }
+
+    #main-view {
+        padding-top: 10px;
+        border: red 1px dashed;
+        height: 60vh;
+        left: 15px;
+        top: 15px;
+        margin-top: 1vh;
+    }
+
+    #new-post {
+        padding-top: 10px;
+        border: red 1px dashed;
+        height: 19vh;
+        left: 15px;
+        top: 15px;
+    }
+
+    .nav-image {
+        margin-left: -3px;
+    }
+
+    .sidebar-nav {
+        position: absolute;
+        right: 7px;
+    }
+
+    .setting-icon {
+        position: fixed;
+        bottom: 0px;
+        left: 7px;
+    }
+
+    .list-item, .content-item {
+        padding-top: 10px;
+        list-style: none;
+        left: -55px;
+        border: green 1px dashed;
+        margin-left: -40px;
+        margin-top: 5px;
+    }
+}
+
+
+/* Animation Logic */
+
+#bubble1 {
     border-radius: 50%;
     width: 30px;
     height: 30px;
@@ -28,7 +424,7 @@
     animation-iteration-count: infinite;
 }
 
-#bubble2{
+#bubble2 {
     border-radius: 50%;
     width: 40px;
     height: 40px;
@@ -43,7 +439,7 @@
     animation-iteration-count: infinite;
 }
 
-#bubble3{
+#bubble3 {
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -58,7 +454,7 @@
     animation-iteration-count: infinite;
 }
 
-#bubble4{
+#bubble4 {
     border-radius: 50%;
     width: 25px;
     height: 25px;
@@ -73,136 +469,110 @@
     animation-iteration-count: infinite;
 }
 
-@-webkit-keyframes bubbles1{
-    0%   {left: 20%; top: 20%;}
-    25%  {left: 30%; top: 40%;}
-    50%  {left: 40%; top: 20%;}
-    75%  {left: 10%; top: 60%;}
-    100% {left: 20%; top: 20%;}
+@-webkit-keyframes bubbles1 {
+    0% {
+        left: 20%;
+        top: 20%;
+    }
+
+    25% {
+        left: 30%;
+        top: 40%;
+    }
+
+    50% {
+        left: 40%;
+        top: 20%;
+    }
+
+    75% {
+        left: 10%;
+        top: 60%;
+    }
+
+    100% {
+        left: 20%;
+        top: 20%;
+    }
 }
 
-@-webkit-keyframes bubbles2{
-    0%   {left: 50%; top: 40%;}
-    25%  {left: 30%; top: 32%;}
-    50%  {left: 15%; top: 15%;}
-    75%  {left: 65%; top: 68%;}
-    100% {left: 50%; top: 40%;}
+@-webkit-keyframes bubbles2 {
+    0% {
+        left: 50%;
+        top: 40%;
+    }
+
+    25% {
+        left: 30%;
+        top: 32%;
+    }
+
+    50% {
+        left: 15%;
+        top: 15%;
+    }
+
+    75% {
+        left: 65%;
+        top: 68%;
+    }
+
+    100% {
+        left: 50%;
+        top: 40%;
+    }
 }
 
-@-webkit-keyframes bubbles3{
-    0%   {left: 38%; top: 32%;}
-    25%  {left: 30%; top: 15%;}
-    50%  {left: 40%; top: 55%;}
-    75%  {left: 10%; top: 48%;}
-    100% {left: 38%; top: 32%;}
+@-webkit-keyframes bubbles3 {
+    0% {
+        left: 38%;
+        top: 32%;
+    }
+
+    25% {
+        left: 30%;
+        top: 15%;
+    }
+
+    50% {
+        left: 40%;
+        top: 55%;
+    }
+
+    75% {
+        left: 10%;
+        top: 48%;
+    }
+
+    100% {
+        left: 38%;
+        top: 32%;
+    }
 }
 
-@-webkit-keyframes bubbles4{
-    0%   {left: 42%; top: 45%;}
-    25%  {left: 33%; top: 77%;}
-    50%  {left: 44%; top: 22%;}
-    75%  {left: 77%; top: 44%;}
-    100% {left: 42%; top: 45%;}
-}
+@-webkit-keyframes bubbles4 {
+    0% {
+        left: 42%;
+        top: 45%;
+    }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
-}
+    25% {
+        left: 33%;
+        top: 77%;
+    }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
-}
+    50% {
+        left: 44%;
+        top: 22%;
+    }
 
-hr{
-    border-top-color: rgb(166,140,105);
-}
+    75% {
+        left: 77%;
+        top: 44%;
+    }
 
-/* main colour of the top of the page */
-.navbar {
-    padding-right: 5%;
-    background-color: rgb(240,229,201);
-    border-bottom-width:medium;
-    border-bottom-color: rgb(166,140,105);
-}
-
-/* (B) Logo */
-.navbar-inverse .navbar-brand{
-    color: rgb(89,68,51);
-    font-size: 30px;
-}
-
-/* (B) Logo on hover/focus */
-.navbar-inverse .navbar-brand:hover,
-.navbar-inverse .navbar-brand:focus {
-  color: rgb(166,140,105);
-  background-color: transparent;  
-}
-
-/* The navigational links at the top of the page */
-.navbar-inverse .navbar-nav > li > a {
-    color: rgb(89,68,51);
-    font-family: 'Lato', sans-serif;
-    font-weight: bold;
-}
-
-/* The navigational links during hover/focus at the top of the page */
-.navbar-inverse .navbar-nav > li > a:hover,
-.navbar-inverse .navbar-nav > li > a:focus {
-  color: rgb(166,140,105);
-  background-color: transparent;    
-}
-
-.register-now, .register-now:hover, register-now:focus{
-    background-color: rgb(240,229,201);
-    border-width:medium;
-    border-color: rgb(166,140,105);
-}
-
-.register-now a{
-    color: rgb(89,68,51);
-    text-decoration: none;
-}
-
-.register-now a:hover,
-.register-now a:focus{
-    color: rgb(166,140,105);
-}
-
-#list-view{
-    background-color: green;
-    color: white;
-    height: 500px;
-}
-
-#main-view{
-    background-color: red;
-    color:white;
-    height: 400px;
-}
-
-#new-post{
-    background-color: blue;
-    color:white;
-    height: 100px;
-}
-
-.nav-image{
-    margin-left: -3px;
-}
-
-.sidebar-nav{    
-    position: absolute;
-    right: 7px;
-}
-
-.setting-icon{
-    position: fixed;
-    bottom: 0px;
-    left: 7px;
+    100% {
+        left: 42%;
+        top: 45%;
+    }
 }
