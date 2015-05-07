@@ -15,7 +15,7 @@ namespace Bubblespace.Controllers
             return View();
         }
 
-        public ActionResult CreatePost()
+        public ActionResult Create()
         {
             return View();
         }
@@ -50,12 +50,12 @@ namespace Bubblespace.Controllers
             return View();
         }
 
-        public ActionResult SortPosts()
+        public ActionResult Sort()
         {
             return View();
         }
 
-        public ActionResult DeletePost()
+        public ActionResult Delete()
         {
             return View();
         }

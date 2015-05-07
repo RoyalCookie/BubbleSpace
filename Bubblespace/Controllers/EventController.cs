@@ -16,7 +16,7 @@ namespace Bubblespace.Controllers
             return View();
         }
 
-        public ActionResult CreateEvent()
+        public ActionResult Create()
         {
             return View();
         }
@@ -26,17 +26,17 @@ namespace Bubblespace.Controllers
             return View();
         }
 
-        public ActionResult JoinEvent()
+        public ActionResult Join()
         {
             return View();
         }
 
-        public ActionResult EditEvent()
+        public ActionResult Edit()
         {
             return View();
         }
 
-        public ActionResult DeleteEvent()
+        public ActionResult Delete()
         {
             return View();
         }

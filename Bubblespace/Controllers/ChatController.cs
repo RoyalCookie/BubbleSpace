@@ -15,22 +15,22 @@ namespace Bubblespace.Controllers
             return View();
         }
 
-        public ActionResult SendMessage()
+        public ActionResult Send()
         {
             return View();
         }
 
-        public ActionResult GetMessage()
+        public ActionResult Get()
         {
             return View();
         }
 
-        public ActionResult CreateChat()
+        public ActionResult Create()
         {
             return View();
         }
 
-        public ActionResult RenameChat()
+        public ActionResult Rename()
         {
             return View();
         }

@@ -15,12 +15,12 @@ namespace Bubblespace.Controllers
             return View();
         }
 
-        public ActionResult BanUser()
+        public ActionResult Ban()
         {
             return View();
         }
 
-        public ActionResult PromoteUser()
+        public ActionResult Promote()
         {
             return View();
         }
@@ -35,17 +35,17 @@ namespace Bubblespace.Controllers
             return View();
         }
 
-        public ActionResult EditUser()
+        public ActionResult Edit()
         {
             return View();
         }
 
-        public ActionResult UserEvents()
+        public ActionResult Events()
         {
             return View();
         }
 
-        public ActionResult UserGroups()
+        public ActionResult Groups()
         {
             return View();
         }
@@ -55,7 +55,7 @@ namespace Bubblespace.Controllers
             return View();
         }
 
-        public ActionResult UserFriends()
+        public ActionResult Friends()
         {
             return View();
         }

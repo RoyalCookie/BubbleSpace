@@ -30,22 +30,22 @@ namespace Bubblespace.Controllers
             return View();
         }
 
-        public ActionResult PostToGroup()
+        public ActionResult Post()
         {
             return View();
         }
 
-        public ActionResult SortGroupPost()
+        public ActionResult Sort()
         {
             return View();
         }
 
-        public ActionResult EditGroupPost()
+        public ActionResult Edit()
         {
             return View();
         }
 
-        public ActionResult DeleteGroupPost()
+        public ActionResult Delete()
         {
             return View();
         }
