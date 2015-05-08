@@ -39,8 +39,6 @@ namespace Bubblespace.Controllers
              */
             var db = new ApplicationDbContext();
             var allUsers = db.Users.ToList();
-
-            
             return View(allUsers);
         }
     }
