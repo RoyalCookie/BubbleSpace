@@ -17,8 +17,9 @@
             </div>
             <div id="main-view" class="col-xs-8">
                 <ul>
-                    <li class="content-item">This is a post</li>
-                    
+                    @foreach (var post in Model) { 
+                        <li class="list-item">@Html.ActionLink(post.content_text, "Post", new {id = 5})</li>
+                    }
                 </ul>  
             </div>
         </div>

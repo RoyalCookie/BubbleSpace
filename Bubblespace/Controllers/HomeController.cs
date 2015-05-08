@@ -37,7 +37,8 @@ namespace Bubblespace.Controllers
              * Nothing final here
              * -Andri Rafn
              */
-            var db = new BubbleSpaceDb();
+            var db = new VERK2015_H17Entities1();
+
             return View(db.posts.ToList());
         }
     }
