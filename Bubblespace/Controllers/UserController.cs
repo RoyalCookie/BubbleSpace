@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace Bubblespace.Controllers
-{
+{   
     public class UserController : Controller
     {
         //
@@ -57,7 +57,11 @@ namespace Bubblespace.Controllers
 
         public ActionResult Friends()
         {
-            return View();
+            // For now this returns all users, not just friends.
+            // We need to change this to accept an id and return only friends. - Andri
+            var db = new VERK2015_H17Entities1();
+            var allUsers = db.AspNetUsers.ToList();
+            return Json(allUsers);
         }
 	}
 }
