@@ -405,18 +405,7 @@
         margin-top: 5px;
     }
 
-    .navButton{
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        margin-left: 25px;               
-        margin-top: 10px;
-        background-color: red;
-    }
-
-    .navButton img{
-        margin-top: -13px;
-        margin-left: -18px;
+    nav-image{
     }
 }
 
