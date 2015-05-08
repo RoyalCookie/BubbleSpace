@@ -4,55 +4,1236 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="VERK2015_H17Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="users">
+    <Schema Namespace="VERK2015_H17Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="256" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="user_status" Type="bit" />
+          <Property Name="FK_users_userrank" Type="int" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="NickName" Type="varchar" MaxLength="256" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="profile_image" Type="varchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="bubble_errors">
           <Key>
             <PropertyRef Name="_ID" />
           </Key>
-          <Property Name="_ID" Type="varchar" MaxLength="128" Nullable="false" />
-          <Property Name="password" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="user_status" Type="tinyint" />
-          <Property Name="FK_users_userrank" Type="int" />
-          <Property Name="profile_image" Type="varchar" MaxLength="128" />
+          <Property Name="_ID" Type="int" Nullable="false" />
+          <Property Name="error_owner" Type="nvarchar" MaxLength="128" />
+          <Property Name="error_msg" Type="text" />
+          <Property Name="time_of_error" Type="datetime" />
         </EntityType>
+        <EntityType Name="bubble_groups">
+          <Key>
+            <PropertyRef Name="_ID" />
+          </Key>
+          <Property Name="_ID" Type="int" Nullable="false" />
+          <Property Name="group_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="group_description" Type="text" />
+          <Property Name="FK_bubble_groups_users" Type="nvarchar" MaxLength="128" />
+          <Property Name="group_profile_image" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="chat_members">
+          <Key>
+            <PropertyRef Name="_ID" />
+          </Key>
+          <Property Name="_ID" Type="int" Nullable="false" />
+          <Property Name="FK_chat_members_user" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FK_chat_members_chat" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="chats">
+          <Key>
+            <PropertyRef Name="_ID" />
+          </Key>
+          <Property Name="_ID" Type="int" Nullable="false" />
+          <Property Name="chat_name" Type="nvarchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="event_users">
+          <Key>
+            <PropertyRef Name="_ID" />
+          </Key>
+          <Property Name="_ID" Type="int" Nullable="false" />
+          <Property Name="FK_event_users_users" Type="nvarchar" MaxLength="128" />
+          <Property Name="FK_event_users_events" Type="int" />
+          <Property Name="event_admin" Type="bit" />
+        </EntityType>
+        <EntityType Name="events">
+          <Key>
+            <PropertyRef Name="_ID" />
+          </Key>
+          <Property Name="_ID" Type="int" Nullable="false" />
+          <Property Name="event_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="event_description" Type="text" />
+          <Property Name="event_start_time" Type="datetime" />
+          <Property Name="event_end_time" Type="datetime" />
+          <Property Name="FK_events_owner" Type="nvarchar" MaxLength="128" />
+          <Property Name="event_profile_image" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="friends_added">
+          <Key>
+            <PropertyRef Name="_ID" />
+          </Key>
+          <Property Name="_ID" Type="int" Nullable="false" />
+          <Property Name="FK_friends_added_users_Addee" Type="nvarchar" MaxLength="128" />
+          <Property Name="FK_friends_added_users_Added" Type="nvarchar" MaxLength="128" />
+          <Property Name="friended" Type="bit" />
+        </EntityType>
+        <EntityType Name="group_users">
+          <Key>
+            <PropertyRef Name="_ID" />
+          </Key>
+          <Property Name="_ID" Type="int" Nullable="false" />
+          <Property Name="FK_group_users_bubble_group" Type="int" />
+          <Property Name="FK_group_users_users" Type="nvarchar" MaxLength="128" />
+          <Property Name="group_admin" Type="bit" />
+        </EntityType>
+        <EntityType Name="like_comments">
+          <Key>
+            <PropertyRef Name="_ID" />
+          </Key>
+          <Property Name="_ID" Type="int" Nullable="false" />
+          <Property Name="FK_like_comments_post_comments" Type="int" />
+          <Property Name="comment_like" Type="bit" />
+          <Property Name="comment_burst" Type="tinyint" />
+          <Property Name="FK_like_comments_users" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="messages">
+          <Key>
+            <PropertyRef Name="_ID" />
+          </Key>
+          <Property Name="_ID" Type="int" Nullable="false" />
+          <Property Name="message" Type="text" />
+          <Property Name="FK_messages_user" Type="nvarchar" MaxLength="128" />
+          <Property Name="time_stamp" Type="datetime" Nullable="false" />
+          <Property Name="FK_messages_chat_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="post_comments">
+          <Key>
+            <PropertyRef Name="_ID" />
+          </Key>
+          <Property Name="_ID" Type="int" Nullable="false" />
+          <Property Name="comment" Type="text" />
+          <Property Name="FK_post_comments_posts" Type="int" />
+          <Property Name="FK_post_comments_users" Type="nvarchar" MaxLength="128" />
+          <Property Name="comment_time" Type="datetime" />
+        </EntityType>
+        <EntityType Name="post_likes">
+          <Key>
+            <PropertyRef Name="_ID" />
+          </Key>
+          <Property Name="_ID" Type="int" Nullable="false" />
+          <Property Name="FK_group_post_likes_group_posts" Type="int" />
+          <Property Name="group_insert_like" Type="tinyint" />
+          <Property Name="insert_burst" Type="tinyint" />
+          <Property Name="FK_group_post_like_users" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="posts">
+          <Key>
+            <PropertyRef Name="_ID" />
+          </Key>
+          <Property Name="_ID" Type="int" Nullable="false" />
+          <Property Name="content_text" Type="text" />
+          <Property Name="content_picture" Type="nvarchar" MaxLength="128" />
+          <Property Name="time_inserted" Type="datetime" />
+          <Property Name="FK_posts_bubble_groups" Type="int" />
+          <Property Name="FK_posts_users" Type="nvarchar" MaxLength="128" />
+          <Property Name="content_is_video" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="user_ranks">
+          <Key>
+            <PropertyRef Name="_ID" />
+          </Key>
+          <Property Name="_ID" Type="int" Nullable="false" />
+          <Property Name="rank" Type="nvarchar" MaxLength="9" />
+        </EntityType>
+        <Association Name="FK_bubble_groups_users">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="bubble_groups" Type="Self.bubble_groups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="bubble_groups">
+              <PropertyRef Name="FK_bubble_groups_users" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_chat_members_chat">
+          <End Role="chats" Type="Self.chats" Multiplicity="1" />
+          <End Role="chat_members" Type="Self.chat_members" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chats">
+              <PropertyRef Name="_ID" />
+            </Principal>
+            <Dependent Role="chat_members">
+              <PropertyRef Name="FK_chat_members_chat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_chat_members_user">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="chat_members" Type="Self.chat_members" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="chat_members">
+              <PropertyRef Name="FK_chat_members_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_event_users_events">
+          <End Role="events" Type="Self.events" Multiplicity="0..1" />
+          <End Role="event_users" Type="Self.event_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="events">
+              <PropertyRef Name="_ID" />
+            </Principal>
+            <Dependent Role="event_users">
+              <PropertyRef Name="FK_event_users_events" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_event_users_users">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="event_users" Type="Self.event_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="event_users">
+              <PropertyRef Name="FK_event_users_users" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_events_owner">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="events" Type="Self.events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="events">
+              <PropertyRef Name="FK_events_owner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_friends_added_users_Added">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="friends_added" Type="Self.friends_added" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="friends_added">
+              <PropertyRef Name="FK_friends_added_users_Added" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_friends_added_users_Addee">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="friends_added" Type="Self.friends_added" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="friends_added">
+              <PropertyRef Name="FK_friends_added_users_Addee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_group_post_like_users">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="post_likes" Type="Self.post_likes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="post_likes">
+              <PropertyRef Name="FK_group_post_like_users" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_group_post_likes_group_posts">
+          <End Role="posts" Type="Self.posts" Multiplicity="0..1" />
+          <End Role="post_likes" Type="Self.post_likes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="posts">
+              <PropertyRef Name="_ID" />
+            </Principal>
+            <Dependent Role="post_likes">
+              <PropertyRef Name="FK_group_post_likes_group_posts" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_group_users_bubble_group">
+          <End Role="bubble_groups" Type="Self.bubble_groups" Multiplicity="0..1" />
+          <End Role="group_users" Type="Self.group_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bubble_groups">
+              <PropertyRef Name="_ID" />
+            </Principal>
+            <Dependent Role="group_users">
+              <PropertyRef Name="FK_group_users_bubble_group" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_group_users_users">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="group_users" Type="Self.group_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="group_users">
+              <PropertyRef Name="FK_group_users_users" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_like_comments_post_comments">
+          <End Role="post_comments" Type="Self.post_comments" Multiplicity="0..1" />
+          <End Role="like_comments" Type="Self.like_comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="post_comments">
+              <PropertyRef Name="_ID" />
+            </Principal>
+            <Dependent Role="like_comments">
+              <PropertyRef Name="FK_like_comments_post_comments" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_like_comments_users">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="like_comments" Type="Self.like_comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="like_comments">
+              <PropertyRef Name="FK_like_comments_users" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_messages_chat_id">
+          <End Role="chats" Type="Self.chats" Multiplicity="1" />
+          <End Role="messages" Type="Self.messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chats">
+              <PropertyRef Name="_ID" />
+            </Principal>
+            <Dependent Role="messages">
+              <PropertyRef Name="FK_messages_chat_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_messages_users">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="messages" Type="Self.messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="messages">
+              <PropertyRef Name="FK_messages_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_post_comments_posts">
+          <End Role="posts" Type="Self.posts" Multiplicity="0..1" />
+          <End Role="post_comments" Type="Self.post_comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="posts">
+              <PropertyRef Name="_ID" />
+            </Principal>
+            <Dependent Role="post_comments">
+              <PropertyRef Name="FK_post_comments_posts" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_post_comments_users">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="post_comments" Type="Self.post_comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="post_comments">
+              <PropertyRef Name="FK_post_comments_users" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_posts_bubble_group">
+          <End Role="bubble_groups" Type="Self.bubble_groups" Multiplicity="0..1" />
+          <End Role="posts" Type="Self.posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bubble_groups">
+              <PropertyRef Name="_ID" />
+            </Principal>
+            <Dependent Role="posts">
+              <PropertyRef Name="FK_posts_bubble_groups" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_posts_users">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="posts" Type="Self.posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="posts">
+              <PropertyRef Name="FK_posts_users" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_users_userrank">
+          <End Role="user_ranks" Type="Self.user_ranks" Multiplicity="0..1" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_ranks">
+              <PropertyRef Name="_ID" />
+            </Principal>
+            <Dependent Role="AspNetUsers">
+              <PropertyRef Name="FK_users_userrank" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="VERK2015_H17ModelStoreContainer">
-          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bubble_errors" EntityType="Self.bubble_errors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bubble_groups" EntityType="Self.bubble_groups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="chat_members" EntityType="Self.chat_members" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="chats" EntityType="Self.chats" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="event_users" EntityType="Self.event_users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="events" EntityType="Self.events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="friends_added" EntityType="Self.friends_added" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="group_users" EntityType="Self.group_users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="like_comments" EntityType="Self.like_comments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="messages" EntityType="Self.messages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="post_comments" EntityType="Self.post_comments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="post_likes" EntityType="Self.post_likes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="posts" EntityType="Self.posts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user_ranks" EntityType="Self.user_ranks" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_bubble_groups_users" Association="Self.FK_bubble_groups_users">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="bubble_groups" EntitySet="bubble_groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_chat_members_chat" Association="Self.FK_chat_members_chat">
+            <End Role="chats" EntitySet="chats" />
+            <End Role="chat_members" EntitySet="chat_members" />
+          </AssociationSet>
+          <AssociationSet Name="FK_chat_members_user" Association="Self.FK_chat_members_user">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="chat_members" EntitySet="chat_members" />
+          </AssociationSet>
+          <AssociationSet Name="FK_event_users_events" Association="Self.FK_event_users_events">
+            <End Role="events" EntitySet="events" />
+            <End Role="event_users" EntitySet="event_users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_event_users_users" Association="Self.FK_event_users_users">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="event_users" EntitySet="event_users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_events_owner" Association="Self.FK_events_owner">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="events" EntitySet="events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_friends_added_users_Added" Association="Self.FK_friends_added_users_Added">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="friends_added" EntitySet="friends_added" />
+          </AssociationSet>
+          <AssociationSet Name="FK_friends_added_users_Addee" Association="Self.FK_friends_added_users_Addee">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="friends_added" EntitySet="friends_added" />
+          </AssociationSet>
+          <AssociationSet Name="FK_group_post_like_users" Association="Self.FK_group_post_like_users">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="post_likes" EntitySet="post_likes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_group_post_likes_group_posts" Association="Self.FK_group_post_likes_group_posts">
+            <End Role="posts" EntitySet="posts" />
+            <End Role="post_likes" EntitySet="post_likes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_group_users_bubble_group" Association="Self.FK_group_users_bubble_group">
+            <End Role="bubble_groups" EntitySet="bubble_groups" />
+            <End Role="group_users" EntitySet="group_users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_group_users_users" Association="Self.FK_group_users_users">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="group_users" EntitySet="group_users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_like_comments_post_comments" Association="Self.FK_like_comments_post_comments">
+            <End Role="post_comments" EntitySet="post_comments" />
+            <End Role="like_comments" EntitySet="like_comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_like_comments_users" Association="Self.FK_like_comments_users">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="like_comments" EntitySet="like_comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_messages_chat_id" Association="Self.FK_messages_chat_id">
+            <End Role="chats" EntitySet="chats" />
+            <End Role="messages" EntitySet="messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_messages_users" Association="Self.FK_messages_users">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="messages" EntitySet="messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_post_comments_posts" Association="Self.FK_post_comments_posts">
+            <End Role="posts" EntitySet="posts" />
+            <End Role="post_comments" EntitySet="post_comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_post_comments_users" Association="Self.FK_post_comments_users">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="post_comments" EntitySet="post_comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_posts_bubble_group" Association="Self.FK_posts_bubble_group">
+            <End Role="bubble_groups" EntitySet="bubble_groups" />
+            <End Role="posts" EntitySet="posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_posts_users" Association="Self.FK_posts_users">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="posts" EntitySet="posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_users_userrank" Association="Self.FK_users_userrank">
+            <End Role="user_ranks" EntitySet="user_ranks" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="VERK2015_H17Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="users">
+        <EntityContainer Name="VERK2015_H17Entities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AspNetUsers" EntityType="VERK2015_H17Model.AspNetUsers" />
+          <EntitySet Name="bubble_errors" EntityType="VERK2015_H17Model.bubble_errors" />
+          <EntitySet Name="bubble_groups" EntityType="VERK2015_H17Model.bubble_groups" />
+          <EntitySet Name="chat_members" EntityType="VERK2015_H17Model.chat_members" />
+          <EntitySet Name="chats" EntityType="VERK2015_H17Model.chats" />
+          <EntitySet Name="event_users" EntityType="VERK2015_H17Model.event_users" />
+          <EntitySet Name="events" EntityType="VERK2015_H17Model.events" />
+          <EntitySet Name="friends_added" EntityType="VERK2015_H17Model.friends_added" />
+          <EntitySet Name="group_users" EntityType="VERK2015_H17Model.group_users" />
+          <EntitySet Name="like_comments" EntityType="VERK2015_H17Model.like_comments" />
+          <EntitySet Name="messages" EntityType="VERK2015_H17Model.messages" />
+          <EntitySet Name="post_comments" EntityType="VERK2015_H17Model.post_comments" />
+          <EntitySet Name="post_likes" EntityType="VERK2015_H17Model.post_likes" />
+          <EntitySet Name="posts" EntityType="VERK2015_H17Model.posts" />
+          <EntitySet Name="user_ranks" EntityType="VERK2015_H17Model.user_ranks" />
+          <AssociationSet Name="FK_bubble_groups_users" Association="VERK2015_H17Model.FK_bubble_groups_users">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="bubble_groups" EntitySet="bubble_groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_chat_members_user" Association="VERK2015_H17Model.FK_chat_members_user">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="chat_members" EntitySet="chat_members" />
+          </AssociationSet>
+          <AssociationSet Name="FK_event_users_users" Association="VERK2015_H17Model.FK_event_users_users">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="event_users" EntitySet="event_users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_events_owner" Association="VERK2015_H17Model.FK_events_owner">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="events" EntitySet="events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_friends_added_users_Added" Association="VERK2015_H17Model.FK_friends_added_users_Added">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="friends_added" EntitySet="friends_added" />
+          </AssociationSet>
+          <AssociationSet Name="FK_friends_added_users_Addee" Association="VERK2015_H17Model.FK_friends_added_users_Addee">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="friends_added" EntitySet="friends_added" />
+          </AssociationSet>
+          <AssociationSet Name="FK_group_post_like_users" Association="VERK2015_H17Model.FK_group_post_like_users">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="post_likes" EntitySet="post_likes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_group_users_users" Association="VERK2015_H17Model.FK_group_users_users">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="group_users" EntitySet="group_users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_like_comments_users" Association="VERK2015_H17Model.FK_like_comments_users">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="like_comments" EntitySet="like_comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_messages_users" Association="VERK2015_H17Model.FK_messages_users">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="messages" EntitySet="messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_post_comments_users" Association="VERK2015_H17Model.FK_post_comments_users">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="post_comments" EntitySet="post_comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_posts_users" Association="VERK2015_H17Model.FK_posts_users">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="posts" EntitySet="posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_users_userrank" Association="VERK2015_H17Model.FK_users_userrank">
+            <End Role="user_ranks" EntitySet="user_ranks" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_group_users_bubble_group" Association="VERK2015_H17Model.FK_group_users_bubble_group">
+            <End Role="bubble_groups" EntitySet="bubble_groups" />
+            <End Role="group_users" EntitySet="group_users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_posts_bubble_group" Association="VERK2015_H17Model.FK_posts_bubble_group">
+            <End Role="bubble_groups" EntitySet="bubble_groups" />
+            <End Role="posts" EntitySet="posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_chat_members_chat" Association="VERK2015_H17Model.FK_chat_members_chat">
+            <End Role="chats" EntitySet="chats" />
+            <End Role="chat_members" EntitySet="chat_members" />
+          </AssociationSet>
+          <AssociationSet Name="FK_messages_chat_id" Association="VERK2015_H17Model.FK_messages_chat_id">
+            <End Role="chats" EntitySet="chats" />
+            <End Role="messages" EntitySet="messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_event_users_events" Association="VERK2015_H17Model.FK_event_users_events">
+            <End Role="events" EntitySet="events" />
+            <End Role="event_users" EntitySet="event_users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_like_comments_post_comments" Association="VERK2015_H17Model.FK_like_comments_post_comments">
+            <End Role="post_comments" EntitySet="post_comments" />
+            <End Role="like_comments" EntitySet="like_comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_post_comments_posts" Association="VERK2015_H17Model.FK_post_comments_posts">
+            <End Role="posts" EntitySet="posts" />
+            <End Role="post_comments" EntitySet="post_comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_group_post_likes_group_posts" Association="VERK2015_H17Model.FK_group_post_likes_group_posts">
+            <End Role="posts" EntitySet="posts" />
+            <End Role="post_likes" EntitySet="post_likes" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="user_status" Type="Boolean" />
+          <Property Name="FK_users_userrank" Type="Int32" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="NickName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="profile_image" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="bubble_groups" Relationship="VERK2015_H17Model.FK_bubble_groups_users" FromRole="AspNetUsers" ToRole="bubble_groups" />
+          <NavigationProperty Name="chat_members" Relationship="VERK2015_H17Model.FK_chat_members_user" FromRole="AspNetUsers" ToRole="chat_members" />
+          <NavigationProperty Name="event_users" Relationship="VERK2015_H17Model.FK_event_users_users" FromRole="AspNetUsers" ToRole="event_users" />
+          <NavigationProperty Name="events" Relationship="VERK2015_H17Model.FK_events_owner" FromRole="AspNetUsers" ToRole="events" />
+          <NavigationProperty Name="friends_added" Relationship="VERK2015_H17Model.FK_friends_added_users_Added" FromRole="AspNetUsers" ToRole="friends_added" />
+          <NavigationProperty Name="friends_added1" Relationship="VERK2015_H17Model.FK_friends_added_users_Addee" FromRole="AspNetUsers" ToRole="friends_added" />
+          <NavigationProperty Name="post_likes" Relationship="VERK2015_H17Model.FK_group_post_like_users" FromRole="AspNetUsers" ToRole="post_likes" />
+          <NavigationProperty Name="group_users" Relationship="VERK2015_H17Model.FK_group_users_users" FromRole="AspNetUsers" ToRole="group_users" />
+          <NavigationProperty Name="like_comments" Relationship="VERK2015_H17Model.FK_like_comments_users" FromRole="AspNetUsers" ToRole="like_comments" />
+          <NavigationProperty Name="messages" Relationship="VERK2015_H17Model.FK_messages_users" FromRole="AspNetUsers" ToRole="messages" />
+          <NavigationProperty Name="post_comments" Relationship="VERK2015_H17Model.FK_post_comments_users" FromRole="AspNetUsers" ToRole="post_comments" />
+          <NavigationProperty Name="posts" Relationship="VERK2015_H17Model.FK_posts_users" FromRole="AspNetUsers" ToRole="posts" />
+          <NavigationProperty Name="user_ranks" Relationship="VERK2015_H17Model.FK_users_userrank" FromRole="AspNetUsers" ToRole="user_ranks" />
+        </EntityType>
+        <EntityType Name="bubble_errors">
           <Key>
             <PropertyRef Name="C_ID" />
           </Key>
-          <Property Name="C_ID" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="user_status" Type="Byte" />
-          <Property Name="FK_users_userrank" Type="Int32" />
-          <Property Name="profile_image" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="C_ID" Type="Int32" Nullable="false" />
+          <Property Name="error_owner" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="error_msg" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="time_of_error" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityContainer Name="VERK2015_H17Entities1" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="users" EntityType="Self.users" />
-        </EntityContainer>
+        <EntityType Name="bubble_groups">
+          <Key>
+            <PropertyRef Name="C_ID" />
+          </Key>
+          <Property Name="C_ID" Type="Int32" Nullable="false" />
+          <Property Name="group_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="group_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FK_bubble_groups_users" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="group_profile_image" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="VERK2015_H17Model.FK_bubble_groups_users" FromRole="bubble_groups" ToRole="AspNetUsers" />
+          <NavigationProperty Name="group_users" Relationship="VERK2015_H17Model.FK_group_users_bubble_group" FromRole="bubble_groups" ToRole="group_users" />
+          <NavigationProperty Name="posts" Relationship="VERK2015_H17Model.FK_posts_bubble_group" FromRole="bubble_groups" ToRole="posts" />
+        </EntityType>
+        <EntityType Name="chat_members">
+          <Key>
+            <PropertyRef Name="C_ID" />
+          </Key>
+          <Property Name="C_ID" Type="Int32" Nullable="false" />
+          <Property Name="FK_chat_members_user" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FK_chat_members_chat" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="VERK2015_H17Model.FK_chat_members_user" FromRole="chat_members" ToRole="AspNetUsers" />
+          <NavigationProperty Name="chats" Relationship="VERK2015_H17Model.FK_chat_members_chat" FromRole="chat_members" ToRole="chats" />
+        </EntityType>
+        <EntityType Name="chats">
+          <Key>
+            <PropertyRef Name="C_ID" />
+          </Key>
+          <Property Name="C_ID" Type="Int32" Nullable="false" />
+          <Property Name="chat_name" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="chat_members" Relationship="VERK2015_H17Model.FK_chat_members_chat" FromRole="chats" ToRole="chat_members" />
+          <NavigationProperty Name="messages" Relationship="VERK2015_H17Model.FK_messages_chat_id" FromRole="chats" ToRole="messages" />
+        </EntityType>
+        <EntityType Name="event_users">
+          <Key>
+            <PropertyRef Name="C_ID" />
+          </Key>
+          <Property Name="C_ID" Type="Int32" Nullable="false" />
+          <Property Name="FK_event_users_users" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FK_event_users_events" Type="Int32" />
+          <Property Name="event_admin" Type="Boolean" />
+          <NavigationProperty Name="AspNetUsers" Relationship="VERK2015_H17Model.FK_event_users_users" FromRole="event_users" ToRole="AspNetUsers" />
+          <NavigationProperty Name="events" Relationship="VERK2015_H17Model.FK_event_users_events" FromRole="event_users" ToRole="events" />
+        </EntityType>
+        <EntityType Name="events">
+          <Key>
+            <PropertyRef Name="C_ID" />
+          </Key>
+          <Property Name="C_ID" Type="Int32" Nullable="false" />
+          <Property Name="event_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="event_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="event_start_time" Type="DateTime" Precision="3" />
+          <Property Name="event_end_time" Type="DateTime" Precision="3" />
+          <Property Name="FK_events_owner" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="event_profile_image" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="VERK2015_H17Model.FK_events_owner" FromRole="events" ToRole="AspNetUsers" />
+          <NavigationProperty Name="event_users" Relationship="VERK2015_H17Model.FK_event_users_events" FromRole="events" ToRole="event_users" />
+        </EntityType>
+        <EntityType Name="friends_added">
+          <Key>
+            <PropertyRef Name="C_ID" />
+          </Key>
+          <Property Name="C_ID" Type="Int32" Nullable="false" />
+          <Property Name="FK_friends_added_users_Addee" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FK_friends_added_users_Added" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="friended" Type="Boolean" />
+          <NavigationProperty Name="AspNetUsers" Relationship="VERK2015_H17Model.FK_friends_added_users_Added" FromRole="friends_added" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUsers1" Relationship="VERK2015_H17Model.FK_friends_added_users_Addee" FromRole="friends_added" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="group_users">
+          <Key>
+            <PropertyRef Name="C_ID" />
+          </Key>
+          <Property Name="C_ID" Type="Int32" Nullable="false" />
+          <Property Name="FK_group_users_bubble_group" Type="Int32" />
+          <Property Name="FK_group_users_users" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="group_admin" Type="Boolean" />
+          <NavigationProperty Name="AspNetUsers" Relationship="VERK2015_H17Model.FK_group_users_users" FromRole="group_users" ToRole="AspNetUsers" />
+          <NavigationProperty Name="bubble_groups" Relationship="VERK2015_H17Model.FK_group_users_bubble_group" FromRole="group_users" ToRole="bubble_groups" />
+        </EntityType>
+        <EntityType Name="like_comments">
+          <Key>
+            <PropertyRef Name="C_ID" />
+          </Key>
+          <Property Name="C_ID" Type="Int32" Nullable="false" />
+          <Property Name="FK_like_comments_post_comments" Type="Int32" />
+          <Property Name="comment_like" Type="Boolean" />
+          <Property Name="comment_burst" Type="Byte" />
+          <Property Name="FK_like_comments_users" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="VERK2015_H17Model.FK_like_comments_users" FromRole="like_comments" ToRole="AspNetUsers" />
+          <NavigationProperty Name="post_comments" Relationship="VERK2015_H17Model.FK_like_comments_post_comments" FromRole="like_comments" ToRole="post_comments" />
+        </EntityType>
+        <EntityType Name="messages">
+          <Key>
+            <PropertyRef Name="C_ID" />
+          </Key>
+          <Property Name="C_ID" Type="Int32" Nullable="false" />
+          <Property Name="message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FK_messages_user" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="time_stamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FK_messages_chat_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="VERK2015_H17Model.FK_messages_users" FromRole="messages" ToRole="AspNetUsers" />
+          <NavigationProperty Name="chats" Relationship="VERK2015_H17Model.FK_messages_chat_id" FromRole="messages" ToRole="chats" />
+        </EntityType>
+        <EntityType Name="post_comments">
+          <Key>
+            <PropertyRef Name="C_ID" />
+          </Key>
+          <Property Name="C_ID" Type="Int32" Nullable="false" />
+          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FK_post_comments_posts" Type="Int32" />
+          <Property Name="FK_post_comments_users" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="comment_time" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="AspNetUsers" Relationship="VERK2015_H17Model.FK_post_comments_users" FromRole="post_comments" ToRole="AspNetUsers" />
+          <NavigationProperty Name="like_comments" Relationship="VERK2015_H17Model.FK_like_comments_post_comments" FromRole="post_comments" ToRole="like_comments" />
+          <NavigationProperty Name="posts" Relationship="VERK2015_H17Model.FK_post_comments_posts" FromRole="post_comments" ToRole="posts" />
+        </EntityType>
+        <EntityType Name="post_likes">
+          <Key>
+            <PropertyRef Name="C_ID" />
+          </Key>
+          <Property Name="C_ID" Type="Int32" Nullable="false" />
+          <Property Name="FK_group_post_likes_group_posts" Type="Int32" />
+          <Property Name="group_insert_like" Type="Byte" />
+          <Property Name="insert_burst" Type="Byte" />
+          <Property Name="FK_group_post_like_users" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="VERK2015_H17Model.FK_group_post_like_users" FromRole="post_likes" ToRole="AspNetUsers" />
+          <NavigationProperty Name="posts" Relationship="VERK2015_H17Model.FK_group_post_likes_group_posts" FromRole="post_likes" ToRole="posts" />
+        </EntityType>
+        <EntityType Name="posts">
+          <Key>
+            <PropertyRef Name="C_ID" />
+          </Key>
+          <Property Name="C_ID" Type="Int32" Nullable="false" />
+          <Property Name="content_text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="content_picture" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="time_inserted" Type="DateTime" Precision="3" />
+          <Property Name="FK_posts_bubble_groups" Type="Int32" />
+          <Property Name="FK_posts_users" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="content_is_video" Type="Byte" />
+          <NavigationProperty Name="AspNetUsers" Relationship="VERK2015_H17Model.FK_posts_users" FromRole="posts" ToRole="AspNetUsers" />
+          <NavigationProperty Name="bubble_groups" Relationship="VERK2015_H17Model.FK_posts_bubble_group" FromRole="posts" ToRole="bubble_groups" />
+          <NavigationProperty Name="post_comments" Relationship="VERK2015_H17Model.FK_post_comments_posts" FromRole="posts" ToRole="post_comments" />
+          <NavigationProperty Name="post_likes" Relationship="VERK2015_H17Model.FK_group_post_likes_group_posts" FromRole="posts" ToRole="post_likes" />
+        </EntityType>
+        <EntityType Name="user_ranks">
+          <Key>
+            <PropertyRef Name="C_ID" />
+          </Key>
+          <Property Name="C_ID" Type="Int32" Nullable="false" />
+          <Property Name="rank" Type="String" MaxLength="9" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="VERK2015_H17Model.FK_users_userrank" FromRole="user_ranks" ToRole="AspNetUsers" />
+        </EntityType>
+        <Association Name="FK_bubble_groups_users">
+          <End Type="VERK2015_H17Model.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="VERK2015_H17Model.bubble_groups" Role="bubble_groups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="bubble_groups">
+              <PropertyRef Name="FK_bubble_groups_users" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_chat_members_user">
+          <End Type="VERK2015_H17Model.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="VERK2015_H17Model.chat_members" Role="chat_members" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="chat_members">
+              <PropertyRef Name="FK_chat_members_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_event_users_users">
+          <End Type="VERK2015_H17Model.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="VERK2015_H17Model.event_users" Role="event_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="event_users">
+              <PropertyRef Name="FK_event_users_users" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_events_owner">
+          <End Type="VERK2015_H17Model.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="VERK2015_H17Model.events" Role="events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="events">
+              <PropertyRef Name="FK_events_owner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_friends_added_users_Added">
+          <End Type="VERK2015_H17Model.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="VERK2015_H17Model.friends_added" Role="friends_added" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="friends_added">
+              <PropertyRef Name="FK_friends_added_users_Added" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_friends_added_users_Addee">
+          <End Type="VERK2015_H17Model.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="VERK2015_H17Model.friends_added" Role="friends_added" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="friends_added">
+              <PropertyRef Name="FK_friends_added_users_Addee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_group_post_like_users">
+          <End Type="VERK2015_H17Model.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="VERK2015_H17Model.post_likes" Role="post_likes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="post_likes">
+              <PropertyRef Name="FK_group_post_like_users" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_group_users_users">
+          <End Type="VERK2015_H17Model.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="VERK2015_H17Model.group_users" Role="group_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="group_users">
+              <PropertyRef Name="FK_group_users_users" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_like_comments_users">
+          <End Type="VERK2015_H17Model.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="VERK2015_H17Model.like_comments" Role="like_comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="like_comments">
+              <PropertyRef Name="FK_like_comments_users" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_messages_users">
+          <End Type="VERK2015_H17Model.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="VERK2015_H17Model.messages" Role="messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="messages">
+              <PropertyRef Name="FK_messages_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_post_comments_users">
+          <End Type="VERK2015_H17Model.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="VERK2015_H17Model.post_comments" Role="post_comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="post_comments">
+              <PropertyRef Name="FK_post_comments_users" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_posts_users">
+          <End Type="VERK2015_H17Model.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="VERK2015_H17Model.posts" Role="posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="posts">
+              <PropertyRef Name="FK_posts_users" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_users_userrank">
+          <End Type="VERK2015_H17Model.user_ranks" Role="user_ranks" Multiplicity="0..1" />
+          <End Type="VERK2015_H17Model.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_ranks">
+              <PropertyRef Name="C_ID" />
+            </Principal>
+            <Dependent Role="AspNetUsers">
+              <PropertyRef Name="FK_users_userrank" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_group_users_bubble_group">
+          <End Type="VERK2015_H17Model.bubble_groups" Role="bubble_groups" Multiplicity="0..1" />
+          <End Type="VERK2015_H17Model.group_users" Role="group_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bubble_groups">
+              <PropertyRef Name="C_ID" />
+            </Principal>
+            <Dependent Role="group_users">
+              <PropertyRef Name="FK_group_users_bubble_group" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_posts_bubble_group">
+          <End Type="VERK2015_H17Model.bubble_groups" Role="bubble_groups" Multiplicity="0..1" />
+          <End Type="VERK2015_H17Model.posts" Role="posts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bubble_groups">
+              <PropertyRef Name="C_ID" />
+            </Principal>
+            <Dependent Role="posts">
+              <PropertyRef Name="FK_posts_bubble_groups" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_chat_members_chat">
+          <End Type="VERK2015_H17Model.chats" Role="chats" Multiplicity="1" />
+          <End Type="VERK2015_H17Model.chat_members" Role="chat_members" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chats">
+              <PropertyRef Name="C_ID" />
+            </Principal>
+            <Dependent Role="chat_members">
+              <PropertyRef Name="FK_chat_members_chat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_messages_chat_id">
+          <End Type="VERK2015_H17Model.chats" Role="chats" Multiplicity="1" />
+          <End Type="VERK2015_H17Model.messages" Role="messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chats">
+              <PropertyRef Name="C_ID" />
+            </Principal>
+            <Dependent Role="messages">
+              <PropertyRef Name="FK_messages_chat_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_event_users_events">
+          <End Type="VERK2015_H17Model.events" Role="events" Multiplicity="0..1" />
+          <End Type="VERK2015_H17Model.event_users" Role="event_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="events">
+              <PropertyRef Name="C_ID" />
+            </Principal>
+            <Dependent Role="event_users">
+              <PropertyRef Name="FK_event_users_events" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_like_comments_post_comments">
+          <End Type="VERK2015_H17Model.post_comments" Role="post_comments" Multiplicity="0..1" />
+          <End Type="VERK2015_H17Model.like_comments" Role="like_comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="post_comments">
+              <PropertyRef Name="C_ID" />
+            </Principal>
+            <Dependent Role="like_comments">
+              <PropertyRef Name="FK_like_comments_post_comments" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_post_comments_posts">
+          <End Type="VERK2015_H17Model.posts" Role="posts" Multiplicity="0..1" />
+          <End Type="VERK2015_H17Model.post_comments" Role="post_comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="posts">
+              <PropertyRef Name="C_ID" />
+            </Principal>
+            <Dependent Role="post_comments">
+              <PropertyRef Name="FK_post_comments_posts" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_group_post_likes_group_posts">
+          <End Type="VERK2015_H17Model.posts" Role="posts" Multiplicity="0..1" />
+          <End Type="VERK2015_H17Model.post_likes" Role="post_likes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="posts">
+              <PropertyRef Name="C_ID" />
+            </Principal>
+            <Dependent Role="post_likes">
+              <PropertyRef Name="FK_group_post_likes_group_posts" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="VERK2015_H17ModelStoreContainer" CdmEntityContainer="VERK2015_H17Entities1">
-          <EntitySetMapping Name="users">
-            <EntityTypeMapping TypeName="VERK2015_H17Model.users">
-              <MappingFragment StoreEntitySet="users">
-                <ScalarProperty Name="C_ID" ColumnName="_ID" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="user_status" ColumnName="user_status" />
-                <ScalarProperty Name="FK_users_userrank" ColumnName="FK_users_userrank" />
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="VERK2015_H17Model.AspNetUsers">
+              <MappingFragment StoreEntitySet="AspNetUsers">
                 <ScalarProperty Name="profile_image" ColumnName="profile_image" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="NickName" ColumnName="NickName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="FK_users_userrank" ColumnName="FK_users_userrank" />
+                <ScalarProperty Name="user_status" ColumnName="user_status" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bubble_errors">
+            <EntityTypeMapping TypeName="VERK2015_H17Model.bubble_errors">
+              <MappingFragment StoreEntitySet="bubble_errors">
+                <ScalarProperty Name="time_of_error" ColumnName="time_of_error" />
+                <ScalarProperty Name="error_msg" ColumnName="error_msg" />
+                <ScalarProperty Name="error_owner" ColumnName="error_owner" />
+                <ScalarProperty Name="C_ID" ColumnName="_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bubble_groups">
+            <EntityTypeMapping TypeName="VERK2015_H17Model.bubble_groups">
+              <MappingFragment StoreEntitySet="bubble_groups">
+                <ScalarProperty Name="group_profile_image" ColumnName="group_profile_image" />
+                <ScalarProperty Name="FK_bubble_groups_users" ColumnName="FK_bubble_groups_users" />
+                <ScalarProperty Name="group_description" ColumnName="group_description" />
+                <ScalarProperty Name="group_name" ColumnName="group_name" />
+                <ScalarProperty Name="C_ID" ColumnName="_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="chat_members">
+            <EntityTypeMapping TypeName="VERK2015_H17Model.chat_members">
+              <MappingFragment StoreEntitySet="chat_members">
+                <ScalarProperty Name="FK_chat_members_chat" ColumnName="FK_chat_members_chat" />
+                <ScalarProperty Name="FK_chat_members_user" ColumnName="FK_chat_members_user" />
+                <ScalarProperty Name="C_ID" ColumnName="_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="chats">
+            <EntityTypeMapping TypeName="VERK2015_H17Model.chats">
+              <MappingFragment StoreEntitySet="chats">
+                <ScalarProperty Name="chat_name" ColumnName="chat_name" />
+                <ScalarProperty Name="C_ID" ColumnName="_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="event_users">
+            <EntityTypeMapping TypeName="VERK2015_H17Model.event_users">
+              <MappingFragment StoreEntitySet="event_users">
+                <ScalarProperty Name="event_admin" ColumnName="event_admin" />
+                <ScalarProperty Name="FK_event_users_events" ColumnName="FK_event_users_events" />
+                <ScalarProperty Name="FK_event_users_users" ColumnName="FK_event_users_users" />
+                <ScalarProperty Name="C_ID" ColumnName="_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="events">
+            <EntityTypeMapping TypeName="VERK2015_H17Model.events">
+              <MappingFragment StoreEntitySet="events">
+                <ScalarProperty Name="event_profile_image" ColumnName="event_profile_image" />
+                <ScalarProperty Name="FK_events_owner" ColumnName="FK_events_owner" />
+                <ScalarProperty Name="event_end_time" ColumnName="event_end_time" />
+                <ScalarProperty Name="event_start_time" ColumnName="event_start_time" />
+                <ScalarProperty Name="event_description" ColumnName="event_description" />
+                <ScalarProperty Name="event_name" ColumnName="event_name" />
+                <ScalarProperty Name="C_ID" ColumnName="_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="friends_added">
+            <EntityTypeMapping TypeName="VERK2015_H17Model.friends_added">
+              <MappingFragment StoreEntitySet="friends_added">
+                <ScalarProperty Name="friended" ColumnName="friended" />
+                <ScalarProperty Name="FK_friends_added_users_Added" ColumnName="FK_friends_added_users_Added" />
+                <ScalarProperty Name="FK_friends_added_users_Addee" ColumnName="FK_friends_added_users_Addee" />
+                <ScalarProperty Name="C_ID" ColumnName="_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="group_users">
+            <EntityTypeMapping TypeName="VERK2015_H17Model.group_users">
+              <MappingFragment StoreEntitySet="group_users">
+                <ScalarProperty Name="group_admin" ColumnName="group_admin" />
+                <ScalarProperty Name="FK_group_users_users" ColumnName="FK_group_users_users" />
+                <ScalarProperty Name="FK_group_users_bubble_group" ColumnName="FK_group_users_bubble_group" />
+                <ScalarProperty Name="C_ID" ColumnName="_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="like_comments">
+            <EntityTypeMapping TypeName="VERK2015_H17Model.like_comments">
+              <MappingFragment StoreEntitySet="like_comments">
+                <ScalarProperty Name="FK_like_comments_users" ColumnName="FK_like_comments_users" />
+                <ScalarProperty Name="comment_burst" ColumnName="comment_burst" />
+                <ScalarProperty Name="comment_like" ColumnName="comment_like" />
+                <ScalarProperty Name="FK_like_comments_post_comments" ColumnName="FK_like_comments_post_comments" />
+                <ScalarProperty Name="C_ID" ColumnName="_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="messages">
+            <EntityTypeMapping TypeName="VERK2015_H17Model.messages">
+              <MappingFragment StoreEntitySet="messages">
+                <ScalarProperty Name="FK_messages_chat_id" ColumnName="FK_messages_chat_id" />
+                <ScalarProperty Name="time_stamp" ColumnName="time_stamp" />
+                <ScalarProperty Name="FK_messages_user" ColumnName="FK_messages_user" />
+                <ScalarProperty Name="message" ColumnName="message" />
+                <ScalarProperty Name="C_ID" ColumnName="_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="post_comments">
+            <EntityTypeMapping TypeName="VERK2015_H17Model.post_comments">
+              <MappingFragment StoreEntitySet="post_comments">
+                <ScalarProperty Name="comment_time" ColumnName="comment_time" />
+                <ScalarProperty Name="FK_post_comments_users" ColumnName="FK_post_comments_users" />
+                <ScalarProperty Name="FK_post_comments_posts" ColumnName="FK_post_comments_posts" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="C_ID" ColumnName="_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="post_likes">
+            <EntityTypeMapping TypeName="VERK2015_H17Model.post_likes">
+              <MappingFragment StoreEntitySet="post_likes">
+                <ScalarProperty Name="FK_group_post_like_users" ColumnName="FK_group_post_like_users" />
+                <ScalarProperty Name="insert_burst" ColumnName="insert_burst" />
+                <ScalarProperty Name="group_insert_like" ColumnName="group_insert_like" />
+                <ScalarProperty Name="FK_group_post_likes_group_posts" ColumnName="FK_group_post_likes_group_posts" />
+                <ScalarProperty Name="C_ID" ColumnName="_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="posts">
+            <EntityTypeMapping TypeName="VERK2015_H17Model.posts">
+              <MappingFragment StoreEntitySet="posts">
+                <ScalarProperty Name="content_is_video" ColumnName="content_is_video" />
+                <ScalarProperty Name="FK_posts_users" ColumnName="FK_posts_users" />
+                <ScalarProperty Name="FK_posts_bubble_groups" ColumnName="FK_posts_bubble_groups" />
+                <ScalarProperty Name="time_inserted" ColumnName="time_inserted" />
+                <ScalarProperty Name="content_picture" ColumnName="content_picture" />
+                <ScalarProperty Name="content_text" ColumnName="content_text" />
+                <ScalarProperty Name="C_ID" ColumnName="_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user_ranks">
+            <EntityTypeMapping TypeName="VERK2015_H17Model.user_ranks">
+              <MappingFragment StoreEntitySet="user_ranks">
+                <ScalarProperty Name="rank" ColumnName="rank" />
+                <ScalarProperty Name="C_ID" ColumnName="_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

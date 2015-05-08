@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Andri\Desktop\BubbleSpace\Bubblespace\BubbleSpaceDb.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Sveinbjorn\Dropbox\HR\VLN\T-220-VLN2\BubbleSpace\Bubblespace\BubbleSpaceDb.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
