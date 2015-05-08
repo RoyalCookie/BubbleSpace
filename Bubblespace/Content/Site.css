@@ -34,8 +34,6 @@
     .navbar {
         padding-right: 5%;
         background-color: rgb(240,229,201);
-        border-bottom-width: medium;
-        border-bottom-color: rgb(166,140,105);
     }
 
     /* (B) Logo */
@@ -67,8 +65,6 @@
 
     .register-now, .register-now:hover, register-now:focus {
         background-color: rgb(240,229,201);
-        border-width: medium;
-        border-color: rgb(166,140,105);
     }
 
     .register-now a {
@@ -166,8 +162,6 @@
     .navbar {
         padding-right: 5%;
         background-color: rgb(240,229,201);
-        border-bottom-width: medium;
-        border-bottom-color: rgb(166,140,105);
     }
 
     /* (B) Logo */
@@ -280,7 +274,6 @@
         overflow: hidden;
         padding-bottom: 20px;
         height: 100%;
-        background-color: rgb(173,223,227);
     }
     
     .body-content {
@@ -310,14 +303,12 @@
     /* main colour of the top of the page */
     .navbar {
         padding-right: 5%;
-        background-color: rgb(240,229,201);
-        border-bottom-width: medium;
-        border-bottom-color: rgb(166,140,105);
+        background-color: rgb(0,126,229);
     }
 
     /* (B) Logo */
     .navbar-inverse .navbar-brand {
-        color: rgb(89,68,51);
+        color: white;
         font-size: 30px;
     }
 
@@ -333,6 +324,7 @@
         color: rgb(89,68,51);
         font-family: 'Lato', sans-serif;
         font-weight: bold;
+        color: white;
     }
 
     /* The navigational links during hover/focus at the top of the page */
@@ -343,9 +335,7 @@
     }
 
     .register-now, .register-now:hover, register-now:focus {
-        background-color: rgb(240,229,201);
-        border-width: medium;
-        border-color: rgb(166,140,105);
+        background-color: rgb(0,126,229);
     }
 
     .register-now a {
@@ -359,26 +349,27 @@
     }
 
     #list-view {
-        border: red 1px dashed;
+        border: rgb(145, 199, 244) 2px solid;
         height: 80vh;
-        top: 15px;
+        top: 5px;
+        left: 5px;
     }
 
     #main-view {
         padding-top: 10px;
-        border: red 1px dashed;
+        border: rgb(145, 199, 244) 2px solid;
         height: 60vh;
-        left: 15px;
-        top: 15px;
+        left: 10px;
+        top: 5px;
         margin-top: 1vh;
     }
 
     #new-post {
         padding-top: 10px;
-        border: red 1px dashed;
+        border: rgb(145, 199, 244) 2px solid;
         height: 19vh;
-        left: 15px;
-        top: 15px;
+        left: 10px;
+        top: 5px;
     }
 
     .nav-image {
@@ -388,6 +379,10 @@
     .sidebar-nav {
         position: absolute;
         right: 7px;
+    }
+
+    #sidebar-wrapper{
+        background-color: rgb(0,126,229) !important;
     }
 
     .setting-icon {
@@ -405,7 +400,8 @@
         margin-top: 2px;        
     }
 
-    nav-image{
+    #registerLink, #loginLink{
+        color: white;
     }
 }
 
