@@ -37,9 +37,8 @@ namespace Bubblespace.Controllers
              * Nothing final here
              * -Andri Rafn
              */
-            var db = new ApplicationDbContext();
-            var allUsers = db.Users.ToList();
-            return View(allUsers);
+            var db = new VERK2015_H17Entities1();
+            return View(db.posts.ToList());
         }
     }
 }
