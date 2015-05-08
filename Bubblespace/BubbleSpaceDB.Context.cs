@@ -13,10 +13,10 @@ namespace Bubblespace
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class BubbleSpaceDb : DbContext
+    public partial class VERK2015_H17Entities1 : DbContext
     {
-        public BubbleSpaceDb()
-            : base("name=BubbleSpaceDb")
+        public VERK2015_H17Entities1()
+            : base("name=VERK2015_H17Entities1")
         {
         }
     
