@@ -10,4 +10,7 @@ $(function () {
     for (var i = 1; i < 41; i++) {
         friendslist.append("<li class='list-item'><img src='/Content/Assets/placeholder.png'/>Placeholder #" + i + "</li>");
     }
+
+
+
 });
