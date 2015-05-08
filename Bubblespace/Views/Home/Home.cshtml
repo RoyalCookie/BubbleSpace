@@ -5,10 +5,7 @@
 <div class="container-fluid">
     <div class="row">
         <div id="list-view" class="col-xs-3">
-              <ul>
-                  @foreach (var post in Model) { 
-                    <li class="list-item">@Html.ActionLink(post.content_text, "#", new { id = 5 })</li>
-                  }                  
+              <ul id="list-view-items">
               </ul>  
         </div>
         <div class="row">
@@ -17,9 +14,6 @@
             </div>
             <div id="main-view" class="col-xs-8">
                 <ul>
-                    @foreach (var post in Model) { 
-                        <li class="list-item">@Html.ActionLink(post.content_text, "Post", new {id = 5})</li>
-                    }
                 </ul>  
             </div>
         </div>

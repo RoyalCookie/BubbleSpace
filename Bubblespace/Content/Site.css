@@ -397,12 +397,12 @@
     }
 
     .list-item, .content-item {
-        padding-top: 10px;
         list-style: none;
+        font-size: 12px;
         left: -55px;
-        border: green 1px dashed;
-        margin-left: -40px;
-        margin-top: 5px;
+        border: grey 2px solid;
+        margin-left: -52px;
+        margin-top: 2px;        
     }
 
     nav-image{

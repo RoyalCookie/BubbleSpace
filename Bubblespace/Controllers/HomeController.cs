@@ -31,14 +31,7 @@ namespace Bubblespace.Controllers
         public ActionResult Home()
         {
             ViewBag.Message = "This is the main page! (edit this in HomeController.cs)";
-
-            /* 
-             * Testing Stuff 
-             * Nothing final here
-             * -Andri Rafn
-             */
-            var db = new VERK2015_H17Entities1();
-            return View(db.posts.ToList());
+            return View();
         }
     }
 }

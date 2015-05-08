@@ -30,7 +30,7 @@
     </div>
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
-            <li class="navButton"><img src="@Url.Content("~/Content/Assets/friends.png")" class="nav-image"></li>
+            <li><img src="@Url.Content("~/Content/Assets/friends.png")" class="nav-image"></li>
             <li><img src="@Url.Content("~/Content/Assets/placeholder.png")" class="nav-image"></li>
             <li><img src="@Url.Content("~/Content/Assets/events.png")" class="nav-image"></li>
             <li><img src="@Url.Content("~/Content/Assets/chat.png")" class="nav-image"></li>    
@@ -48,6 +48,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/Scripts/perfect-scrollbar.jquery.js")
     @Scripts.Render("~/Scripts/perfect-scrollbar.js")
+    @Scripts.Render("~/Scripts/friendsAjax.js")
     @Scripts.Render("~/Scripts/scrollbar.js")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
