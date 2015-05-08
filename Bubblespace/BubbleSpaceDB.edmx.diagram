@@ -5,7 +5,42 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="a4c826a38dfc4192b52d65e8b28a7daf" Name="Diagram1">
-        <EntityTypeShape EntityType="VERK2015_H17Model.users" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VERK2015_H17Model.AspNetUsers" Width="1.5" PointX="3" PointY="10.625" />
+        <EntityTypeShape EntityType="VERK2015_H17Model.bubble_errors" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="VERK2015_H17Model.bubble_groups" Width="1.5" PointX="5.25" PointY="18.125" />
+        <EntityTypeShape EntityType="VERK2015_H17Model.chat_members" Width="1.5" PointX="5.25" PointY="9.875" />
+        <EntityTypeShape EntityType="VERK2015_H17Model.chats" Width="1.5" PointX="3" PointY="8" />
+        <EntityTypeShape EntityType="VERK2015_H17Model.event_users" Width="1.5" PointX="7.5" PointY="16.375" />
+        <EntityTypeShape EntityType="VERK2015_H17Model.events" Width="1.5" PointX="5.25" PointY="21.5" />
+        <EntityTypeShape EntityType="VERK2015_H17Model.friends_added" Width="1.5" PointX="5.25" PointY="25" />
+        <EntityTypeShape EntityType="VERK2015_H17Model.group_users" Width="1.5" PointX="7.5" PointY="12.625" />
+        <EntityTypeShape EntityType="VERK2015_H17Model.like_comments" Width="1.5" PointX="18" PointY="12.75" />
+        <EntityTypeShape EntityType="VERK2015_H17Model.messages" Width="1.5" PointX="5.25" PointY="12.75" />
+        <EntityTypeShape EntityType="VERK2015_H17Model.post_comments" Width="1.5" PointX="12.75" PointY="12.625" />
+        <EntityTypeShape EntityType="VERK2015_H17Model.post_likes" Width="1.5" PointX="15.75" PointY="12.75" />
+        <EntityTypeShape EntityType="VERK2015_H17Model.posts" Width="1.5" PointX="10.5" PointY="14.125" />
+        <EntityTypeShape EntityType="VERK2015_H17Model.user_ranks" Width="1.5" PointX="0.75" PointY="13.125" />
+        <AssociationConnector Association="VERK2015_H17Model.FK_bubble_groups_users" />
+        <AssociationConnector Association="VERK2015_H17Model.FK_chat_members_user" />
+        <AssociationConnector Association="VERK2015_H17Model.FK_event_users_users" />
+        <AssociationConnector Association="VERK2015_H17Model.FK_events_owner" />
+        <AssociationConnector Association="VERK2015_H17Model.FK_friends_added_users_Added" />
+        <AssociationConnector Association="VERK2015_H17Model.FK_friends_added_users_Addee" />
+        <AssociationConnector Association="VERK2015_H17Model.FK_group_post_like_users" />
+        <AssociationConnector Association="VERK2015_H17Model.FK_group_users_users" />
+        <AssociationConnector Association="VERK2015_H17Model.FK_like_comments_users" />
+        <AssociationConnector Association="VERK2015_H17Model.FK_messages_users" />
+        <AssociationConnector Association="VERK2015_H17Model.FK_post_comments_users" />
+        <AssociationConnector Association="VERK2015_H17Model.FK_posts_users" />
+        <AssociationConnector Association="VERK2015_H17Model.FK_users_userrank" />
+        <AssociationConnector Association="VERK2015_H17Model.FK_group_users_bubble_group" />
+        <AssociationConnector Association="VERK2015_H17Model.FK_posts_bubble_group" />
+        <AssociationConnector Association="VERK2015_H17Model.FK_chat_members_chat" />
+        <AssociationConnector Association="VERK2015_H17Model.FK_messages_chat_id" />
+        <AssociationConnector Association="VERK2015_H17Model.FK_event_users_events" />
+        <AssociationConnector Association="VERK2015_H17Model.FK_like_comments_post_comments" />
+        <AssociationConnector Association="VERK2015_H17Model.FK_post_comments_posts" />
+        <AssociationConnector Association="VERK2015_H17Model.FK_group_post_likes_group_posts" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
