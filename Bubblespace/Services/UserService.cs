@@ -19,7 +19,7 @@ namespace Bubblespace.Services
 		
 		public void AddFriend()
 		{
-		
+			
 		}
 		
 		public void RemoveFriend()
@@ -34,9 +34,16 @@ namespace Bubblespace.Services
 		{
 		}
 		
-		public List<event_users>GetAllUsersEvents()
+		public List<events>GetAllUsersEvents(string ID)
 		{
-			return null;
+			var db = new VERK2015_H17Entities1();
+			var userEventsList = db.event_users.ToList();
+			var eventLists = db.events.ToList();			
+			var userEvents = (from eventUser in userEventsList
+							  join eve in eventLists on eventUser.FK_event_users_events equals eve.C_ID
+							  where eventUser.FK_event_users_users == ID
+							  select eve).ToList();
+			return userEvents;
 		}
 		
 		public List<group_users>GetAllUserGroups()
