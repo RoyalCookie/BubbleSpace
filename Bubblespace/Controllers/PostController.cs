@@ -27,28 +27,40 @@ namespace Bubblespace.Controllers
                        where a.Email == Convert.ToString(identity)
                        select a).Single();
 
-            posts postToInsert = new posts();
-            postToInsert.content_text = collection["content_text"];
-            postToInsert.content_is_video = Convert.ToByte(0);
-
             
+            posts postToInsert = new posts();
+            /*
+            postToInsert.content_text = collection["content_text"];
+            postToInsert.content_picture = "None";
+            postToInsert.content_is_video = Convert.ToByte(0);
             postToInsert.time_inserted = DateTime.Now;
             // Real Below In Comments - Above For Testing
             //postToInsert.time_inserted = Convert.ToDateTime(collection["time"]);
-           
             postToInsert.FK_posts_users = user.Id;
-
-            
-            postToInsert.FK_posts_bubble_groups = null;
+            postToInsert.FK_posts_bubble_groups = 0;
             // Real Below Using Null Currently As Testing
             //postToInsert.FK_posts_bubble_groups = Convert.ToInt32(collection["FK_posts_bubble_groups"]);
+            */
 
+            postToInsert.FK_posts_bubble_groups = null;
+            postToInsert.FK_posts_users = user.Id;
+            postToInsert.content_picture = "None";
+            postToInsert.content_text = "this is a test";
+            postToInsert.content_is_video = Convert.ToByte(0);
+            postToInsert.time_inserted = DateTime.Now;
 
-            db.posts.Add(postToInsert);
-            db.SaveChanges();
+            try
+            {
+                db.posts.Add(postToInsert);
+                db.SaveChanges();
+            }catch(Exception e){
+                System.Diagnostics.Debug.WriteLine(e.Message);
+                System.Diagnostics.Debug.WriteLine(e.InnerException);
+                System.Diagnostics.Debug.WriteLine(e.HelpLink);
+            }
             
             // Debug Info
-            System.Diagnostics.Debug.WriteLine("You've Called Post.Create()");
+            System.Diagnostics.Debug.WriteLine("\n\n\nYou've Called Post.Create()");
             System.Diagnostics.Debug.WriteLine("Current Data:");
             System.Diagnostics.Debug.WriteLine("Content: " + postToInsert.content_text);
             System.Diagnostics.Debug.WriteLine("User: " + user.Email);
