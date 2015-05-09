@@ -96,7 +96,7 @@
     #new-post {
         padding-top: 10px;
         border: red 1px dashed;
-        height: 19vh;
+        height: 100px;
         min-width: 79vw;
         left: 15px;
         top: 15px;
@@ -368,12 +368,63 @@
         padding-top: 10px;
         border: rgb(145, 199, 244) 2px solid;
         height: 19vh;
+        min-height: 120px;
         left: 10px;
         top: 5px;
     }
 
-    .nav-image {
-        margin-left: -3px;
+    #post-content{
+        border: rgb(145, 199, 244) 2px solid;
+        box-shadow: 0 0 1px #719ECE;
+        resize: none;
+    }
+
+    #nav-button-friends, #nav-button-placeholder, #nav-button-events, #nav-button-chat, #nav-button-settings{
+        width: 50px;
+        height: 50px;
+    }
+
+    #nav-button-friends{
+        background:transparent url('/Content/Assets/friends.png') center top no-repeat;
+    }
+    
+    #nav-button-placeholder{
+        background:transparent url('/Content/Assets/placeholder.png') center top no-repeat;
+    }
+
+    #nav-button-events{
+        background:transparent url('/Content/Assets/events.png') center top no-repeat;
+    }
+
+    #nav-button-chat{
+        background:transparent url('/Content/Assets/chat.png') center top no-repeat;
+    }
+
+    #nav-button-settings{
+        position: fixed;
+        bottom: 0px;
+        left: 7px;
+        background:transparent url('/Content/Assets/settings.png') center top no-repeat;
+    }
+
+    #nav-button-friends:hover{
+        background:transparent url('/Content/Assets/friends-hover.png') center top no-repeat;
+    }
+    
+    #nav-button-placeholder:hover{
+        background:transparent url('/Content/Assets/placeholder-hover.png') center top no-repeat;
+    }
+
+    #nav-button-events:hover{
+        background:transparent url('/Content/Assets/events-hover.png') center top no-repeat;
+    }
+
+    #nav-button-chat:hover{
+        background:transparent url('/Content/Assets/chat-hover.png') center top no-repeat;
+    }
+
+    #nav-button-settings:hover{
+        background:transparent url('/Content/Assets/settings-hover.png') center top no-repeat;
     }
 
     .sidebar-nav {
@@ -386,9 +437,7 @@
     }
 
     .setting-icon {
-        position: fixed;
-        bottom: 0px;
-        left: 7px;
+
     }
 
     .list-item, .content-item {
@@ -402,6 +451,13 @@
 
     #registerLink, #loginLink{
         color: white;
+    }
+
+    /* New Post */
+    #upload-button{
+        position: absolute;
+        top: 75px;
+        left: 210px;
     }
 }
 
