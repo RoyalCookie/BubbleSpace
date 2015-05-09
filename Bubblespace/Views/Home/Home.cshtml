@@ -1,21 +1,25 @@
 ﻿@model IEnumerable<posts>
-@{
-    Layout = "~/Views/Shared/_LayoutMain.cshtml";
-}
-<div class="container-fluid">
-    <div class="row">
-        <div id="list-view" class="col-xs-3">
-              <ul id="list-view-items">
-              </ul>  
-        </div>
+    @{
+        Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    }
+    <div class="container-fluid">
         <div class="row">
-            <div id="new-post" class="col-xs-8">
-                <div>insert post here!</div>
+            <div id="list-view" class="col-xs-3">
+                <ul id="list-view-items"></ul>
             </div>
-            <div id="main-view" class="col-xs-8">
-                <ul>
-                </ul>  
+            <div class="row">
+                <div id="new-post" class="col-xs-8">
+                    <div>
+                        <form>
+                            <textarea id="post-content" rows="3" cols="40"></textarea><br />
+                            <input type="submit" value="Post" />
+                            <input id="upload-button" type="file" name="pic" accept="image/*">
+                        </form>
+                    </div>
+                </div>
+                <div id="main-view" class="col-xs-8">
+                    <ul></ul>
+                </div>
             </div>
         </div>
     </div>
-</div>

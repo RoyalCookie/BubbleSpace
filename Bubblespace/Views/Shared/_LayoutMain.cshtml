@@ -30,11 +30,12 @@
     </div>
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
-            <li><img src="@Url.Content("~/Content/Assets/friends.png")" class="nav-image"></li>
-            <li><img src="@Url.Content("~/Content/Assets/placeholder.png")" class="nav-image"></li>
-            <li><img src="@Url.Content("~/Content/Assets/events.png")" class="nav-image"></li>
-            <li><img src="@Url.Content("~/Content/Assets/chat.png")" class="nav-image"></li>    
-            <li><img src="@Url.Content("~/Content/Assets/settings.png")" class="nav-image setting-icon"></li>        
+            <li><a onclick="friendsTab(); return false;" id="nav-button-friends"></a></li>
+            <li><a id="nav-button-placeholder"></a></li>
+
+            <li><a onclick="eventsTab(); return false;" href="#" id="nav-button-events"></a></li>
+            <li><a href="#" id="nav-button-chat"></a></li>
+            <li><a href="#" id="nav-button-settings"></a></li>
         </ul>
     </div>
     <div class="container body-content">
