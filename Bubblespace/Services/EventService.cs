@@ -10,7 +10,8 @@ namespace Bubblespace.Services
 	{
 		public List<events>GetAllEvents()
 		{
-			return null;
+            var db = new VERK2015_H17Entities1();
+            return db.events.ToList();
 		}
 		
 		public void CreateEvent()

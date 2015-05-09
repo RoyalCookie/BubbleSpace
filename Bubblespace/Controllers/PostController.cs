@@ -27,7 +27,6 @@ namespace Bubblespace.Controllers
                        where a.Email == Convert.ToString(identity)
                        select a).Single();
             
-            
             /*
             posts postToInsert = new posts();
             postToInsert.content_text = collection["content_text"];
@@ -36,9 +35,6 @@ namespace Bubblespace.Controllers
             postToInsert.FK_posts_users = user.Id;
             postToInsert.FK_posts_bubble_groups = bubbleGroup;
              */
-
-
-
 
             // Debug Info
             System.Diagnostics.Debug.WriteLine("You've Called Post.Create()");

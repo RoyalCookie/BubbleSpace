@@ -4,8 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-
-namespace Bubblespace.Services
+namespace Bubblespace.Services  
 {
 	public class UserService
 	{
