@@ -10,8 +10,8 @@
             <div class="row">
                 <div id="new-post" class="col-xs-8">
                     <div>
-                        <form>
-                            <textarea id="post-content" rows="3" cols="40"></textarea><br />
+                        <form method="post" action="/Post/Create">
+                            <textarea id="content_text" rows="3" cols="40"></textarea><br />
                             <input type="submit" value="Post" />
                             <input id="upload-button" type="file" name="pic" accept="image/*">
                         </form>
