@@ -11,9 +11,8 @@ namespace Bubblespace.Controllers
         //
         // GET: /Post/
         [HttpPost]
-        public ActionResult Create(string postContent, string contentPicture, DateTime time, int bubbleGroup, byte isVideo)
+        public ActionResult Create(FormCollection collection)
         {
-            
             // Get The Currently Logged In Users Email
             string identity = User.Identity.Name;
 
@@ -29,16 +28,15 @@ namespace Bubblespace.Controllers
                        select a).Single();
             
             
+            /*
             posts postToInsert = new posts();
-
-            postToInsert.content_text = postContent;
-            postToInsert.content_is_video = isVideo;
-            postToInsert.content_picture = contentPicture;
+            postToInsert.content_text = collection["content_text"];
+            postToInsert.content_is_video = Convert.ToByte(collection["content_is_video"]);
             postToInsert.time_inserted = time;
             postToInsert.FK_posts_users = user.Id;
             postToInsert.FK_posts_bubble_groups = bubbleGroup;
+             */
 
-            db.posts.Add(postToInsert);
 
 
 
