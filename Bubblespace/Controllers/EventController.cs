@@ -40,5 +40,21 @@ namespace Bubblespace.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public ActionResult Events()
+        {
+            // For now this returns all users, not just friends.
+            // We need to change this to accept an id and return only friends. - Andri
+            var db = new VERK2015_H17Entities1();
+            var allEvents = db.events.ToList();
+            var eventNames = (from eve in allEvents select eve.event_name).ToList();
+            var eventImages = (from eve in allEvents select eve.event_profile_image).ToList();
+
+            List<List<string>> returnJson = new List<List<string>>();
+            returnJson.Add(eventNames);
+            returnJson.Add(eventImages);
+            return Json(returnJson);
+        }
 	}
 }
