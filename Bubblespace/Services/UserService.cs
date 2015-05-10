@@ -11,6 +11,7 @@ namespace Bubblespace.Services
     //</summary>
 	public class UserService
 	{
+
         /* <summary>gets all users in the system</summary>
          * <param name="ID">takes no param</param>
          * <returns>returns a list of all users</returns>
