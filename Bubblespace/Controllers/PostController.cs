@@ -21,7 +21,13 @@ namespace Bubblespace.Controllers
             
             // Get a List Of All Users
             var dbUsers = db.AspNetUsers.ToList();
-            
+
+            var dbUser = db.AspNetUsers.ToList().Where(x => x.Email == "janus@tviund.com");
+
+            foreach(AspNetUsers a in dbUser){
+                System.Diagnostics.Debug.WriteLine(a.Email);
+            }
+
             // Get The User Data
             AspNetUsers user = (from a in dbUsers
                        where a.Email == Convert.ToString(identity)
@@ -43,7 +49,7 @@ namespace Bubblespace.Controllers
 
             postToInsert.FK_posts_bubble_groups = null;
             postToInsert.FK_posts_users = user.Id;
-            postToInsert.content_picture = "None";
+            postToInsert.content_picture = "none";
             postToInsert.content_text = "this is a test";
             postToInsert.content_is_video = Convert.ToByte(0);
             postToInsert.time_inserted = DateTime.Now;
@@ -100,7 +106,19 @@ namespace Bubblespace.Controllers
 
         public ActionResult Sort()
         {
-            return View();
+            var db = new VERK2015_H17Entities1();
+            
+            
+
+            try
+            {
+                db.user_ranks.Add(rankToAdd);
+                db.SaveChanges();            
+            }catch (Exception e){
+                System.Diagnostics.Debug.WriteLine("Villa");
+            }
+            
+            return Json("asd");
         }
 
         public ActionResult Delete()
