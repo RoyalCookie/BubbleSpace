@@ -10,15 +10,11 @@
             <div class="row">
                 <div id="new-post" class="col-xs-8">
                     <div>
-<<<<<<< HEAD
                         <form method="post" action="/Post/Create">
                             <textarea id="content_text" name="content_text" rows="3" cols="40"></textarea><br />
-=======
-                        <form action="/Post/Create" method="post">
-                            <textarea name="content_text" id="post-content" rows="3" cols="40"></textarea><br />
->>>>>>> origin/master
                             <input type="submit" value="Post" />
                             <input id="upload-button" type="file" name="content_image" accept="image/*">
+                            <input name="content_is_video" value="0" hidden/>
                         </form>
                     </div>
                 </div>

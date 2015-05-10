@@ -13,65 +13,63 @@ namespace Bubblespace.Controllers
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
-            // Get The Currently Logged In Users Email
-            string identity = User.Identity.Name;
-
-            // Create A  Database Entity
-            var db = new VERK2015_H17Entities1();
-            
-            // Get a List Of All Users
-            var dbUsers = db.AspNetUsers.ToList();
-
-            var dbUser = db.AspNetUsers.ToList().Where(x => x.Email == "janus@tviund.com");
-
-            foreach(AspNetUsers a in dbUser){
-                System.Diagnostics.Debug.WriteLine(a.Email);
+            // Check For Authentication
+            if(!User.Identity.IsAuthenticated){
+                return Json("{\"Error\": \"Bad Authentication\",\"Code\": 1}");
             }
 
-            // Get The User Data
-            AspNetUsers user = (from a in dbUsers
-                       where a.Email == Convert.ToString(identity)
-                       select a).Single();
-            
-            posts postToInsert = new posts();
-            /*
-            postToInsert.content_text = collection["content_text"];
-            postToInsert.content_picture = "None";
-            postToInsert.content_is_video = Convert.ToByte(0);
-            postToInsert.time_inserted = DateTime.Now;
-            // Real Below In Comments - Above For Testing
-            //postToInsert.time_inserted = Convert.ToDateTime(collection["time"]);
-            postToInsert.FK_posts_users = user.Id;
-            postToInsert.FK_posts_bubble_groups = 0;
-            // Real Below Using Null Currently As Testing
-            //postToInsert.FK_posts_bubble_groups = Convert.ToInt32(collection["FK_posts_bubble_groups"]);
-            */
+            // Create the DB Entity
+            var db = new VERK2015_H17Entities1();
 
-            postToInsert.FK_posts_bubble_groups = null;
-            postToInsert.FK_posts_users = user.Id;
-            postToInsert.content_picture = "none";
-            postToInsert.content_text = "this is a test";
+            // Get the authenticated users email
+            string userEmail = User.Identity.Name;
+
+            // Use the email to fill a AspNetUser model for the user
+            AspNetUsers userModel = (db.AspNetUsers.ToList().Where(x => x.Email == userEmail)).Single();
+
+            // Create the post we insert, And fill in relative information below
+            posts postToInsert = new posts();
+            
+            
+            
+            /* 
+             * TODO:
+             * 1. Vista Myndir Inná Server
+             * 2. Fá Path
+             * 3. Setja Path Inn Í postToInsert.content_is_video
+             */
+
+            postToInsert.content_text = collection["content_text"];
+            postToInsert.content_picture = "None";                      // <-- Breyta Path Fyrir Myndir
             postToInsert.content_is_video = Convert.ToByte(0);
             postToInsert.time_inserted = DateTime.Now;
+            postToInsert.FK_posts_users = userModel.Id;
+            postToInsert.FK_posts_bubble_groups = null;
+            
+            // Það Þarf Að Implementa Fyrir Myndir
+            
+            
 
             try
             {
                 db.posts.Add(postToInsert);
                 db.SaveChanges();
             }catch(Exception e){
-                System.Diagnostics.Debug.WriteLine(e.Message);
-                System.Diagnostics.Debug.WriteLine(e.InnerException);
-                System.Diagnostics.Debug.WriteLine(e.HelpLink);
+                return Json("{\"Error\": \"Couldn't Insert Into Database\",\"Code\": 2}");
             }
+
+
+
             
             // Debug Info
             System.Diagnostics.Debug.WriteLine("\n\n\nYou've Called Post.Create()");
             System.Diagnostics.Debug.WriteLine("Current Data:");
             System.Diagnostics.Debug.WriteLine("Content: " + postToInsert.content_text);
-            System.Diagnostics.Debug.WriteLine("User: " + user.Email);
-            System.Diagnostics.Debug.WriteLine("UserId: " + user.Id);
+            System.Diagnostics.Debug.WriteLine("User: " + userModel.Email);
+            System.Diagnostics.Debug.WriteLine("UserId: " + userModel.Id);
+            System.Diagnostics.Debug.WriteLine(Json(postToInsert).Data);
 
-            return Json("asd");
+            return Json("{\"Error\": \"None\",\"Code\": 0}");
         }
 
         public ActionResult LikePost()
@@ -106,19 +104,7 @@ namespace Bubblespace.Controllers
 
         public ActionResult Sort()
         {
-            var db = new VERK2015_H17Entities1();
-            
-            
-
-            try
-            {
-                db.user_ranks.Add(rankToAdd);
-                db.SaveChanges();            
-            }catch (Exception e){
-                System.Diagnostics.Debug.WriteLine("Villa");
-            }
-            
-            return Json("asd");
+            return View();
         }
 
         public ActionResult Delete()

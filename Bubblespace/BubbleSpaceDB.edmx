@@ -155,7 +155,7 @@
           <Key>
             <PropertyRef Name="_ID" />
           </Key>
-          <Property Name="_ID" Type="int" Nullable="false" />
+          <Property Name="_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="rank" Type="nvarchar" MaxLength="9" />
         </EntityType>
         <Association Name="FK_bubble_groups_users">
