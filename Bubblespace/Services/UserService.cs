@@ -24,7 +24,7 @@ namespace Bubblespace.Services
 			
 			return allUsers;
 		}
-		
+
         /* <summary>user adds a friend</summary>
          * <param name="userID">ID of user that adds a friend</param>
          * <param name="friendID> ID of the user that was friended</param>
@@ -45,6 +45,7 @@ namespace Bubblespace.Services
         public void RemoveFriend(string userID, string friendID)
 		{
             var db = new VERK2015_H17Entities1();
+
 		}
 
        /* <summary>Admin bans a user from BubbleSpace</summary>
@@ -55,6 +56,11 @@ namespace Bubblespace.Services
         public void BanUser(string ID)
 		{
             var db = new VERK2015_H17Entities1();
+            var allUsers = db.AspNetUsers.ToList();
+            var userBan = (from user in allUsers where user.Id == ID select user).SingleOrDefault();
+            userBan.user_status = true;
+
+            db.SaveChanges();
 		}
 
         /* <summary>Upgrade a user to admin of BubbleSpace</summary>
@@ -110,7 +116,10 @@ namespace Bubblespace.Services
          */
         public List<chats> GetAllChats(string ID)
 		{
+            //TODO: figure out how to connect it by email/username of user - Valgeir
+
             var db = new VERK2015_H17Entities1();
+            var userList = db.AspNetUsers.ToList();
             var userChatsList = db.chats.ToList();
             var userMessagesList = db.messages.ToList();
             var chatMembersList = db.chat_members.ToList();
