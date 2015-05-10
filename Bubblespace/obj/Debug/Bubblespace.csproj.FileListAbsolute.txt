@@ -107,3 +107,4 @@ C:\Users\janus\Documents\GitHub\BubbleSpace\Bubblespace\bin\Microsoft.Owin.Secur
 C:\Users\janus\Documents\GitHub\BubbleSpace\Bubblespace\obj\Debug\Bubblespace.csprojResolveAssemblyReference.cache
 C:\Users\janus\Documents\GitHub\BubbleSpace\Bubblespace\obj\Debug\Bubblespace.dll
 C:\Users\janus\Documents\GitHub\BubbleSpace\Bubblespace\obj\Debug\Bubblespace.pdb
+C:\Users\Sveinbjorn\Dropbox\HR\VLN\T-220-VLN2\BubbleSpace\Bubblespace\obj\Debug\Bubblespace.csprojResolveAssemblyReference.cache

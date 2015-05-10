@@ -11,6 +11,9 @@ namespace Bubblespace.Controllers
     {
         public ActionResult Index()
         {
+            Services.EventService es = new Services.EventService();
+            events ev = new events();
+            es.CreateEvent(ev);
             return View();
         }
 

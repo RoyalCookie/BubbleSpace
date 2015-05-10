@@ -13,9 +13,11 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
-        public void SavePostToDB()
+        public void SavePostToDB(posts post)
 		{
-			
+            var db = new VERK2015_H17Entities1();
+            db.posts.Add(post);
+            db.SaveChanges();
 		}
 
         /* <summary></summary>
@@ -23,9 +25,11 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
-		public void SaveLikePost()
+		public void SaveLikePost(post_likes postLikes)
 		{
-			
+            var db = new VERK2015_H17Entities1();
+            db.post_likes.Add(postLikes);
+            db.SaveChanges();
 		}
 
        /* <summary></summary>

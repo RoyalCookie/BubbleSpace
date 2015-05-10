@@ -73,7 +73,7 @@
           <Key>
             <PropertyRef Name="_ID" />
           </Key>
-          <Property Name="_ID" Type="int" Nullable="false" />
+          <Property Name="_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="event_name" Type="nvarchar" MaxLength="255" />
           <Property Name="event_description" Type="text" />
           <Property Name="event_start_time" Type="datetime" />
@@ -143,7 +143,7 @@
           <Key>
             <PropertyRef Name="_ID" />
           </Key>
-          <Property Name="_ID" Type="int" Nullable="false" />
+          <Property Name="_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="content_text" Type="text" />
           <Property Name="content_picture" Type="nvarchar" MaxLength="128" />
           <Property Name="time_inserted" Type="datetime" />
