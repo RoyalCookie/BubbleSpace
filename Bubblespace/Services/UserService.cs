@@ -14,18 +14,18 @@ namespace Bubblespace.Services
 
         /* <summary>gets all users in the system</summary>
          * <param name="ID">takes no param</param>
-         * <returns>returns a list of all users</returns>
+         * <returns>list of all users</returns>
          * <author>Valgeir</author>
          */
 		public List<AspNetUsers>GetAllUsers()
 		{
-			var db = new VERK2015_H17Entities1();
+            var db = new VERK2015_H17Entities1();
 			var allUsers = db.AspNetUsers.ToList();
 			
 			return allUsers;
 		}
 		
-        /* <summary></summary>
+        /* <summary>user adds a friend</summary>
          * <param name="userID">ID of user that adds a friend</param>
          * <param name="friendID> ID of the user that was friended</param>
          * <returns>no return</returns>
@@ -33,10 +33,10 @@ namespace Bubblespace.Services
          */
 		public void AddFriend(string userID, string friendID)
 		{
-			
+            var db = new VERK2015_H17Entities1();
 		}
 
-        /* <summary></summary>
+        /* <summary>user removes a friend</summary>
          * <param name="userID">ID of the user that removes friend</param>
          * <param name="friendID> ID of the user that was removed</param>
          * <returns>no return</returns>
@@ -44,17 +44,22 @@ namespace Bubblespace.Services
          */
         public void RemoveFriend(string userID, string friendID)
 		{
-
+            var db = new VERK2015_H17Entities1();
 		}
 
-
+       /* <summary>Admin bans a user from BubbleSpace</summary>
+        * <param name="ID"></param>
+        * <returns></returns>
+        * <author></author>
+        */
         public void BanUser(string ID)
 		{
+            var db = new VERK2015_H17Entities1();
 		}
 
-        /* <summary>Upgrade a user to admin in the system</summary>
+        /* <summary>Upgrade a user to admin of BubbleSpace</summary>
          * <param name="ID">Takes in ID of the user</param>
-         * <returns>Returns nothing</returns>
+         * <returns>no return</returns>
          * <author>Valgeir</author>
          */
         public void UpgradeUserToAdmin(string ID)
@@ -68,36 +73,65 @@ namespace Bubblespace.Services
             db.SaveChanges();
 		}
 		
-        /* <summary>Gets all events for a specified user </summary>
+        /* <summary>Gets all events for a specified user</summary>
          * <param name="ID">Takes in ID of the user</param>
-         * <returns>Returns a list of events for the user</returns>
+         * <returns>list of events for the user</returns>
          * <author>Valgeir</author>
          */
 		public List<events>GetAllUsersEvents(string ID)
 		{
 			var db = new VERK2015_H17Entities1();
 			var userEventsList = db.event_users.ToList();
-
-			var eventLists = db.events.ToList();			
-			var userEvents = (from eventUser in userEventsList
+            var eventLists = db.events.ToList();			
+			
+            var userEvents = (from eventUser in userEventsList
 							  join eve in eventLists on eventUser.FK_event_users_events equals eve.C_ID
 							  where eventUser.FK_event_users_users == ID
 							  select eve).ToList();
+
 			return userEvents;
 		}
 
+       /* <summary>Gets all the groups a specified user is in</summary>
+        * <param name="ID">Takes in the ID of the user</param>
+        * <returns>list of groups for the user</returns>
+        * <author>Valgeir</author>
+        */
         public List<group_users> GetAllUserGroups(string ID)
 		{
+            var db = new VERK2015_H17Entities1();
 			return null;
 		}
 
+        /* <summary>Gets all the chats for a specified user</summary>
+         * <param name="ID">Takes in the ID of the user</param>
+         * <returns>list of chats for the user</returns>
+         * <author>Valgeir</author>
+         */
         public List<chats> GetAllChats(string ID)
 		{
-			return null;
+            var db = new VERK2015_H17Entities1();
+            var userChatsList = db.chats.ToList();
+            var userMessagesList = db.messages.ToList();
+            var chatMembersList = db.chat_members.ToList();
+
+            var userChats = (from userChat in userChatsList
+                             join chatMember in chatMembersList on userChat.C_ID equals chatMember.FK_chat_members_chat
+                             join userMessage in userMessagesList on userChat.C_ID equals userMessage.FK_messages_chat_id
+                             where chatMember.FK_chat_members_user == ID || userMessage.FK_messages_user == ID
+                             select userChat).ToList();
+            
+			return userChats;
 		}
 
+       /* <summary>Gets all the friends of a specified user</summary>
+        * <param name="ID">Takes in the ID of the user</param>
+        * <returns>list of friends of the user</returns>
+        * <author>Valgeir</author>
+        */
         public List<friends_added> GetAllFriends(string ID)
 		{
+            var db = new VERK2015_H17Entities1();
 			return null;
 		}
 	}
