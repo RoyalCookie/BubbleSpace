@@ -13,9 +13,11 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
-		public void CreateGroup()
+		public void CreateGroup(bubble_groups group)
 		{
-			
+            var db = new VERK2015_H17Entities1();
+            db.bubble_groups.Add(group);
+            db.SaveChanges();
 		}
 
        /* <summary></summary>
@@ -33,9 +35,13 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
-		public void SortGroupPostBy()
+		public List<posts> SortGroupPostBy(string sortingsorter, bubble_groups gr)
 		{
-			
+            var db = new VERK2015_H17Entities1();
+            var sorted = (from x in db.posts.Where(y => y.FK_posts_bubble_groups == gr.C_ID)
+                          orderby x.time_inserted ascending
+                          select x).ToList();
+            return sorted;
 		}
 
        /* <summary></summary>
@@ -63,9 +69,8 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
-		public void SetAdminStatus()
+		public void SetAdminStatus(AspNetUsers user)
 		{
-			
 		}
 
        /* <summary></summary>
