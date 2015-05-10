@@ -32,7 +32,6 @@ namespace Bubblespace.Controllers
             AspNetUsers user = (from a in dbUsers
                        where a.Email == Convert.ToString(identity)
                        select a).Single();
-
             
             posts postToInsert = new posts();
             /*
@@ -71,8 +70,6 @@ namespace Bubblespace.Controllers
             System.Diagnostics.Debug.WriteLine("Content: " + postToInsert.content_text);
             System.Diagnostics.Debug.WriteLine("User: " + user.Email);
             System.Diagnostics.Debug.WriteLine("UserId: " + user.Id);
-
-
 
             return Json("asd");
         }

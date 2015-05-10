@@ -8,31 +8,61 @@ namespace Bubblespace.Services
 {
 	public class PostService
 	{
-		public void SavePostToDB()
+       /* <summary></summary>
+        * <param name="ID"></param>
+        * <returns></returns>
+        * <author></author>
+        */
+        public void SavePostToDB()
 		{
 			
 		}
-		
+
+        /* <summary></summary>
+        * <param name="ID"></param>
+        * <returns></returns>
+        * <author></author>
+        */
 		public void SaveLikePost()
 		{
 			
 		}
-		
+
+       /* <summary></summary>
+        * <param name="ID"></param>
+        * <returns></returns>
+        * <author></author>
+        */
 		public void SaveBurstPost()
 		{
 			
 		}
-		
+
+       /* <summary></summary>
+        * <param name="ID"></param>
+        * <returns></returns>
+        * <author></author>
+        */
 		public void SaveCommentOnPost()
 		{
 			
 		}
-		
+
+       /* <summary></summary>
+        * <param name="ID"></param>
+        * <returns></returns>
+        * <author></author>
+        */
 		public void SaveLikeComment()
 		{
 			
 		}
-		
+
+       /* <summary></summary>
+        * <param name="ID"></param>
+        * <returns></returns>
+        * <author></author>
+        */
 		public void BurstComment()
 		{
 			

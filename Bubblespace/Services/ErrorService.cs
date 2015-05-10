@@ -8,6 +8,11 @@ namespace Bubblespace.Services
 {
 	public class ErrorService
 	{
+       /* <summary></summary>
+        * <param name="ID"></param>
+        * <returns></returns>
+        * <author></author>
+        */
 		public void LogErrorToDB()
 		{
 			
