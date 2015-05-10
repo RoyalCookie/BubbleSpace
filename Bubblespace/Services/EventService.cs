@@ -24,9 +24,11 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
-		public void CreateEvent()
+		public void CreateEvent(events ev)
 		{
-			
+            var db = new VERK2015_H17Entities1();
+            db.events.Add(ev);
+            db.SaveChanges();
 		}
 
        /* <summary></summary>
@@ -34,9 +36,18 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
-		public void JoinEvent()
+		public void JoinEvent(AspNetUsers user, events ev)
 		{
-			
+            var db = new VERK2015_H17Entities1();
+            var theEvent = (from x in db.events.Where(x => x.C_ID == ev.C_ID)
+                           select x).SingleOrDefault();
+
+            event_users tempusr = new event_users();
+            tempusr.event_admin = false;
+            tempusr.FK_event_users_events = ev.C_ID;
+            tempusr.FK_event_users_users = user.UserName;
+
+            theEvent.event_users.Add(tempusr);
 		}
 
        /* <summary></summary>
@@ -46,7 +57,7 @@ namespace Bubblespace.Services
         */
 		public void EditEvent()
 		{
-			
+		    	
 		}
 				
 	}
