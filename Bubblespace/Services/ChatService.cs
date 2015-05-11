@@ -8,6 +8,26 @@ namespace Bubblespace.Services
 {
 	public class ChatService
 	{
+        static public void CreateMessage(messages message)
+        {
+            var db = new VERK2015_H17Entities1();
+            db.messages.Add(message);
+            db.SaveChanges();
+        }
+        static public void CreateChat(chats chat)
+        {
+            var db = new VERK2015_H17Entities1();
+            db.chats.Add(chat);
+            db.SaveChanges();
+        }
+        static public void RenameChat(chats chat)
+        {
+            var db = new VERK2015_H17Entities1();
+            var getChat = (from x in db.chats.Where(y => y.C_ID == chat.C_ID)
+                           select x).SingleOrDefault();
+            getChat.chat_name = chat.chat_name;
+            db.SaveChanges(); 
+        }
        /* <summary></summary>
         * <param name="ID"></param>
         * <returns></returns>
@@ -33,7 +53,6 @@ namespace Bubblespace.Services
                              select x).ToList();
 			return chatUsers;
 		}
-
        /* <summary></summary>
         * <param name="ID"></param>
         * <returns></returns>
@@ -46,5 +65,19 @@ namespace Bubblespace.Services
                             select x).ToList();
 			return messages;
 		}
+        /* <summary>Gets all the chats for a specified user</summary>
+         * <param name="user">Takes in obj of user</param>
+         * <returns>list of chats for the user</returns>
+         * <author>Valgeir</author>
+         */
+        static public List<chats> GetAllChats(AspNetUsers user)
+        {
+            //TODO: Change from string to object of user
+
+            var db = new VERK2015_H17Entities1();
+
+
+            return null;
+        }
 	}	
 }
