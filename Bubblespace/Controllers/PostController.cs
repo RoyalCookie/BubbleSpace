@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Text.RegularExpressions;
+using Bubblespace.Services;
 
 namespace Bubblespace.Controllers
 {
@@ -24,6 +25,8 @@ namespace Bubblespace.Controllers
         [HttpPost]
         public ActionResult Create(FormCollection collection, HttpPostedFileBase contentImage)
         {
+            // TODO: File Handling 
+
             // Check For Authentication
             if (!User.Identity.IsAuthenticated)
             {
@@ -31,9 +34,9 @@ namespace Bubblespace.Controllers
             }
 
             // Get The Current User So We Can Reference Him As A Post Owner
-            AspNetUsers userModel = Bubblespace.Services.UserService.GetUserByEmail(User.Identity.Name);
+            AspNetUsers userModel = UserService.GetUserByEmail(User.Identity.Name);
 
-            
+
             // Create the post we insert, And fill in relative information below
             posts postToInsert = new posts();
 
@@ -45,9 +48,9 @@ namespace Bubblespace.Controllers
             postToInsert.FK_posts_bubble_groups = null;
 
             // Inside this if statement we handle the image if one is uploaded
-            if(contentImage != null)
+            if (contentImage != null)
             {
-                
+
                 System.Diagnostics.Debug.WriteLine("We have a file");
 
                 // Retreiving the file name
@@ -74,7 +77,7 @@ namespace Bubblespace.Controllers
 
                 // Debug Print
                 System.Diagnostics.Debug.WriteLine("The Path: " + path);
-                
+
                 // File is uploaded
                 contentImage.SaveAs(path);
 
@@ -85,11 +88,11 @@ namespace Bubblespace.Controllers
 
             try
             {
-                Bubblespace.Services.PostService.SavePostToDB(postToInsert);
+                PostService.SavePostToDB(postToInsert);
             }
             catch (Exception)
             {
-                return Json("{\"Error\": \"Couldn't Insert Into Database\",\"Code\": 2}");
+                return Json("{\"Error\":\"We've Encountered An Error\"}");
             }
 
             return Json(postToInsert);
@@ -115,7 +118,7 @@ namespace Bubblespace.Controllers
                 return Json("{\"Error\": \"Bad Authentication\",\"Code\": 1}");
             }
 
-            AspNetUsers user = Bubblespace.Services.UserService.GetUserByEmail(User.Identity.Name);
+            AspNetUsers user = UserService.GetUserByEmail(User.Identity.Name);
 
             post_likes likeToInsert = new post_likes();
 
@@ -125,7 +128,7 @@ namespace Bubblespace.Controllers
             likeToInsert.post_like = false;
             try
             {
-                Bubblespace.Services.PostService.SaveLikePost(likeToInsert);
+                PostService.SaveLikePost(likeToInsert);
             }
             catch (Exception)
             {
@@ -135,9 +138,32 @@ namespace Bubblespace.Controllers
             return Json(likeToInsert);
         }
 
-        public ActionResult CommentPost()
+        public ActionResult CommentPost(FormCollection collection)
         {
-            return View();
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Json("{\"Error\": \"Bad Authentication\",\"Code\": 1}");
+            }
+
+            AspNetUsers user = UserService.GetUserByEmail(User.Identity.Name);
+
+            post_comments postComment = new post_comments();
+
+            postComment.comment = collection["comment"];
+            postComment.comment_time = DateTime.Now;
+            postComment.FK_post_comments_users = user.Id;
+            postComment.FK_post_comments_posts = Convert.ToInt32(collection["postId"]);
+
+            try
+            {
+                PostService.SaveCommentOnPost(postComment);
+            }
+            catch (Exception)
+            {
+                return Json("{\"Error\": \"Couldn't Insert Into Database\",\"Code\": 2}");
+            }
+
+            return Json(postComment);
         }
 
         public ActionResult LikeComment(FormCollection collection)
@@ -147,7 +173,7 @@ namespace Bubblespace.Controllers
                 return Json("{\"Error\": \"Bad Authentication\",\"Code\": 1}");
             }
 
-            AspNetUsers user = Bubblespace.Services.UserService.GetUserByEmail(User.Identity.Name);
+            AspNetUsers user = UserService.GetUserByEmail(User.Identity.Name);
 
             like_comments likeToInsert = new like_comments();
 
@@ -157,7 +183,7 @@ namespace Bubblespace.Controllers
             likeToInsert.comment_burst = null;
             try
             {
-                Bubblespace.Services.PostService.SaveLikeComment(likeToInsert);
+                PostService.SaveLikeComment(likeToInsert);
             }
             catch (Exception)
             {
@@ -174,7 +200,7 @@ namespace Bubblespace.Controllers
                 return Json("{\"Error\": \"Bad Authentication\",\"Code\": 1}");
             }
 
-            AspNetUsers user = Bubblespace.Services.UserService.GetUserByEmail(User.Identity.Name);
+            AspNetUsers user = UserService.GetUserByEmail(User.Identity.Name);
 
             like_comments likeToInsert = new like_comments();
 
@@ -184,7 +210,7 @@ namespace Bubblespace.Controllers
             likeToInsert.comment_burst = Convert.ToBoolean(1);
             try
             {
-                Bubblespace.Services.PostService.SaveLikeComment(likeToInsert);
+                PostService.SaveLikeComment(likeToInsert);
             }
             catch (Exception)
             {
@@ -213,5 +239,10 @@ namespace Bubblespace.Controllers
         {
             return View();
         }
-	}
+
+        public ActionResult GetAllPosts()
+        {
+            return Json(PostService.GetAllPosts());
+        }
+    }
 }
