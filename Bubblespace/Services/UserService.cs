@@ -91,11 +91,17 @@ namespace Bubblespace.Services
             var db = new VERK2015_H17Entities1();
             var userBan = (from x in db.AspNetUsers.Where(y => y.Id == user.Id)
                            select x).SingleOrDefault();
-            userBan.user_status = true;
-            
-            db.SaveChanges();
+            if (userBan.user_status == false)
+            {
+                userBan.user_status = true;
+                db.SaveChanges();
+            }
+            else
+            {
+                userBan.user_status = false;
+                db.SaveChanges();
+            } 
         }
-        
 
         /* <summary>Upgrade a user to admin of BubbleSpace</summary>
          * <param name="email">Takes in the email of user</param>
@@ -104,7 +110,6 @@ namespace Bubblespace.Services
          */
         static public void UpgradeUserToAdmin(AspNetUsers user)
         {
-
             var db = new VERK2015_H17Entities1();
 
             var userToAdmin = (from x in db.AspNetUsers.Where(y => y.Id == user.Id) 
