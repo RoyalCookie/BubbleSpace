@@ -116,5 +116,15 @@ namespace Bubblespace.Services
                          select x).ToList();
 			return groups;
 		}
+        
+        /* <summary>Gets all the groups a specified user is in</summary>
+         * <param name="email">Takes in the email/username of the user</param>
+         * <returns>list of groups for the user</returns>
+         * <author></author>
+         */
+        static public List<bubble_groups> GetAllUserGroups(string email)
+        {
+            return null;
+        }
 	}	
 }
