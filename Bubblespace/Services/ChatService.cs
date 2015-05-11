@@ -13,9 +13,12 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
-		public List<messages>GetMessages()
+		public List<messages>GetMessages(chats chat)
 		{
-			return null;
+            var db = new VERK2015_H17Entities1();
+            var messages = (from x in db.messages.Where(y => y.FK_messages_chat_id == chat.C_ID)
+                            select x).ToList();
+            return messages;
 		}
 
        /* <summary></summary>
@@ -23,9 +26,12 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
-		public List<chat_members>GetChatUsers()
+		public List<chat_members>GetChatUsers(chats chat)
 		{
-			return null;
+            var db = new VERK2015_H17Entities1();
+            var chatUsers = (from x in db.chat_members.Where(y => y.FK_chat_members_chat == chat.C_ID)
+                             select x).ToList();
+			return chatUsers;
 		}
 
        /* <summary></summary>
@@ -33,9 +39,12 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
-		public List<chats>GetChatSince()
+		public List<messages>GetMessagesSince(chats chat, DateTime date)
 		{
-			return null;
+            var db = new VERK2015_H17Entities1();
+            var messages = (from x in db.messages.Where(y => y.FK_messages_chat_id == chat.C_ID).Where(y => y.time_stamp >= date)
+                            select x).ToList();
+			return messages;
 		}
 	}	
 }
