@@ -7,7 +7,7 @@ using System.Web.Mvc;
 namespace Bubblespace.Services
 {
     //<summary>
-    // Takes care of the logic for the usercontroller
+    // Takes care of the logic for the UserController
     //</summary>
     static public class UserService
     {
@@ -23,9 +23,8 @@ namespace Bubblespace.Services
             var allUsers = db.AspNetUsers.ToList();
             return allUsers;
         }
-        /* <summary>
-         * Gets a user by his email
-         * </summary>
+        
+        /* <summary>Gets a user by his email</summary>
          * <param name="email">The email string to search after</param>
          * <returns>Returns a single user that matches the email</returns>
          * <author>Janus</author>
@@ -44,6 +43,7 @@ namespace Bubblespace.Services
          */
         static public void AddFriend(AspNetUsers userAdder, AspNetUsers userFriended)
         {
+            //TODO: Add trigger function for if the friend was a friend before and then removed
               var db = new VERK2015_H17Entities1();
               
              friends_added addFriend = new friends_added();
@@ -52,8 +52,7 @@ namespace Bubblespace.Services
              addFriend.friended = true;
              
              db.friends_added.Add(addFriend);
-             db.SaveChanges();
-             
+             db.SaveChanges();     
         }
 
         /* <summary>user removes a friend</summary>
@@ -65,8 +64,21 @@ namespace Bubblespace.Services
         static public void RemoveFriend(AspNetUsers userAdder, AspNetUsers userFriend)
         {
             var db = new VERK2015_H17Entities1();
-            //TODO
+            var friendRemoved = (from x in db.friends_added.Where(y => y.FK_friends_added_users_Added == userAdder.Id).Where(z => z.FK_friends_added_users_Addee == userFriend.Id) 
+                                 select x ).SingleOrDefault();
+            var friendAddeRemoved = (from x in db.friends_added.Where (y => y.FK_friends_added_users_Added == userFriend.Id).Where(z => z.FK_friends_added_users_Addee == userAdder.Id)
+                                     select x).SingleOrDefault();
             
+            if (friendRemoved.C_ID != 0 && friendRemoved.FK_friends_added_users_Added != null)
+            {
+                friendRemoved.friended = false;
+                db.SaveChanges();
+            }
+            else
+            {
+                friendAddeRemoved.friended = false;
+                db.SaveChanges();
+            }
         }
 
         /* <summary>Admin bans a user from BubbleSpace</summary>
@@ -90,17 +102,14 @@ namespace Bubblespace.Services
          * <returns>no return</returns>
          * <author>Valgeir</author>
          */
-        static public void UpgradeUserToAdmin(string email)
+        static public void UpgradeUserToAdmin(AspNetUsers user)
         {
-            //TODO: change function to accept obj of user
-            
-            var db = new VERK2015_H17Entities1();
-            var allUsers = db.AspNetUsers.ToList();
 
-            var userToAdmin = (from user in allUsers where user.Email == email select user).SingleOrDefault();
+            var db = new VERK2015_H17Entities1();
+
+            var userToAdmin = (from x in db.AspNetUsers.Where(y => y.Id == user.Id) 
+                               select x).SingleOrDefault();
             userToAdmin.FK_users_userrank = 2;
-            
-            
             
             db.SaveChanges();
         }
@@ -110,20 +119,14 @@ namespace Bubblespace.Services
          * <returns>list of events for the user</returns>
          * <author>Valgeir</author>
          */
-        static public List<events> GetAllUsersEvents(string email)
+        static public List<events> GetAllUsersEvents(AspNetUsers user)
         {
             //TODO: Change from string to object of user
             
             var db = new VERK2015_H17Entities1();
-            var userEventsList = db.event_users.ToList();
-            var eventLists = db.events.ToList();
-            var usersLists = db.AspNetUsers.ToList();
 
-            var userEvents = (from eventUser in userEventsList
-                              join eve in eventLists on eventUser.FK_event_users_events equals eve.C_ID
-                              join user in usersLists on eventUser.FK_event_users_users equals user.Id
-                              where user.Email == email
-                              select eve).ToList();
+            var userEvents = (from events in db.events.Where( )
+                              select x).ToList();
 
             return userEvents;
         }
@@ -150,51 +153,39 @@ namespace Bubblespace.Services
         }
 
         /* <summary>Gets all the chats for a specified user</summary>
-         * <param name="email">Takes in the email/username of the user</param>
+         * * <param name="user">Takes in obj of user</param>
          * <returns>list of chats for the user</returns>
          * <author>Valgeir</author>
          */
-        static public List<chats> GetAllChats(string email)
+        static public List<chats> GetAllChats(AspNetUsers user)
         {
             //TODO: Change from string to object of user
             
             var db = new VERK2015_H17Entities1();
-            var userList = db.AspNetUsers.ToList();
-            var userChatsList = db.chats.ToList();
-            var userMessagesList = db.messages.ToList();
-            var chatMembersList = db.chat_members.ToList();
 
-            /*var userChats = (from userChat in userChatsList
-                             join chatMember in chatMembersList on userChat.C_ID equals chatMember.FK_chat_members_chat
-                             join userMessage in userMessagesList on userChat.C_ID equals userMessage.FK_messages_chat_id
-                             where chatMember.FK_chat_members_user == ID || userMessage.FK_messages_user == ID
-                             select userChat).ToList();*/
-
-            var userChats = (from userChat in userChatsList
-                             join chatMember in chatMembersList on userChat.C_ID equals chatMember.FK_chat_members_chat
-                             join user in userList on chatMember.FK_chat_members_user equals user.Id
-                             join userMessage in userMessagesList on userChat.C_ID equals userMessage.FK_messages_chat_id
-                             where user.UserName == email
-                             select userChat).ToList();
             
-            return userChats;
+            return null;
         }
 
         /* <summary>Gets all the friends of a specified user</summary>
-         * <param name="email">Takes in the email/username of user</param>
+         * <param name="user">Takes in obj of user</param>
          * <returns>list of friends of the user</returns>
          * <author>Valgeir</author>
          */
         static public List<friends_added> GetAllFriends(AspNetUsers user)
-        {
-            //TODO: Change from string to object of user
-            
+        {   
             var db = new VERK2015_H17Entities1();
             
-            var friends = (from friend in db.friends_added
-                           where friend.FK_friends_added_users_Added == user.Id || friend.FK_friends_added_users_Addee == user.Id
-                           select friend).ToList();  
-            return friends;
+            //Gets a list of friends that user added
+            var friendsAdded = (from friend in db.friends_added.Where(y => y.FK_friends_added_users_Added == user.Id)
+                                select friend).ToList(); 
+            //Gets a list of friends that added the user
+            var friendsAddee = (from friend in db.friends_added.Where(y => y.FK_friends_added_users_Addee == user.Id)
+                                select friend).ToList();
+            //Combines the two lists together                   
+            friendsAdded.AddRange(friendsAddee); 
+            
+            return friendsAdded;
         }
     }
 }
