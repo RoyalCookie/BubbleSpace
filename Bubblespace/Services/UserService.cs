@@ -114,19 +114,17 @@ namespace Bubblespace.Services
             db.SaveChanges();
         }
 
-        /* <summary>Gets all events for a specified user</summary>
+        /* <summary>Gets all events a specified user created</summary>
          * <param name="email">Takes in the email/username of user</param>
-         * <returns>list of events for the user</returns>
+         * <returns>list of events created by user</returns>
          * <author>Valgeir</author>
          */
-        static public List<events> GetAllUsersEvents(AspNetUsers user)
+        static public List<events> GetAllEventsCreatedByUser(AspNetUsers user)
         {
-            //TODO: Change from string to object of user
-            
             var db = new VERK2015_H17Entities1();
 
-            var userEvents = (from events in db.events.Where( )
-                              select x).ToList();
+            var userEvents = (from events in db.events.Where(x => x.FK_events_owner == user.Id)
+                              select events).ToList();
 
             return userEvents;
         }
@@ -150,21 +148,6 @@ namespace Bubblespace.Services
                               select userGroup).ToList();
             
             return userGroups;
-        }
-
-        /* <summary>Gets all the chats for a specified user</summary>
-         * * <param name="user">Takes in obj of user</param>
-         * <returns>list of chats for the user</returns>
-         * <author>Valgeir</author>
-         */
-        static public List<chats> GetAllChats(AspNetUsers user)
-        {
-            //TODO: Change from string to object of user
-            
-            var db = new VERK2015_H17Entities1();
-
-            
-            return null;
         }
 
         /* <summary>Gets all the friends of a specified user</summary>
