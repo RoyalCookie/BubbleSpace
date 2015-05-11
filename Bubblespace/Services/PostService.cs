@@ -22,15 +22,17 @@ namespace Bubblespace.Services
             db.SaveChanges();
         }
 
-        /* <summary></summary>
-        * <param name="ID"></param>
-        * <returns></returns>
-        * <author></author>
+        /* <summary>
+         * Creates a like or a burst into the database depending on the values in the parameter
+         * </summary>
+        * <param name="postLike">post_likes object, either with the burst or like value set as 1</param>
+        * <returns>Nothing</returns>
+        * <author>Janus</author>
         */
-        public void SaveLikePost(post_likes postLikes)
+        static public void SaveLikePost(post_likes postLike)
         {
             var db = new VERK2015_H17Entities1();
-            db.post_likes.Add(postLikes);
+            db.post_likes.Add(postLike);
             db.SaveChanges();
         }
 
@@ -39,39 +41,24 @@ namespace Bubblespace.Services
          * <returns></returns>
          * <author></author>
          */
-        public void SaveBurstPost()
+        static public void SaveCommentOnPost()
         {
 
         }
 
-        /* <summary></summary>
-         * <param name="ID"></param>
-         * <returns></returns>
-         * <author></author>
-         */
-        public void SaveCommentOnPost()
+        /* <summary>
+         * Creates a like or a burst into the database depending on the values in the parameter
+         * </summary>
+        * <param name="postLike">likes_comments object, either with the burst or like value set as 1</param>
+        * <returns>Nothing</returns>
+        * <author>Janus</author>
+        */
+        static public void SaveLikeComment(like_comments commentLike)
         {
 
-        }
-
-        /* <summary></summary>
-         * <param name="ID"></param>
-         * <returns></returns>
-         * <author></author>
-         */
-        public void SaveLikeComment()
-        {
-
-        }
-
-        /* <summary></summary>
-         * <param name="ID"></param>
-         * <returns></returns>
-         * <author></author>
-         */
-        public void BurstComment()
-        {
-
+            var db = new VERK2015_H17Entities1();
+            db.like_comments.Add(commentLike);
+            db.SaveChanges();
         }
     }
 }

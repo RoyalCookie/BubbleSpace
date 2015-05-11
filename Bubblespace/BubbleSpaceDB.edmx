@@ -103,10 +103,10 @@
           <Key>
             <PropertyRef Name="_ID" />
           </Key>
-          <Property Name="_ID" Type="int" Nullable="false" />
+          <Property Name="_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FK_like_comments_post_comments" Type="int" />
           <Property Name="comment_like" Type="bit" />
-          <Property Name="comment_burst" Type="tinyint" />
+          <Property Name="comment_burst" Type="bit" />
           <Property Name="FK_like_comments_users" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="messages">
@@ -745,7 +745,7 @@
           <Property Name="C_ID" Type="Int32" Nullable="false" />
           <Property Name="FK_like_comments_post_comments" Type="Int32" />
           <Property Name="comment_like" Type="Boolean" />
-          <Property Name="comment_burst" Type="Byte" />
+          <Property Name="comment_burst" Type="Boolean" />
           <Property Name="FK_like_comments_users" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUsers" Relationship="VERK2015_H17Model.FK_like_comments_users" FromRole="like_comments" ToRole="AspNetUsers" />
           <NavigationProperty Name="post_comments" Relationship="VERK2015_H17Model.FK_like_comments_post_comments" FromRole="like_comments" ToRole="post_comments" />

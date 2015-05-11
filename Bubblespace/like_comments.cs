@@ -17,7 +17,7 @@ namespace Bubblespace
         public int C_ID { get; set; }
         public Nullable<int> FK_like_comments_post_comments { get; set; }
         public Nullable<bool> comment_like { get; set; }
-        public Nullable<byte> comment_burst { get; set; }
+        public Nullable<bool> comment_burst { get; set; }
         public string FK_like_comments_users { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
