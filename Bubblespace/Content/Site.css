@@ -461,6 +461,14 @@
         list-style: none;
         margin-top: 15px;
     }
+
+    .post-text{
+        margin-left: 50px;
+    }
+
+    .post-content-like, post-content-burst, post-content-comment{
+        border-radius: 40%;
+    }
 }
 
 
