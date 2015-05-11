@@ -106,6 +106,7 @@ namespace Bubblespace.Controllers
         * <returns>A Json error object on failure Or a json object of the post on success</returns>
         * <author></author>
         */
+        [HttpPost]
         public ActionResult LikePost(FormCollection collection)
         {
 
@@ -141,6 +142,7 @@ namespace Bubblespace.Controllers
         * <returns>A Json error object on failure Or a json object of the post on success</returns>
         * <author></author>
         */
+        [HttpPost]
         public ActionResult BurstPost(FormCollection collection)
         {
             if (!User.Identity.IsAuthenticated)
@@ -177,6 +179,7 @@ namespace Bubblespace.Controllers
         * <returns>A Json error object on failure Or a json object of the post on success</returns>
         * <author></author>
         */
+        [HttpPost]
         public ActionResult CommentPost(FormCollection collection)
         {
             if (!User.Identity.IsAuthenticated)
@@ -212,6 +215,7 @@ namespace Bubblespace.Controllers
         * <returns>A Json error object on failure Or a json object of the post on success</returns>
         * <author></author>
         */
+        [HttpPost]
         public ActionResult LikeComment(FormCollection collection)
         {
             if (!User.Identity.IsAuthenticated)
@@ -246,6 +250,7 @@ namespace Bubblespace.Controllers
         * <returns>A Json error object on failure Or a json object of the post on success</returns>
         * <author></author>
         */
+        [HttpPost]
         public ActionResult BurstComment(FormCollection collection)
         {
             if (!User.Identity.IsAuthenticated)
@@ -272,7 +277,7 @@ namespace Bubblespace.Controllers
 
             return Json(likeToInsert);
         }
-
+        [HttpPost]
         public ActionResult BurstCount()
         {
             var allPosts = PostService.GetAllPosts();
@@ -282,23 +287,37 @@ namespace Bubblespace.Controllers
             };
             return Json(returnObject);
         }
-
-        public ActionResult Sort(FormCollection collection)
-        {
-            string orderByField = collection["orderBy"];
-            return Json(PostService.GetAllPosts(orderByField));
-        }
-
+        [HttpPost]
         public ActionResult Delete()
         {
             return View();
         }
-
+        [HttpPost]
         public ActionResult CommentBurstCount() 
         {
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Sort(FormCollection collection)
+        {
+            string orderByField = collection["orderBy"];
+
+            List<posts> sortedPosts = PostService.GetAllPosts(orderByField);
+            var returnObject = new
+            {
+                posterNames = ( from post in sortedPosts
+                                select post.AspNetUsers.NickName).ToList(),
+                postBody = (    from post in sortedPosts
+                                select post.content_text).ToList(),
+                profileImage = (from post in sortedPosts
+                                select post.AspNetUsers.profile_image).ToList()
+            };
+
+            return Json(returnObject);
+        }
+
+        [HttpPost]
         public ActionResult GetAllPosts()
         {
             var allPosts = PostService.GetAllPosts();
@@ -315,5 +334,6 @@ namespace Bubblespace.Controllers
             returnJson.Add(profileImage);
             return Json(returnJson);
         }
+
     }
 }
