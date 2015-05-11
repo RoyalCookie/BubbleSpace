@@ -462,13 +462,19 @@
         margin-top: 15px;
     }
 
+    .post-user-name{
+        display: inline;
+        color: rgb(26,18,2);
+        font-weight: bold;
+    }
+    .fa{
+        margin-left: 10px;
+    }
+
     .post-text{
         margin-left: 50px;
     }
 
-    .post-content-like, post-content-burst, post-content-comment{
-        border-radius: 40%;
-    }
 }
 
 
