@@ -45,8 +45,6 @@ namespace Bubblespace.Controllers
         [HttpPost]
         public ActionResult Events()
         { 
-            // For now this returns all users, not just friends.
-            // We need to change this to accept an id and return only friends. - Andri
             EventService es = new EventService();
 
             var allEvents = es.GetAllEvents();

@@ -61,9 +61,11 @@ namespace Bubblespace.Controllers
         {
             // For now this returns all users, not just friends.
             // We need to change this to accept an id and return only friends. - Andri
-            var allUsers = Bubblespace.Services.UserService.GetAllUsers();
-            var usernames = ( from user in allUsers select user.NickName).ToList();
-            var images = (from user in allUsers select user.profile_image).ToList();
+            var allUsers = UserService.GetAllUsers();
+            var usernames = ( from user in allUsers 
+                              select user.NickName).ToList();
+            var images = (from user in allUsers 
+                          select user.profile_image).ToList();
 
             List<List<string>> returnJson = new List<List<string>>();
             returnJson.Add(usernames);

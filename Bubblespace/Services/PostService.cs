@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.SqlServer.Server;
+using System.Text.RegularExpressions;
 
 namespace Bubblespace.Services
 {
@@ -57,7 +59,6 @@ namespace Bubblespace.Services
         */
         static public void SaveLikeComment(like_comments commentLike)
         {
-
             var db = new VERK2015_H17Entities1();
             db.like_comments.Add(commentLike);
             db.SaveChanges();
@@ -68,5 +69,7 @@ namespace Bubblespace.Services
             var db = new VERK2015_H17Entities1();
             return db.posts.ToList();
         }
+
+        
     }
 }
