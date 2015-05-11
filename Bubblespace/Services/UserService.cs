@@ -37,16 +37,33 @@ namespace Bubblespace.Services
             AspNetUsers user = (db.AspNetUsers.ToList().Where(x => x.Email == email)).Single();
             return user;
         }
-
+    
+        /* <summary>gets the user ID</summary>
+         * <param name="email">email/username of the user</param>
+         * <returns>string ID</returns>
+         * <author>Valgeir</author>
+         */
+        static private string GetUserIdByEmail(string email)
+        {
+            var db = new VERK2015_H17Entities1();
+            var usersList = db.AspNetUsers.ToList();
+            
+            string userID = (from user in usersList
+                             where user.Email == email
+                             select user.Id).SingleOrDefault();
+            return userID;
+        }
+        
         /* <summary>user adds a friend</summary>
-         * <param name="userID">ID of user that adds a friend</param>
-         * <param name="friendID> ID of the user that was friended</param>
+         * <param name="friends">object of the model friends_added</param>
          * <returns>no return</returns>
          * <author>Valgeir</author>
          */
-        static public void AddFriend(string userID, string friendID)
+        static public void AddFriend(friends_added friends)
         {
-            var db = new VERK2015_H17Entities1();
+              var db = new VERK2015_H17Entities1();
+              db.friends_added.Add(friends);
+              db.SaveChanges();
         }
 
         /* <summary>user removes a friend</summary>
@@ -55,9 +72,11 @@ namespace Bubblespace.Services
          * <returns>no return</returns>
          * <author>Valgeir</author>
          */
-        static public void RemoveFriend(string userID, string friendID)
+        static public void RemoveFriend()
         {
             var db = new VERK2015_H17Entities1();
+            
+            
 
         }
 
@@ -72,9 +91,10 @@ namespace Bubblespace.Services
             var allUsers = db.AspNetUsers.ToList();
             var userBan = (from user in allUsers where user.Email == email select user).SingleOrDefault();
             userBan.user_status = true;
-
+            
             db.SaveChanges();
         }
+        
 
         /* <summary>Upgrade a user to admin of BubbleSpace</summary>
          * <param name="email">Takes in the email of user</param>
@@ -88,7 +108,9 @@ namespace Bubblespace.Services
 
             var userToAdmin = (from user in allUsers where user.Email == email select user).SingleOrDefault();
             userToAdmin.FK_users_userrank = 2;
-
+            
+            
+            
             db.SaveChanges();
         }
 
