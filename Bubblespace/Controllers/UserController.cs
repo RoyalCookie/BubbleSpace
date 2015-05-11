@@ -57,7 +57,7 @@ namespace Bubblespace.Controllers
         }
 
         [HttpPost]
-        public ActionResult Friends()
+        public ActionResult GetFriends()
         {
             /*
              * ToDo: Change JsonList Into A Var Object
@@ -65,7 +65,8 @@ namespace Bubblespace.Controllers
             
             // For now this returns all users, not just friends.
             // We need to change this to accept an id and return only friends. - Andri
-            var allUsers = UserService.GetAllUsers();
+            AspNetUsers currentUser = UserService.GetUserByEmail(User.Identity.Name);
+            var allUsers = UserService.GetAllFriends(currentUser);
             var usernames = ( from user in allUsers 
                               select user.NickName).ToList();
             var images = (from user in allUsers 
@@ -78,6 +79,15 @@ namespace Bubblespace.Controllers
             returnJson.Add(images);
             returnJson.Add(userId);
             return Json(returnJson);
+        }
+
+        // Should remain here for testing misc code
+        [HttpPost]
+        public ActionResult Test()
+        {
+            AspNetUsers user = UserService.GetUserByEmail(User.Identity.Name);
+            UserService.GetAllFriends(user);
+            return Json("A S D");
         }
 
         [HttpPost]

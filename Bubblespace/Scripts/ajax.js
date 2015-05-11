@@ -5,7 +5,7 @@
 function friendsTab() {
     var friendslist = $("#list-view-items");
     friendslist.empty();
-    $.post("/User/Friends", function (data) {
+    $.post("/User/GetFriends", function (data) {
         console.log(data);
         for (var i = 0; i < data[0].length; i++) {
             
@@ -16,6 +16,7 @@ function friendsTab() {
             );
         }
     })
+    newsFeed();
 }
 
 function friendMain(id) {
@@ -101,6 +102,29 @@ function newPost(type) {
     $(":file").filestyle('size', 'xs');
 
 }
+
+function chatTab() {
+    var friendslist = $("#list-view-items");
+    friendslist.empty();
+    $.post("/User/GetFriends", function (data) {
+        console.log(data);
+        for (var i = 0; i < data[0].length; i++) {
+
+            friendslist.append(
+                  "<li class='list-item'>"
+                + "<img src='/Content/Assets/" + data[1][i] + ".png'/>"
+                + "<a onclick='friendMain(\"" + data[2][i] + "\"); return false;' id='user-name' data-val='" + data[2][i] + "'>" + data[0][i] + "</a></li>"
+            );
+        }
+    })
+}
+
+
+function chatView(id) {
+    
+}
+
+
 
 $(document).ready(function () {
     friendsTab();
