@@ -71,7 +71,6 @@ namespace Bubblespace.Services
             theEvent.FK_events_owner = ev.FK_events_owner;
 
             db.SaveChanges();
-
 		}
 				
 	}
