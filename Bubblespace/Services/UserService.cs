@@ -62,50 +62,52 @@ namespace Bubblespace.Services
         }
 
         /* <summary>Admin bans a user from BubbleSpace</summary>
-         * <param name="ID"></param>
-         * <returns></returns>
-         * <author></author>
+         * <param name="email">takes in the email of user</param>
+         * <returns>no return</returns>
+         * <author>Valgeir</author>
          */
-        static public void BanUser(string ID)
+        static public void BanUser(string email)
         {
             var db = new VERK2015_H17Entities1();
             var allUsers = db.AspNetUsers.ToList();
-            var userBan = (from user in allUsers where user.Id == ID select user).SingleOrDefault();
+            var userBan = (from user in allUsers where user.Email == email select user).SingleOrDefault();
             userBan.user_status = true;
 
             db.SaveChanges();
         }
 
         /* <summary>Upgrade a user to admin of BubbleSpace</summary>
-         * <param name="ID">Takes in ID of the user</param>
+         * <param name="email">Takes in the email of user</param>
          * <returns>no return</returns>
          * <author>Valgeir</author>
          */
-        static public void UpgradeUserToAdmin(string ID)
+        static public void UpgradeUserToAdmin(string email)
         {
             var db = new VERK2015_H17Entities1();
             var allUsers = db.AspNetUsers.ToList();
 
-            var userToAdmin = (from user in allUsers where user.Id == ID select user).SingleOrDefault();
+            var userToAdmin = (from user in allUsers where user.Email == email select user).SingleOrDefault();
             userToAdmin.FK_users_userrank = 2;
 
             db.SaveChanges();
         }
 
         /* <summary>Gets all events for a specified user</summary>
-         * <param name="ID">Takes in ID of the user</param>
+         * <param name="email">Takes in the email/username of user</param>
          * <returns>list of events for the user</returns>
          * <author>Valgeir</author>
          */
-        static public List<events> GetAllUsersEvents(string ID)
+        static public List<events> GetAllUsersEvents(string email)
         {
             var db = new VERK2015_H17Entities1();
             var userEventsList = db.event_users.ToList();
             var eventLists = db.events.ToList();
+            var usersLists = db.AspNetUsers.ToList();
 
             var userEvents = (from eventUser in userEventsList
                               join eve in eventLists on eventUser.FK_event_users_events equals eve.C_ID
-                              where eventUser.FK_event_users_users == ID
+                              join user in usersLists on eventUser.FK_event_users_users equals user.Id
+                              where user.Email == email
                               select eve).ToList();
 
             return userEvents;
@@ -162,14 +164,21 @@ namespace Bubblespace.Services
         }
 
         /* <summary>Gets all the friends of a specified user</summary>
-         * <param name="ID">Takes in the ID of the user</param>
+         * <param name="email">Takes in the email/username of user</param>
          * <returns>list of friends of the user</returns>
          * <author>Valgeir</author>
          */
-        static public List<friends_added> GetAllFriends(string ID)
+        static public List<friends_added> GetAllFriends(string email)
         {
             var db = new VERK2015_H17Entities1();
-            return null;
+            var friendsList = db.friends_added.ToList();
+            var usersList = db.AspNetUsers.ToList();
+            
+            var friends = (from friend in friendsList
+                          join user in usersList on friend.FK_friends_added_users_Added equals user.Id
+                          where user.Email == email
+                          select friend).ToList();
+            return friends;
         }
     }
 }
