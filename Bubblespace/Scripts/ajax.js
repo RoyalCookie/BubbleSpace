@@ -17,3 +17,13 @@ function eventsTab() {
         }
     })
 }
+
+$(function () {
+    var mainView = $("#main-view");
+    mainView.empty();
+    $.post("/Post/NAME!", function (posts) {
+        for (var i = 0; i < posts[0].length; i++) {
+            mainView.append("<li>This is a post</li>");
+        }
+    })
+});
