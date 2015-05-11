@@ -45,9 +45,7 @@ namespace Bubblespace.Controllers
         [HttpPost]
         public ActionResult Events()
         { 
-            EventService es = new EventService();
-
-            var allEvents = es.GetAllEvents();
+            var allEvents = EventService.GetAllEvents();
             var eventNames = (from eve in allEvents select eve.event_name).ToList();
             var eventImages = (from eve in allEvents select eve.event_profile_image).ToList();
 
