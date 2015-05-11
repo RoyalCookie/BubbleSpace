@@ -57,14 +57,38 @@ namespace Bubblespace.Services
         {
             //TODO: Add trigger function for if the friend was a friend before and then removed
               var db = new VERK2015_H17Entities1();
-              
-             friends_added addFriend = new friends_added();
-             addFriend.FK_friends_added_users_Added = userAdder.Id;
-             addFriend.FK_friends_added_users_Addee = userFriended.Id;
-             addFriend.friended = true;
              
-             db.friends_added.Add(addFriend);
-             db.SaveChanges();     
+             //Checks if you have added that user
+             var friendExist = (from x in db.friends_added.Where(y => y.FK_friends_added_users_Added == userAdder.Id).Where(z => z.FK_friends_added_users_Addee == userFriended.Id)
+                                select x).SingleOrDefault();
+             //Checks if the user added you
+             var friendExistOther = (from x in db.friends_added.Where(y => y.FK_friends_added_users_Added == userFriended.Id).Where(z => z.FK_friends_added_users_Addee == userAdder.Id)
+                                select x).SingleOrDefault();
+             //If there already exist a record of your friendship where you added him, change friended to true                  
+             if(friendExist.C_ID != 0 && friendExist.FK_friends_added_users_Added != null)
+             {
+                friendExist.friended = true;
+                db.SaveChanges();
+             }
+             //If there exists a record of your friendship where user added you, change friended to true
+             else if(friendExistOther.C_ID != 0 && friendExistOther.FK_friends_added_users_Added != null)
+             {
+                 friendExistOther.friended = true;
+                 db.SaveChanges();
+             }
+             //Else create a new record of friendship
+             else
+             {
+                friends_added addFriend = new friends_added();
+                addFriend.FK_friends_added_users_Added = userAdder.Id;
+                addFriend.FK_friends_added_users_Addee = userFriended.Id;
+                addFriend.friended = true;
+             
+                db.friends_added.Add(addFriend);
+                db.SaveChanges();     
+             }
+             
+             
         }
 
         /* <summary>user removes a friend</summary>
@@ -76,17 +100,21 @@ namespace Bubblespace.Services
         static public void RemoveFriend(AspNetUsers userAdder, AspNetUsers userFriend)
         {
             var db = new VERK2015_H17Entities1();
+            
+            //Selects friend that you added
             var friendRemoved = (from x in db.friends_added.Where(y => y.FK_friends_added_users_Added == userAdder.Id).Where(z => z.FK_friends_added_users_Addee == userFriend.Id) 
                                  select x ).SingleOrDefault();
+            //Selects friend that added you
             var friendAddeRemoved = (from x in db.friends_added.Where (y => y.FK_friends_added_users_Added == userFriend.Id).Where(z => z.FK_friends_added_users_Addee == userAdder.Id)
                                      select x).SingleOrDefault();
-            
+            //If the friend was added by you, then change friended = false
             if (friendRemoved.C_ID != 0 && friendRemoved.FK_friends_added_users_Added != null)
             {
                 friendRemoved.friended = false;
                 db.SaveChanges();
             }
-            else
+            //If the friend added you, then change friended to false
+            else if(friendAddeRemoved.C_ID != 0 && friendAddeRemoved.FK_friends_added_users_Added != null)
             {
                 friendAddeRemoved.friended = false;
                 db.SaveChanges();
