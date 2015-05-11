@@ -184,13 +184,13 @@ namespace Bubblespace.Services
             var db = new VERK2015_H17Entities1();
             
             //Gets a list of friends that user added
-            var friendsAdded = (from friend in db.friends_added.Where(y => y.FK_friends_added_users_Added == user.Id)
-                                select friend.AspNetUsers).ToList(); 
+            List<AspNetUsers>friendsAdded = (from friend in db.friends_added.Where(y => y.FK_friends_added_users_Added == user.Id)
+                                select friend.AspNetUsers1).ToList(); 
             //Gets a list of friends that added the user
-            var friendsAddee = (from friend in db.friends_added.Where(y => y.FK_friends_added_users_Addee == user.Id)
+            List<AspNetUsers> friendsAddee = (from friend in db.friends_added.Where(y => y.FK_friends_added_users_Addee == user.Id)
                                 select friend.AspNetUsers).ToList();
-            //Combines the two lists together                   
-            friendsAdded.AddRange(friendsAddee); 
+            //Combines the two lists together            
+            friendsAdded.AddRange(friendsAddee);
             return friendsAdded;
         }
 
