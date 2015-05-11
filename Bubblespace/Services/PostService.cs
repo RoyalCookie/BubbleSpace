@@ -101,6 +101,14 @@ namespace Bubblespace.Services
             return sortedPosts;
         }
 
+        static public List<posts> GetAllPosts(AspNetUsers user) 
+        {
+            List<posts> userPosts = (from post in GetAllPosts()
+                                   where post.FK_posts_users == user.Id
+                                   select post).ToList();
+            return userPosts;
+        }
+
         
     }
 }

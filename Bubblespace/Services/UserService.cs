@@ -149,5 +149,11 @@ namespace Bubblespace.Services
             
             return friendsAdded;
         }
+
+        static public List<posts> GetUsersPosts(AspNetUsers user)
+        {
+            return PostService.GetAllPosts(user);
+        }
+
     }
 }
