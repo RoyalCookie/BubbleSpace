@@ -72,5 +72,20 @@ namespace Bubblespace.Controllers
             returnJson.Add(images);
             return Json(returnJson);
         }
+
+        [HttpPost]
+        public ActionResult GetUserInformation(FormCollection collection) 
+        {
+            AspNetUsers user = UserService.GetUserByEmail(User.Identity.Name);
+            List<posts> userPosts = UserService.GetUsersPosts(user);
+
+            var userInformation = new
+            {
+                userName = user.NickName,
+                profileImage = user.profile_image,
+                posts = userPosts
+            };
+            return Json(userInformation);
+        }
 	}
 }
