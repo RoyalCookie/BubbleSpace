@@ -248,7 +248,7 @@ namespace Bubblespace.Controllers
         * </summary>
         * <param name="collection">List of paramters from the form request</param>
         * <returns>A Json error object on failure Or a json object of the post on success</returns>
-        * <author></author>
+        * <author>Janus</author>
         */
         [HttpPost]
         public ActionResult BurstComment(FormCollection collection)
@@ -277,21 +277,13 @@ namespace Bubblespace.Controllers
 
             return Json(likeToInsert);
         }
-        [HttpPost]
-        public ActionResult BurstCount()
-        {
-            var allPosts = PostService.GetAllPosts();
-            var returnObject = new
-            {
-                amount = allPosts.Count()
-            };
-            return Json(returnObject);
-        }
+
         [HttpPost]
         public ActionResult Delete()
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult CommentBurstCount() 
         {
