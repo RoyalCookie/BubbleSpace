@@ -13,7 +13,7 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
-		public void CreateGroup(bubble_groups group)
+        static public void CreateGroup(bubble_groups group)
 		{
             var db = new VERK2015_H17Entities1();
             db.bubble_groups.Add(group);
@@ -25,7 +25,7 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
- 		public void UserJoinGroup(bubble_groups gr, AspNetUsers user)
+        static public void UserJoinGroup(bubble_groups gr, AspNetUsers user)
 		{
             var db = new VERK2015_H17Entities1();
             group_users groupUser = new group_users();
@@ -41,7 +41,7 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
-		public List<posts> SortGroupPostBy(string sortingsorter, bubble_groups gr)
+        static public List<posts> SortGroupPostBy(string sortingsorter, bubble_groups gr)
 		{
             var db = new VERK2015_H17Entities1();
             var sorted = (from x in db.posts.Where(y => y.FK_posts_bubble_groups == gr.C_ID)
@@ -55,7 +55,7 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
-		public void InsertGroupDescription(bubble_groups gr)
+        static public void InsertGroupDescription(bubble_groups gr)
 		{
             var db = new VERK2015_H17Entities1();
             var getGroup = (from x in db.bubble_groups.Where(y => y.C_ID == gr.C_ID)
@@ -69,7 +69,7 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
-        public void InsertGroupProfileImage(bubble_groups gr)
+        static public void InsertGroupProfileImage(bubble_groups gr)
 		{
             var db = new VERK2015_H17Entities1();
             var getGroup = (from x in db.bubble_groups.Where(y => y.C_ID == gr.C_ID)
@@ -83,7 +83,7 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
-		public void SetAdminStatus(AspNetUsers user)
+        static public void SetAdminStatus(AspNetUsers user)
 		{
             var db = new VERK2015_H17Entities1();
             var getUsr = (from x in db.group_users.Where(y => y.FK_group_users_users == user.UserName)
@@ -97,7 +97,7 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
-		public void CreateGroupPost(posts newPost)
+        static public void CreateGroupPost(posts newPost)
 		{
             var db = new VERK2015_H17Entities1();
             db.posts.Add(newPost);
@@ -109,7 +109,7 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
-		public List<bubble_groups>GetAllGroups()
+        static public List<bubble_groups> GetAllGroups()
 		{
             var db = new VERK2015_H17Entities1();
             var groups = (from x in db.bubble_groups
