@@ -133,10 +133,10 @@
           <Key>
             <PropertyRef Name="_ID" />
           </Key>
-          <Property Name="_ID" Type="int" Nullable="false" />
+          <Property Name="_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FK_group_post_likes_group_posts" Type="int" />
-          <Property Name="group_insert_like" Type="tinyint" />
-          <Property Name="insert_burst" Type="tinyint" />
+          <Property Name="post_like" Type="bit" />
+          <Property Name="post_burst" Type="bit" />
           <Property Name="FK_group_post_like_users" Type="nvarchar" MaxLength="128" />
         </EntityType>
         <EntityType Name="posts">
@@ -781,11 +781,11 @@
           </Key>
           <Property Name="C_ID" Type="Int32" Nullable="false" />
           <Property Name="FK_group_post_likes_group_posts" Type="Int32" />
-          <Property Name="group_insert_like" Type="Byte" />
-          <Property Name="insert_burst" Type="Byte" />
           <Property Name="FK_group_post_like_users" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUsers" Relationship="VERK2015_H17Model.FK_group_post_like_users" FromRole="post_likes" ToRole="AspNetUsers" />
           <NavigationProperty Name="posts" Relationship="VERK2015_H17Model.FK_group_post_likes_group_posts" FromRole="post_likes" ToRole="posts" />
+          <Property Name="post_like" Type="Boolean" />
+          <Property Name="post_burst" Type="Boolean" />
         </EntityType>
         <EntityType Name="posts">
           <Key>
@@ -1208,9 +1208,9 @@
           <EntitySetMapping Name="post_likes">
             <EntityTypeMapping TypeName="VERK2015_H17Model.post_likes">
               <MappingFragment StoreEntitySet="post_likes">
+                <ScalarProperty Name="post_burst" ColumnName="post_burst" />
+                <ScalarProperty Name="post_like" ColumnName="post_like" />
                 <ScalarProperty Name="FK_group_post_like_users" ColumnName="FK_group_post_like_users" />
-                <ScalarProperty Name="insert_burst" ColumnName="insert_burst" />
-                <ScalarProperty Name="group_insert_like" ColumnName="group_insert_like" />
                 <ScalarProperty Name="FK_group_post_likes_group_posts" ColumnName="FK_group_post_likes_group_posts" />
                 <ScalarProperty Name="C_ID" ColumnName="_ID" />
               </MappingFragment>

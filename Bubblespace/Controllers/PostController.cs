@@ -105,11 +105,34 @@ namespace Bubblespace.Controllers
         */
         public ActionResult LikePost(FormCollection collection)
         {
+            return Json("Fuck this shit");
         }
 
-        public ActionResult BurstPost()
+        public ActionResult BurstPost(FormCollection collection)
         {
-            return View();
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Json("{\"Error\": \"Bad Authentication\",\"Code\": 1}");
+            }
+
+            AspNetUsers user = Bubblespace.Services.UserService.GetUserByEmail(User.Identity.Name);
+
+            post_likes likeToInsert = new post_likes();
+
+            likeToInsert.FK_group_post_like_users = user.Id;
+            likeToInsert.FK_group_post_likes_group_posts = Convert.ToInt32(collection["postId"]);
+            likeToInsert.post_burst = true;
+            likeToInsert.post_like = false;
+            try
+            {
+                Bubblespace.Services.PostService.SaveLikePost(likeToInsert);
+            }
+            catch (Exception)
+            {
+                return Json("{\"Error\": \"Couldn't Insert Into Database\",\"Code\": 2}");
+            }
+
+            return Json(likeToInsert);
         }
 
         public ActionResult CommentPost()
@@ -129,7 +152,7 @@ namespace Bubblespace.Controllers
             like_comments likeToInsert = new like_comments();
 
             likeToInsert.FK_like_comments_users = user.Id;
-            likeToInsert.FK_like_comments_post_comments = Convert.ToInt32(collection["postId"]);
+            likeToInsert.FK_like_comments_post_comments = Convert.ToInt32(collection["commentId"]);
             likeToInsert.comment_like = Convert.ToBoolean(1);
             likeToInsert.comment_burst = null;
             try
@@ -156,7 +179,7 @@ namespace Bubblespace.Controllers
             like_comments likeToInsert = new like_comments();
 
             likeToInsert.FK_like_comments_users = user.Id;
-            likeToInsert.FK_like_comments_post_comments = Convert.ToInt32(collection["postId"]);
+            likeToInsert.FK_like_comments_post_comments = Convert.ToInt32(collection["commentId"]);
             likeToInsert.comment_like = null;
             likeToInsert.comment_burst = Convert.ToBoolean(1);
             try
