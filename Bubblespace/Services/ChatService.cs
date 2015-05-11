@@ -42,7 +42,7 @@ namespace Bubblespace.Services
 		public List<messages>GetMessagesSince(chats chat, DateTime date)
 		{
             var db = new VERK2015_H17Entities1();
-            var messages = (from x in db.messages.Where(y => y.FK_messages_chat_id == chat.C_ID).Where(y => y.time_stamp >= date)
+            var messages = (from x in db.messages.Where(y => y.FK_messages_chat_id == chat.C_ID || y.time_stamp >= date)
                             select x).ToList();
 			return messages;
 		}
