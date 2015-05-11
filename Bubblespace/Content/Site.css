@@ -271,7 +271,6 @@
 
 @media (min-width: 768px) {
     body {
-        overflow: hidden;
         padding-bottom: 20px;
         height: 100%;
     }
@@ -349,7 +348,6 @@
     }
 
     #list-view {
-        border: rgb(145, 199, 244) 2px solid;
         height: 80vh;
         top: 5px;
         left: 5px;
@@ -357,7 +355,6 @@
 
     #main-view {
         padding-top: 10px;
-        border: rgb(145, 199, 244) 2px solid;
         height: 60vh;
         left: 10px;
         top: 5px;
@@ -366,7 +363,6 @@
 
     #new-post {
         padding-top: 10px;
-        border: rgb(145, 199, 244) 2px solid;
         height: 19vh;
         min-height: 120px;
         left: 10px;
@@ -458,6 +454,12 @@
         position: absolute;
         top: 75px;
         left: 210px;
+    }
+
+    .feed-post{
+        border: rgb(145, 145, 145) 1px solid;
+        list-style: none;
+        margin-top: 15px;
     }
 }
 

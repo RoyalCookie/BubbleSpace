@@ -12,6 +12,7 @@ function eventsTab() {
     var eventsList = $("#list-view-items");
     eventsList.empty();
     $.post("/Event/Events", function (events) {
+        console.log(events);
         for (var i = 0; i < events[0].length; i++) {
             eventsList.append("<li class='list-item'><img src='/Content/Assets/" + events[1][i] + ".png'/>" + events[0][i] + "</li>");
         }
@@ -21,9 +22,14 @@ function eventsTab() {
 $(function () {
     var mainView = $("#main-view");
     mainView.empty();
-    $.post("/Post/NAME!", function (posts) {
+    $.post("/Post/GetAllPosts", function (posts) {
+        console.log(posts);
         for (var i = 0; i < posts[0].length; i++) {
-            mainView.append("<li>This is a post</li>");
+            mainView.append(
+                "<li class='feed-post'>"
+                  + "<img class='post-profile-image' src='/Content/Assets/" + posts[2][i] + ".png' />"
+                  + posts[0][i] + ": " + posts[1][i]
+              + "</li>");
         }
     })
 });

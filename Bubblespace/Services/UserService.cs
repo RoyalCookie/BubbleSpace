@@ -21,7 +21,6 @@ namespace Bubblespace.Services
         {
             var db = new VERK2015_H17Entities1();
             var allUsers = db.AspNetUsers.ToList();
-
             return allUsers;
         }
         /* <summary>
