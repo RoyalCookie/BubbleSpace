@@ -112,22 +112,30 @@ namespace Bubblespace.Services
         }
 
         /* <summary>Gets all the groups a specified user is in</summary>
-         * <param name="ID">Takes in the ID of the user</param>
+         * <param name="email">Takes in the email/username of the user</param>
          * <returns>list of groups for the user</returns>
          * <author>Valgeir</author>
          */
-        static public List<group_users> GetAllUserGroups(string ID)
+        static public List<bubble_groups> GetAllUserGroups(string email)
         {
             var db = new VERK2015_H17Entities1();
-            return null;
+            var groupsList = db.bubble_groups.ToList();
+            var usersList = db.AspNetUsers.ToList();
+            
+            var userGroups = (from userGroup in groupsList
+                              join user in usersList on userGroup.FK_bubble_groups_users equals user.Id
+                              where user.Email == email
+                              select userGroup).ToList();
+            
+            return userGroups;
         }
 
         /* <summary>Gets all the chats for a specified user</summary>
-         * <param name="ID">Takes in the ID of the user</param>
+         * <param name="email">Takes in the email/username of the user</param>
          * <returns>list of chats for the user</returns>
          * <author>Valgeir</author>
          */
-        static public List<chats> GetAllChats(string ID)
+        static public List<chats> GetAllChats(string email)
         {
             //TODO: figure out how to connect it by email/username of user - Valgeir
 
@@ -137,12 +145,19 @@ namespace Bubblespace.Services
             var userMessagesList = db.messages.ToList();
             var chatMembersList = db.chat_members.ToList();
 
-            var userChats = (from userChat in userChatsList
+            /*var userChats = (from userChat in userChatsList
                              join chatMember in chatMembersList on userChat.C_ID equals chatMember.FK_chat_members_chat
                              join userMessage in userMessagesList on userChat.C_ID equals userMessage.FK_messages_chat_id
                              where chatMember.FK_chat_members_user == ID || userMessage.FK_messages_user == ID
-                             select userChat).ToList();
+                             select userChat).ToList();*/
 
+            var userChats = (from userChat in userChatsList
+                             join chatMember in chatMembersList on userChat.C_ID equals chatMember.FK_chat_members_chat
+                             join user in userList on chatMember.FK_chat_members_user equals user.Id
+                             join userMessage in userMessagesList on userChat.C_ID equals userMessage.FK_messages_chat_id
+                             where user.UserName == email
+                             select userChat).ToList();
+            
             return userChats;
         }
 
