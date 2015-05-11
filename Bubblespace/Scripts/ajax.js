@@ -1,4 +1,8 @@
-﻿function friendsTab(){
+﻿/*
+    TODO: This page requires javascript alert on noscript!
+*/
+
+function friendsTab() {
     var friendslist = $("#list-view-items");
     friendslist.empty();
     $.post("/User/Friends", function (data) {
@@ -77,9 +81,29 @@ function newsFeed() {
             );
         }
     })
+    mainView.perfectScrollbar();
+    Ps.initialize(document.getElementById('main-view'));
 }
 
-$(function () {
+function newPost(type) {
+    var headView = $("#head-view");
+    headView.empty();
+    headView.append(
+        "<form class='new-post' method='post' action='/Post/Create' enctype='multipart/form-data'>"
+            + "<textarea id='content_text' name='content_text' rows='3' cols='40'></textarea><br />"
+            + "<input type='submit' class='btn btn-default' value='Post' />"
+            + "<input type='file' data-iconName='glyphicon-inbox' name='contentImage' accept='image/*'>"
+        + "</form>"
+    );
+    // FileStyle: styles the file submit button.
+    $(":file").filestyle({ input: false });
+    $(":file").filestyle({ iconName: "glyphicon-inbox" });
+    $(":file").filestyle('size', 'xs');
+
+}
+
+$(document).ready(function () {
     friendsTab();
     newsFeed();
+    newPost("newsFeed");
 });

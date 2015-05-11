@@ -93,7 +93,7 @@
         margin-top: 1vh;
     }
 
-    #new-post {
+    #head-view {
         padding-top: 10px;
         border: red 1px dashed;
         height: 100px;
@@ -228,7 +228,7 @@
         margin-top: 1vh;
     }
 
-    #new-post {
+    #head-view {
         padding-top: 10px;
         border: red 1px dashed;
         height: 30vh;
@@ -273,6 +273,8 @@
     body {
         padding-bottom: 20px;
         height: 100%;
+        overflow-x: hidden;
+        overflow-y: hidden;
     }
     
     .body-content {
@@ -355,13 +357,14 @@
 
     #main-view {
         padding-top: 10px;
-        height: 60vh;
+        height: 65vh;
         left: 10px;
         top: 5px;
         margin-top: 1vh;
+        overflow-y:scroll;
     }
 
-    #new-post {
+    #head-view {
         padding-top: 10px;
         height: 19vh;
         min-height: 120px;
@@ -376,8 +379,8 @@
     }
 
     #nav-button-friends, #nav-button-placeholder, #nav-button-events, #nav-button-chat, #nav-button-settings{
-        width: 50px;
         height: 50px;
+        width: 50px;
     }
 
     #nav-button-friends{
@@ -385,7 +388,7 @@
     }
     
     #nav-button-placeholder{
-        background:transparent url('/Content/Assets/placeholder.png') center top no-repeat;
+        background:transparent url('/Content/Assets/groups.png') center top no-repeat;
     }
 
     #nav-button-events{
@@ -449,13 +452,6 @@
         color: white;
     }
 
-    /* New Post */
-    #upload-button{
-        position: absolute;
-        top: 75px;
-        left: 210px;
-    }
-
     .feed-post{
         border: rgb(145, 145, 145) 1px solid;
         list-style: none;
@@ -475,8 +471,19 @@
         margin-left: 50px;
     }
 
-}
+    .new-post{
+        float: right;
+    }
 
+    .bootstrap-filestyle{
+        display: inline;
+        left: 140px;
+    }
+
+    .btn{
+        margin-top: 2px;
+    }
+}
 
 /* Animation Logic */
 
