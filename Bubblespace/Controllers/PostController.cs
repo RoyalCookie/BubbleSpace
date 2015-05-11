@@ -14,24 +14,19 @@ namespace Bubblespace.Controllers
         public ActionResult Create(FormCollection collection)
         {
             // Check For Authentication
-            if(!User.Identity.IsAuthenticated){
+            if (!User.Identity.IsAuthenticated)
+            {
                 return Json("{\"Error\": \"Bad Authentication\",\"Code\": 1}");
             }
 
-            // Create the DB Entity
-            var db = new VERK2015_H17Entities1();
-
-            // Get the authenticated users email
-            string userEmail = User.Identity.Name;
-
-            // Use the email to fill a AspNetUser model for the user
-            AspNetUsers userModel = (db.AspNetUsers.ToList().Where(x => x.Email == userEmail)).Single();
+            // Get The Current User So We Can Reference Him As A Post Owner
+            AspNetUsers userModel = Bubblespace.Services.UserService.GetUserByEmail(User.Identity.Name);
 
             // Create the post we insert, And fill in relative information below
             posts postToInsert = new posts();
-            
-            
-            
+
+
+
             /* 
              * TODO:
              * 1. Vista Myndir Inná Server
@@ -45,29 +40,19 @@ namespace Bubblespace.Controllers
             postToInsert.time_inserted = DateTime.Now;
             postToInsert.FK_posts_users = userModel.Id;
             postToInsert.FK_posts_bubble_groups = null;
-            
+
             // Það Þarf Að Implementa Fyrir Myndir
-            
-            
+
+
 
             try
             {
-                db.posts.Add(postToInsert);
-                db.SaveChanges();
-            }catch(Exception e){
+                Bubblespace.Services.PostService.SavePostToDB(postToInsert);
+            }
+            catch (Exception)
+            {
                 return Json("{\"Error\": \"Couldn't Insert Into Database\",\"Code\": 2}");
             }
-
-
-
-            
-            // Debug Info
-            System.Diagnostics.Debug.WriteLine("\n\n\nYou've Called Post.Create()");
-            System.Diagnostics.Debug.WriteLine("Current Data:");
-            System.Diagnostics.Debug.WriteLine("Content: " + postToInsert.content_text);
-            System.Diagnostics.Debug.WriteLine("User: " + userModel.Email);
-            System.Diagnostics.Debug.WriteLine("UserId: " + userModel.Id);
-            System.Diagnostics.Debug.WriteLine(Json(postToInsert).Data);
 
             return Json("{\"Error\": \"None\",\"Code\": 0}");
         }
