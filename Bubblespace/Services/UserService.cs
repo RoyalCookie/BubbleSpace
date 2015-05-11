@@ -91,9 +91,10 @@ namespace Bubblespace.Services
             var allUsers = db.AspNetUsers.ToList();
             var userBan = (from user in allUsers where user.Email == email select user).SingleOrDefault();
             userBan.user_status = true;
-
+            
             db.SaveChanges();
         }
+        
 
         /* <summary>Upgrade a user to admin of BubbleSpace</summary>
          * <param name="email">Takes in the email of user</param>
@@ -107,7 +108,9 @@ namespace Bubblespace.Services
 
             var userToAdmin = (from user in allUsers where user.Email == email select user).SingleOrDefault();
             userToAdmin.FK_users_userrank = 2;
-
+            
+            
+            
             db.SaveChanges();
         }
 

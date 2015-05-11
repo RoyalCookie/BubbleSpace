@@ -16,9 +16,9 @@ namespace Bubblespace
     {
         public int C_ID { get; set; }
         public Nullable<int> FK_group_post_likes_group_posts { get; set; }
-        public Nullable<byte> group_insert_like { get; set; }
-        public Nullable<byte> insert_burst { get; set; }
         public string FK_group_post_like_users { get; set; }
+        public Nullable<bool> post_like { get; set; }
+        public Nullable<bool> post_burst { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
         public virtual posts posts { get; set; }

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a4c826a38dfc4192b52d65e8b28a7daf" Name="Diagram1">
+      <Diagram DiagramId="a4c826a38dfc4192b52d65e8b28a7daf" Name="Diagram1" ZoomLevel="59">
         <EntityTypeShape EntityType="VERK2015_H17Model.AspNetUsers" Width="1.5" PointX="3" PointY="10.625" />
         <EntityTypeShape EntityType="VERK2015_H17Model.bubble_errors" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="VERK2015_H17Model.bubble_groups" Width="1.5" PointX="5.25" PointY="18.125" />
@@ -14,7 +14,7 @@
         <EntityTypeShape EntityType="VERK2015_H17Model.events" Width="1.5" PointX="5.25" PointY="21.5" />
         <EntityTypeShape EntityType="VERK2015_H17Model.friends_added" Width="1.5" PointX="5.25" PointY="25" />
         <EntityTypeShape EntityType="VERK2015_H17Model.group_users" Width="1.5" PointX="7.5" PointY="12.625" />
-        <EntityTypeShape EntityType="VERK2015_H17Model.like_comments" Width="1.5" PointX="18" PointY="12.75" />
+        <EntityTypeShape EntityType="VERK2015_H17Model.like_comments" Width="1.5" PointX="7.875" PointY="10" />
         <EntityTypeShape EntityType="VERK2015_H17Model.messages" Width="1.5" PointX="5.25" PointY="12.75" />
         <EntityTypeShape EntityType="VERK2015_H17Model.post_comments" Width="1.5" PointX="12.75" PointY="12.625" />
         <EntityTypeShape EntityType="VERK2015_H17Model.post_likes" Width="1.5" PointX="15.75" PointY="12.75" />

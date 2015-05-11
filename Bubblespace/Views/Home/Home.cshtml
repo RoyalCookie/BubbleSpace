@@ -1,4 +1,4 @@
-﻿@model IEnumerable<posts>
+﻿@Model IEnumerable<posts>
     @{
         Layout = "~/Views/Shared/_LayoutMain.cshtml";
     }
@@ -10,16 +10,18 @@
             <div class="row">
                 <div id="new-post" class="col-xs-8">
                     <div>
-                        <form method="post" action="/Post/Create">
+                        <form method="post" action="/Post/Create" enctype="multipart/form-data">
                             <textarea id="content_text" name="content_text" rows="3" cols="40"></textarea><br />
                             <input type="submit" value="Post" />
-                            <input id="upload-button" type="file" name="content_image" accept="image/*">
+                            <input id="upload-button" type="file" name="contentImage" accept="image/*">
                             <input name="content_is_video" value="0" hidden/>
                         </form>
                     </div>
                 </div>
                 <div id="main-view" class="col-xs-8">
-                    <ul></ul>
+                    <ul>
+                        
+                    </ul>
                 </div>
             </div>
         </div>
