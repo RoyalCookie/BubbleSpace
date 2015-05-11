@@ -301,7 +301,19 @@ namespace Bubblespace.Controllers
 
         public ActionResult GetAllPosts()
         {
-            return Json(PostService.GetAllPosts());
+            var allPosts = PostService.GetAllPosts();
+            var posterNames = ( from post in allPosts 
+                                select post.AspNetUsers.NickName).ToList();
+            var postBody = (    from post in allPosts
+                                select post.content_text).ToList();
+            var profileImage = (from post in allPosts
+                                select post.AspNetUsers.profile_image).ToList();
+
+            List<List<string>> returnJson = new List<List<string>>();
+            returnJson.Add(posterNames);
+            returnJson.Add(postBody);
+            returnJson.Add(profileImage);
+            return Json(returnJson);
         }
     }
 }

@@ -21,7 +21,6 @@ namespace Bubblespace.Services
         {
             var db = new VERK2015_H17Entities1();
             var allUsers = db.AspNetUsers.ToList();
-
             return allUsers;
         }
         /* <summary>
@@ -37,59 +36,49 @@ namespace Bubblespace.Services
             AspNetUsers user = (db.AspNetUsers.ToList().Where(x => x.Email == email)).Single();
             return user;
         }
-    
-        /* <summary>gets the user ID</summary>
-         * <param name="email">email/username of the user</param>
-         * <returns>string ID</returns>
-         * <author>Valgeir</author>
-         */
-        static private string GetUserIdByEmail(string email)
-        {
-            var db = new VERK2015_H17Entities1();
-            var usersList = db.AspNetUsers.ToList();
-            
-            string userID = (from user in usersList
-                             where user.Email == email
-                             select user.Id).SingleOrDefault();
-            return userID;
-        }
         
         /* <summary>user adds a friend</summary>
          * <param name="friends">object of the model friends_added</param>
          * <returns>no return</returns>
          * <author>Valgeir</author>
          */
-        static public void AddFriend(friends_added friends)
+        static public void AddFriend(AspNetUsers userAdder, AspNetUsers userFriended)
         {
               var db = new VERK2015_H17Entities1();
-              db.friends_added.Add(friends);
-              db.SaveChanges();
+              
+             friends_added addFriend = new friends_added();
+             addFriend.FK_friends_added_users_Added = userAdder.Id;
+             addFriend.FK_friends_added_users_Addee = userFriended.Id;
+             addFriend.friended = true;
+             
+             db.friends_added.Add(addFriend);
+             db.SaveChanges();
+             
         }
 
         /* <summary>user removes a friend</summary>
-         * <param name="userID">ID of the user that removes friend</param>
-         * <param name="friendID> ID of the user that was removed</param>
+         * <param name="userAdder">obj of the user that removes friend</param>
+         * <param name="userFriend>obj of the user that was removed</param>
          * <returns>no return</returns>
          * <author>Valgeir</author>
          */
-        static public void RemoveFriend()
+        static public void RemoveFriend(AspNetUsers userAdder, AspNetUsers userFriend)
         {
             var db = new VERK2015_H17Entities1();
+            //TODO
             
-            
-
         }
 
         /* <summary>Admin bans a user from BubbleSpace</summary>
-         * <param name="email">takes in the email of user</param>
+         * <param name="user">takes in obj of the user</param>
          * <returns>no return</returns>
          * <author>Valgeir</author>
          */
-        static public void BanUser(string email)
+        static public void BanUser(AspNetUsers user)
         {
             var db = new VERK2015_H17Entities1();
-            var allUsers = db.AspNetUsers.ToList();
-            var userBan = (from user in allUsers where user.Email == email select user).SingleOrDefault();
+            var userBan = (from x in db.AspNetUsers.Where(y => y.Id == user.Id)
+                           select x).SingleOrDefault();
             userBan.user_status = true;
             
             db.SaveChanges();
@@ -103,6 +92,8 @@ namespace Bubblespace.Services
          */
         static public void UpgradeUserToAdmin(string email)
         {
+            //TODO: change function to accept obj of user
+            
             var db = new VERK2015_H17Entities1();
             var allUsers = db.AspNetUsers.ToList();
 
@@ -121,6 +112,8 @@ namespace Bubblespace.Services
          */
         static public List<events> GetAllUsersEvents(string email)
         {
+            //TODO: Change from string to object of user
+            
             var db = new VERK2015_H17Entities1();
             var userEventsList = db.event_users.ToList();
             var eventLists = db.events.ToList();
@@ -142,6 +135,8 @@ namespace Bubblespace.Services
          */
         static public List<bubble_groups> GetAllUserGroups(string email)
         {
+            //TODO: Change from string to object of user
+            
             var db = new VERK2015_H17Entities1();
             var groupsList = db.bubble_groups.ToList();
             var usersList = db.AspNetUsers.ToList();
@@ -161,8 +156,8 @@ namespace Bubblespace.Services
          */
         static public List<chats> GetAllChats(string email)
         {
-            //TODO: figure out how to connect it by email/username of user - Valgeir
-
+            //TODO: Change from string to object of user
+            
             var db = new VERK2015_H17Entities1();
             var userList = db.AspNetUsers.ToList();
             var userChatsList = db.chats.ToList();
@@ -190,16 +185,15 @@ namespace Bubblespace.Services
          * <returns>list of friends of the user</returns>
          * <author>Valgeir</author>
          */
-        static public List<friends_added> GetAllFriends(string email)
+        static public List<friends_added> GetAllFriends(AspNetUsers user)
         {
-            var db = new VERK2015_H17Entities1();
-            var friendsList = db.friends_added.ToList();
-            var usersList = db.AspNetUsers.ToList();
+            //TODO: Change from string to object of user
             
-            var friends = (from friend in friendsList
-                          join user in usersList on friend.FK_friends_added_users_Added equals user.Id
-                          where user.Email == email
-                          select friend).ToList();
+            var db = new VERK2015_H17Entities1();
+            
+            var friends = (from friend in db.friends_added
+                           where friend.FK_friends_added_users_Added == user.Id || friend.FK_friends_added_users_Addee == user.Id
+                           select friend).ToList();  
             return friends;
         }
     }
