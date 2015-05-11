@@ -71,6 +71,37 @@ namespace Bubblespace.Services
             return db.posts.ToList();
         }
 
+        static public List<posts> GetAllPosts(string orderByField) 
+        {
+            List<posts> allPosts = PostService.GetAllPosts();
+            List<AspNetUsers> allUsers = UserService.GetAllUsers();
+            List<posts> sortedPosts;
+            switch (orderByField)
+            {
+                case "Name":
+                    sortedPosts = (from post in allPosts
+                                   orderby post.AspNetUsers.NickName
+                                   select post).ToList();
+                    break;
+                case "Date":
+                    sortedPosts = (from post in allPosts
+                                   orderby post.time_inserted
+                                   select post).ToList();
+                    break;
+                case "Likes":
+                    sortedPosts = (from post in allPosts
+                                   orderby post.post_likes.Count descending
+                                   select post).ToList();
+                    break;
+                default:
+                    sortedPosts = (from post in allPosts
+                                   orderby post.AspNetUsers.NickName
+                                   select post).ToList();
+                    break;
+            }
+            return sortedPosts;
+        }
+
         
     }
 }

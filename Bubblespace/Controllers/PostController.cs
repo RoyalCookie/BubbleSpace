@@ -100,7 +100,7 @@ namespace Bubblespace.Controllers
 
 
         /* <summary>
-        * Likes or Bursts a comment
+        * Likes a post
         * </summary>
         * <param name="collection">List of paramters from the form request</param>
         * <returns>A Json error object on failure Or a json object of the post on success</returns>
@@ -108,9 +108,39 @@ namespace Bubblespace.Controllers
         */
         public ActionResult LikePost(FormCollection collection)
         {
-            return Json("Fuck this shit");
+
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Json("{\"Error\": \"Bad Authentication\",\"Code\": 1}");
+            }
+
+            AspNetUsers user = UserService.GetUserByEmail(User.Identity.Name);
+
+            post_likes likeToInsert = new post_likes();
+
+            likeToInsert.FK_group_post_like_users = user.Id;
+            likeToInsert.FK_group_post_likes_group_posts = Convert.ToInt32(collection["postId"]);
+            likeToInsert.post_burst = false;
+            likeToInsert.post_like = true;
+            try
+            {
+                PostService.SaveLikePost(likeToInsert);
+            }
+            catch (Exception)
+            {
+                return Json("{\"Error\": \"Couldn't Insert Into Database\",\"Code\": 2}");
+            }
+
+            return Json(likeToInsert);
         }
 
+        /* <summary>
+        *  Bursts a post
+        * </summary>
+        * <param name="collection">List of paramters from the form request</param>
+        * <returns>A Json error object on failure Or a json object of the post on success</returns>
+        * <author></author>
+        */
         public ActionResult BurstPost(FormCollection collection)
         {
             if (!User.Identity.IsAuthenticated)
@@ -138,6 +168,15 @@ namespace Bubblespace.Controllers
             return Json(likeToInsert);
         }
 
+
+
+        /* <summary>
+        * Adds a comment to a post
+        * </summary>
+        * <param name="collection">List of paramters from the form request</param>
+        * <returns>A Json error object on failure Or a json object of the post on success</returns>
+        * <author></author>
+        */
         public ActionResult CommentPost(FormCollection collection)
         {
             if (!User.Identity.IsAuthenticated)
@@ -166,6 +205,13 @@ namespace Bubblespace.Controllers
             return Json(postComment);
         }
 
+        /* <summary>
+        * Likes a comment
+        * </summary>
+        * <param name="collection">List of paramters from the form request</param>
+        * <returns>A Json error object on failure Or a json object of the post on success</returns>
+        * <author></author>
+        */
         public ActionResult LikeComment(FormCollection collection)
         {
             if (!User.Identity.IsAuthenticated)
@@ -193,6 +239,13 @@ namespace Bubblespace.Controllers
             return Json(likeToInsert);
         }
 
+        /* <summary>
+        * Bursts a comment
+        * </summary>
+        * <param name="collection">List of paramters from the form request</param>
+        * <returns>A Json error object on failure Or a json object of the post on success</returns>
+        * <author></author>
+        */
         public ActionResult BurstComment(FormCollection collection)
         {
             if (!User.Identity.IsAuthenticated)
@@ -222,12 +275,18 @@ namespace Bubblespace.Controllers
 
         public ActionResult BurstCount()
         {
-            return View();
+            var allPosts = PostService.GetAllPosts();
+            var returnObject = new
+            {
+                amount = allPosts.Count()
+            };
+            return Json(returnObject);
         }
 
-        public ActionResult Sort()
+        public ActionResult Sort(FormCollection collection)
         {
-            return View();
+            string orderByField = collection["orderBy"];
+            return Json(PostService.GetAllPosts(orderByField));
         }
 
         public ActionResult Delete()
@@ -235,7 +294,7 @@ namespace Bubblespace.Controllers
             return View();
         }
 
-        public ActionResult CommentBurstCount()
+        public ActionResult CommentBurstCount() 
         {
             return View();
         }
