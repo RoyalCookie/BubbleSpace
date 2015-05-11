@@ -59,7 +59,6 @@ namespace Bubblespace.Services
         */
         static public void SaveLikeComment(like_comments commentLike)
         {
-
             var db = new VERK2015_H17Entities1();
             db.like_comments.Add(commentLike);
             db.SaveChanges();
