@@ -6,16 +6,16 @@
             friendslist.append(
                   "<li class='list-item'>"
                 + "<img src='/Content/Assets/" + data[1][i] + ".png'/>"
-                + "<a onclick='friendMain(); return false;'>" + data[0][i] + "</a></li>"
+                + "<a onclick='friendMain("+ data[2][i] +"); return false;'>" + data[0][i] + "</a></li>"
             );
         }
     })
 }
 
-function friendMain() {
+function friendMain(id) {
     var mainView = $("#main-view");
     mainView.empty();
-    $.post("/User/GetUserInformation", function (posts) {
+    $.post("/User/GetUserInformation?" + id, function (posts) {
         // TODO: Header
         for (var i = posts[0].length - 1; i >= 0; i--) {
             mainView.append(
