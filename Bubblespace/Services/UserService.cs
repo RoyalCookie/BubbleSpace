@@ -179,19 +179,18 @@ namespace Bubblespace.Services
          * <returns>list of friends of the user</returns>
          * <author>Valgeir</author>
          */
-        static public List<friends_added> GetAllFriends(AspNetUsers user)
+        static public List<AspNetUsers> GetAllFriends(AspNetUsers user)
         {   
             var db = new VERK2015_H17Entities1();
             
             //Gets a list of friends that user added
             var friendsAdded = (from friend in db.friends_added.Where(y => y.FK_friends_added_users_Added == user.Id)
-                                select friend).ToList(); 
+                                select friend.AspNetUsers).ToList(); 
             //Gets a list of friends that added the user
             var friendsAddee = (from friend in db.friends_added.Where(y => y.FK_friends_added_users_Addee == user.Id)
-                                select friend).ToList();
+                                select friend.AspNetUsers).ToList();
             //Combines the two lists together                   
             friendsAdded.AddRange(friendsAddee); 
-            
             return friendsAdded;
         }
 

@@ -14,8 +14,7 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top frontPageTop>
-        <div class=" container">
+    <div class="navbar navbar-inverse navbar-fixed-top frontPageTop">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="icon-bar"></span>
@@ -28,14 +27,11 @@
             @Html.Partial("_LoginPartial")
         </div>
     </div>
-    </div>
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
-
             <li><a onclick="friendsTab(); return false;" id="nav-button-friends"></a></li>
-            <li><a id="nav-button-placeholder"></a></li>
-
-            <li><a onclick="eventsTab(); return false;" href="#" id="nav-button-events"></a></li>
+            <li><a onclick="groupsTab(); return false;" id="nav-button-groups"></a></li>
+            <li><a onclick="eventsTab(); return false;" id="nav-button-events"></a></li>
             <li><a href="#" id="nav-button-chat"></a></li>
             <li><a href="#" id="nav-button-settings"></a></li>
         </ul>

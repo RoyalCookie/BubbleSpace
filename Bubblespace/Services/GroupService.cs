@@ -126,5 +126,18 @@ namespace Bubblespace.Services
         {
             return null;
         }
+
+        /*
+         * <summary> </summary>
+         * <param name="id"></param>
+         * <returns></returns>
+         * <author>Andri Rafn</author>
+         */
+        static public bubble_groups GetGroupById(int id)
+        {
+            var db = new VERK2015_H17Entities1();
+            bubble_groups group = (db.bubble_groups.ToList().Where(x => x.C_ID == id)).Single();
+            return group;
+        }
 	}	
 }

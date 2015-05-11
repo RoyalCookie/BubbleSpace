@@ -6,9 +6,7 @@ function friendsTab() {
     var friendslist = $("#list-view-items");
     friendslist.empty();
     $.post("/User/Friends", function (data) {
-        console.log(data);
         for (var i = 0; i < data[0].length; i++) {
-            
             friendslist.append(
                   "<li class='list-item'>"
                 + "<img src='/Content/Assets/" + data[1][i] + ".png'/>"
@@ -18,8 +16,35 @@ function friendsTab() {
     })
 }
 
+function groupsTab() {
+    var friendslist = $("#list-view-items");
+    friendslist.empty();
+    $.post("/Group/GetAllGroups", function (data) {
+        for (var i = 0; i < data[0].length; i++) {
+            friendslist.append(
+                  "<li class='list-item'>"
+                + "<img src='/Content/Assets/" + data[1][i] + ".png'/>"
+                + "<a onclick='groupMain(\"" + data[2][i] + "\"); return false;' id='group-name' data-val='" + data[2][i] + "'>" + data[0][i] + "</a></li>"
+            );
+        }
+    })
+}
+
+function groupMain(id) {
+    $.ajax({
+        method: "POST",
+        url: "/Group/GetGroupById",
+        data: { groupId: id }
+    })
+   .success(function (info) {
+       var mainView = $("#main-view");
+       mainView.empty();
+       console.log(info);
+   });
+}
+
+
 function friendMain(id) {
-    console.log(id);
 
     $.ajax({
         method: "POST",
@@ -29,7 +54,6 @@ function friendMain(id) {
    .success(function( info ) {
        var mainView = $("#main-view");
        mainView.empty();
-       console.log(info);
        for (var i = info["posts"].length - 1; i >= 0; i--) {
            mainView.append(
                    "<li class='feed-post'>"
@@ -65,7 +89,6 @@ function newsFeed() {
     var mainView = $("#main-view");
     mainView.empty();
     $.post("/Post/GetAllPosts", function (posts) {
-        console.log(posts);
         for (var i = posts[0].length - 1; i >= 0; i--) {
             mainView.append(
                     "<li class='feed-post'>"

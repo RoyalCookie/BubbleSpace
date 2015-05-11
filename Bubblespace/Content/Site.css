@@ -358,7 +358,7 @@
     #main-view {
         padding-top: 10px;
         height: 65vh;
-        left: 10px;
+        left: 10px; 
         top: 5px;
         margin-top: 1vh;
         overflow-y:scroll;
@@ -378,7 +378,7 @@
         resize: none;
     }
 
-    #nav-button-friends, #nav-button-placeholder, #nav-button-events, #nav-button-chat, #nav-button-settings{
+    #nav-button-friends, #nav-button-groups, #nav-button-events, #nav-button-chat, #nav-button-settings{
         height: 50px;
         width: 50px;
     }
@@ -387,7 +387,7 @@
         background:transparent url('/Content/Assets/friends.png') center top no-repeat;
     }
     
-    #nav-button-placeholder{
+    #nav-button-groups{
         background:transparent url('/Content/Assets/groups.png') center top no-repeat;
     }
 
@@ -410,8 +410,8 @@
         background:transparent url('/Content/Assets/friends-hover.png') center top no-repeat;
     }
     
-    #nav-button-placeholder:hover{
-        background:transparent url('/Content/Assets/placeholder-hover.png') center top no-repeat;
+    #nav-button-groups:hover{
+        background:transparent url('/Content/Assets/groups-hover.png') center top no-repeat;
     }
 
     #nav-button-events:hover{
