@@ -15,7 +15,7 @@
 function friendMain() {
     var mainView = $("#main-view");
     mainView.empty();
-    $.post("/Post/GetUserInformation", function (posts) {
+    $.post("/User/GetUserInformation", function (posts) {
         // TODO: Header
         for (var i = posts[0].length - 1; i >= 0; i--) {
             mainView.append(
