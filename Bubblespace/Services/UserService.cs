@@ -129,27 +129,6 @@ namespace Bubblespace.Services
             return userEvents;
         }
 
-        /* <summary>Gets all the groups a specified user is in</summary>
-         * <param name="email">Takes in the email/username of the user</param>
-         * <returns>list of groups for the user</returns>
-         * <author>Valgeir</author>
-         */
-        static public List<bubble_groups> GetAllUserGroups(string email)
-        {
-            //TODO: Change from string to object of user
-            
-            var db = new VERK2015_H17Entities1();
-            var groupsList = db.bubble_groups.ToList();
-            var usersList = db.AspNetUsers.ToList();
-            
-            var userGroups = (from userGroup in groupsList
-                              join user in usersList on userGroup.FK_bubble_groups_users equals user.Id
-                              where user.Email == email
-                              select userGroup).ToList();
-            
-            return userGroups;
-        }
-
         /* <summary>Gets all the friends of a specified user</summary>
          * <param name="user">Takes in obj of user</param>
          * <returns>list of friends of the user</returns>

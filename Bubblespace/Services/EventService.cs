@@ -72,7 +72,16 @@ namespace Bubblespace.Services
 
             db.SaveChanges();
 		}
-				
+        
+       /* <summary>Returns all events user is following</summary>
+        * <param name="user">Takes in obj of user</param>
+        * <returns>list of events</returns>
+        * <author></author>
+        */
+		static public List<events> eventsUserFollowing(AspNetUsers user)
+        {
+            return null;
+        }		
 	}
 	
 }
