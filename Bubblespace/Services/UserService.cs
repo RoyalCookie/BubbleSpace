@@ -35,6 +35,18 @@ namespace Bubblespace.Services
             AspNetUsers user = (db.AspNetUsers.ToList().Where(x => x.Email == email)).Single();
             return user;
         }
+
+        /* <summary>Gets a user by his email</summary>
+         * <param name="email">The email string to search after</param>
+         * <returns>Returns a single user that matches the email</returns>
+         * <author>Janus</author>
+         */
+        static public AspNetUsers GetUserById(string id)
+        {
+            var db = new VERK2015_H17Entities1();
+            AspNetUsers user = (db.AspNetUsers.ToList().Where(x => x.Id == id)).Single();
+            return user;
+        }
         
         /* <summary>user adds a friend</summary>
          * <param name="friends">object of the model friends_added</param>
