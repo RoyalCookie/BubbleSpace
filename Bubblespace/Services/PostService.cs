@@ -41,9 +41,11 @@ namespace Bubblespace.Services
          * <returns></returns>
          * <author></author>
          */
-        static public void SaveCommentOnPost()
+        static public void SaveCommentOnPost(post_comments comment)
         {
-
+            var db = new VERK2015_H17Entities1();
+            db.post_comments.Add(comment);
+            db.SaveChanges();
         }
 
         /* <summary>
@@ -59,6 +61,12 @@ namespace Bubblespace.Services
             var db = new VERK2015_H17Entities1();
             db.like_comments.Add(commentLike);
             db.SaveChanges();
+        }
+
+        static public List<posts> GetAllPosts()
+        {
+            var db = new VERK2015_H17Entities1();
+            return db.posts.ToList();
         }
     }
 }

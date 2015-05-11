@@ -25,9 +25,15 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
- 		public void UserJoinGroup()
-		{	
-			
+ 		public void UserJoinGroup(bubble_groups gr, AspNetUsers user)
+		{
+            var db = new VERK2015_H17Entities1();
+            group_users groupUser = new group_users();
+            groupUser.FK_group_users_bubble_group = gr.C_ID;
+            groupUser.FK_group_users_users = user.UserName;
+            groupUser.group_admin = false;
+
+            db.group_users.Add(groupUser);
 		}
 
        /* <summary></summary>
@@ -49,9 +55,13 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
-		public void InsertGroupDescription()
+		public void InsertGroupDescription(bubble_groups gr)
 		{
-			
+            var db = new VERK2015_H17Entities1();
+            var getGroup = (from x in db.bubble_groups.Where(y => y.C_ID == gr.C_ID)
+                            select x).SingleOrDefault();
+            getGroup.group_description = gr.group_description;
+            db.SaveChanges();
 		}
 
        /* <summary></summary>
@@ -59,9 +69,13 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
-		public void InsertGroupProfileImage()
+        public void InsertGroupProfileImage(bubble_groups gr)
 		{
-			
+            var db = new VERK2015_H17Entities1();
+            var getGroup = (from x in db.bubble_groups.Where(y => y.C_ID == gr.C_ID)
+                            select x).SingleOrDefault();
+            getGroup.group_profile_image = gr.group_profile_image;
+            db.SaveChanges();
 		}
 
        /* <summary></summary>
@@ -71,6 +85,11 @@ namespace Bubblespace.Services
         */
 		public void SetAdminStatus(AspNetUsers user)
 		{
+            var db = new VERK2015_H17Entities1();
+            var getUsr = (from x in db.group_users.Where(y => y.FK_group_users_users == user.UserName)
+                          select x).SingleOrDefault();
+            getUsr.group_admin = true;
+            db.SaveChanges();
 		}
 
        /* <summary></summary>
@@ -78,9 +97,11 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
-		public void CreateGroupPost()
+		public void CreateGroupPost(posts newPost)
 		{
-			
+            var db = new VERK2015_H17Entities1();
+            db.posts.Add(newPost);
+            db.SaveChanges();			
 		}
 
        /* <summary></summary>
@@ -90,7 +111,10 @@ namespace Bubblespace.Services
         */
 		public List<bubble_groups>GetAllGroups()
 		{
-			return null;
+            var db = new VERK2015_H17Entities1();
+            var groups = (from x in db.bubble_groups
+                         select x).ToList();
+			return groups;
 		}
 	}	
 }
