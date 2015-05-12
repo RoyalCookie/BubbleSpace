@@ -9,13 +9,7 @@ namespace Bubblespace.Controllers
 {
     public class ChatController : Controller
     {
-        //
-        // GET: /Chat/
-        public ActionResult Index()
-        {
-            return View();
-        }
-
+        [HttpPost]
         public ActionResult Send(FormCollection fc)
         {
             messages message = new messages();
@@ -32,24 +26,33 @@ namespace Bubblespace.Controllers
 
             }
 
-            return View();
+            return Json("");
         }
 
-        public ActionResult Get(FormCollection fc)
+        [HttpPost]
+        public ActionResult GetUsersChats(FormCollection collection)
         {
-            chats chat = new chats();
-            chat.C_ID = Convert.ToInt32(fc["chat_id"]);
-            List<JsonResult> retStr = new List<JsonResult>();
-            try
+            AspNetUsers user = UserService.GetUserByEmail(User.Identity.Name);
+            List<chats> usersChats;
+            try 
             {
-                retStr.Add(Json(ChatService.GetChatUsers(chat)));
-                retStr.Add(Json(ChatService.GetMessages(chat)));
+                usersChats = ChatService.GetAllChats(user);
             }
             catch(Exception)
             {
-
+                return Json("Error");
             }
-            return View(retStr);
+            System.Diagnostics.Debug.WriteLine("Line 1");
+            var retObj = new
+            {
+                chatName = (from chat in usersChats
+                            select chat.chat_name).ToList(),
+                chatId = (from chat in usersChats
+                          select chat.C_ID).ToList()
+            };
+
+            System.Diagnostics.Debug.WriteLine("Line 2");
+            return Json(retObj);
         }
 
         public ActionResult Create(FormCollection fc)
