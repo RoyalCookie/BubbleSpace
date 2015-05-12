@@ -228,6 +228,11 @@
     .btn{
         margin-top: 2px;
     }
+
+    search-bar{
+        list-style: none;
+        width: 100%;
+    }
 }
 
 /* Animation Logic */

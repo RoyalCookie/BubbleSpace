@@ -4,6 +4,7 @@
 function friendsTab() {
     var friendslist = $("#list-view-items");
     friendslist.empty();
+    addSearchFeature();
     $.post("/User/GetFriends", function (data) {
         console.log(data);
         for (var i = 0; i < data[0].length; i++) {
@@ -184,7 +185,20 @@ function chatMain(id) {
     });
 }
 
-function refresh() {
+function addSearchFeature(type) {
+    var list = $("#list-view-items");
+    list.empty();
+    list.append(
+          "<li>"
+        + "<input type='text' id='search-bar' placeholder='search..'/>"
+        + "</li>"
+    );
+    document.getElementById("search-bar").onkeydown = function (event) {
+
+    }
+}
+
+function refresh() {    
     friendsTab();
     newsFeed();
     newPost("newsFeed");
