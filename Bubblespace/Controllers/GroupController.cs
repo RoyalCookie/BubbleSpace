@@ -19,10 +19,10 @@ namespace Bubblespace.Controllers
         public ActionResult Create(FormCollection fc)
         {
             bubble_groups bGroup = new bubble_groups();
-            bGroup.group_description = fc["description"];
-            bGroup.group_name = fc["group_name"];
-            bGroup.group_profile_image = fc["profile_image"];
-            bGroup.FK_bubble_groups_users = User.Identity.Name;
+            bGroup.group_description = fc["group-description"];
+            bGroup.group_name = fc["group-name"];
+            bGroup.group_profile_image = fc["contentImage"];
+            bGroup.FK_bubble_groups_users = UserService.GetUserByEmail(User.Identity.Name).Id;
             var newGroup = GroupService.CreateGroup(bGroup);
 
             return Json(newGroup);
