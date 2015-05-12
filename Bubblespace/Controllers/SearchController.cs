@@ -15,12 +15,21 @@ namespace Bubblespace.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Users(FormCollection fc)
+        public ActionResult Users()
         {
             AspNetUsers user = UserService.GetUserByEmail(User.Identity.Name);
             var users = SearchService.SearchUsersByName(user);
 
             return Json(users);
+        }
+        [HttpPost]
+        public ActionResult Groups(FormCollection fc)
+        {
+            bubble_groups bGroup = new bubble_groups();
+            bGroup.group_name = fc["group_name"];
+            var groups = SearchService.SearchGroupByName(bGroup);
+
+            return View(groups);
         }
         [HttpPost]
         public ActionResult Posts(FormCollection fc)
