@@ -40,12 +40,13 @@ function createGroup() {
     mainView.empty();
     mainView.append(
                  "<form>"
-               + "Group Name:<br>"
-               + "<input type='text' name='group-name'>"
+               + "<label for='group-name'>Group Name</label>"
+               + "<input type='text' class='form-control' name='group-name'>"
                + "<br>"
-               + "Group Description:<br>"
-               + "<textarea name='group-description'></textarea>"
-               + "<input type='file' data-iconName='glyphicon-inbox' name='contentImage' accept='image/*'>"
+               + "<label for='group-description'>Group Description</label>"
+               + "<textarea class='form-control' name='group-description'></textarea>"
+               + "<input type='file' id='image-upload' name='contentImage' accept='image/*'>"
+               + "<button type='button' onclick='createGroup(); return false;' id='create-submit' class='btn btn-default'>Submit</button>"    
                + "</form>"
             );
 
@@ -53,6 +54,10 @@ function createGroup() {
     $(":file").filestyle({ input: false });
     $(":file").filestyle({ iconName: "glyphicon-inbox" });
     $(":file").filestyle('size', 'xs');
+}
+
+function createGroup() {
+
 }
 
 function groupMain(id) {

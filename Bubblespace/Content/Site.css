@@ -247,6 +247,14 @@
         width: calc(100% + 50px); 
         margin-left: -50px;
     }
+
+    .bootstrap-filestyle{
+        left: 5px;
+    }
+
+    #create-submit{
+        margin-left: 20px;
+    }
 }
 
 /* Animation Logic */
