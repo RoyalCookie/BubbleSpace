@@ -69,6 +69,9 @@ namespace Bubblespace.Controllers
 
         public ActionResult GetGroupById(FormCollection collection)
         {
+            if(!User.Identity.IsAuthenticated) {
+                return Json("No Authentication");
+            } 
             bubble_groups group = GroupService.GetGroupById(Convert.ToInt32(collection["groupId"]));
             List<string> returnJson = new List<string>();
 
