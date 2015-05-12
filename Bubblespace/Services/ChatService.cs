@@ -109,7 +109,13 @@ namespace Bubblespace.Services
 
             var db = new VERK2015_H17Entities1();
 
-            return db.chats.ToList();
+            List<chats> chats = (from connection in db.chat_members
+                                 where connection.FK_chat_members_user == user.Id
+                                 join chat in db.chats on connection.FK_chat_members_chat equals chat.C_ID
+                                 select chat).ToList();
+
+
+            return chats;
         }
 
         static public List<chat_members> GetAllChatMemberEntries()
