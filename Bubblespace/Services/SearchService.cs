@@ -35,5 +35,12 @@ namespace Bubblespace.Services
                           select x).ToList();
             return bEvent;
         }
+        public static List<chats> SearchChatByName(chats chat)
+        {
+            var db = new VERK2015_H17Entities1();
+            var chatRes = (from x in db.chats.Where(y => y.chat_name.Contains(chat.chat_name))
+                           select x).ToList();
+            return chatRes;
+        }
     }
 }

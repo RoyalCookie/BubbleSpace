@@ -9,11 +9,6 @@ namespace Bubblespace.Controllers
 {
     public class SearchController : Controller
     {
-        // GET: Search
-        public ActionResult Index()
-        {
-            return View();
-        }
         [HttpPost]
         public ActionResult Users()
         {
@@ -29,7 +24,7 @@ namespace Bubblespace.Controllers
             bGroup.group_name = fc["group_name"];
             var groups = SearchService.SearchGroupByName(bGroup);
 
-            return View(groups);
+            return Json(groups);
         }
         [HttpPost]
         public ActionResult Posts(FormCollection fc)
@@ -39,12 +34,20 @@ namespace Bubblespace.Controllers
         [HttpPost]
         public ActionResult Events(FormCollection fc)
         {
-            return View();
+            events sEvent = new events();
+            sEvent.event_name = fc["event_name"];
+            var eventRes = SearchService.SearchEventsByName(sEvent);
+
+            return Json(eventRes);
         }
         [HttpPost]
         public ActionResult Chat(FormCollection fc)
         {
-            return View();
+            chats ch = new chats();
+            ch.chat_name = fc["chat_name"];
+            var chats = SearchService.SearchChatByName(ch);
+
+            return Json(chats);
         }
 
     }
