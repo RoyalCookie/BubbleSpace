@@ -3,6 +3,7 @@ using Bubblespace.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -17,15 +18,41 @@ namespace Bubblespace.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Create(FormCollection fc)
+        public ActionResult Create(FormCollection fc, HttpPostedFileBase contentImage)
         {
             events ev = new events();
             ev.event_description = fc["description"];
             ev.event_end_time = Convert.ToDateTime(fc["end_time"]);
             ev.event_name = fc["event_name"];
-            ev.event_profile_image = fc["profile_image"];
             ev.event_start_time = Convert.ToDateTime(fc["start_time"]);
             ev.FK_events_owner = User.Identity.Name;
+
+            if (contentImage != null)
+            {
+                string pic = System.IO.Path.GetFileName(contentImage.FileName);
+
+                // Generate a random filename
+                var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                var random = new Random();
+                var result = new string(
+                    Enumerable.Repeat(chars, 64)
+                              .Select(s => s[random.Next(s.Length)])
+                              .ToArray());
+
+
+                // We extract the file ending and combine it with the generated filename
+                Regex regex = new Regex(@"\.\w{1,3}");
+                result = result + regex.Match(pic).Value.ToLower();
+
+                // Creating an absolute path
+                string path = System.IO.Path.Combine(Server.MapPath("~/Images/Events"), result);
+
+                // File is uploaded
+                contentImage.SaveAs(path);
+
+                // Setting the image name
+                ev.event_profile_image = result;
+            }
 
             return Json(EventService.CreateEvent(ev));
         }
