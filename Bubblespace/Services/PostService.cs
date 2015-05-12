@@ -108,6 +108,27 @@ namespace Bubblespace.Services
                                    select post).ToList();
             return userPosts;
         }
+        static public List<posts> GetAllUserPosts(AspNetUsers user)
+        {
+            var db = new VERK2015_H17Entities1();
+            var friendPosts = new List<posts>();
+            var postRet = new List<posts>();
+
+            var userFriends = UserService.GetAllFriends(user);
+            var userPosts = (from x in db.posts.Where(y => y.FK_posts_users == user.UserName)
+                         select x).ToList();
+
+            foreach(AspNetUsers u in userFriends)
+            {
+                friendPosts.AddRange((from x in db.posts.Where(y => y.FK_posts_users == u.UserName)
+                               select x).ToList());
+            }
+
+            postRet.AddRange(friendPosts);
+            postRet.AddRange(userPosts);
+
+            return postRet;
+        }
 
         
     }

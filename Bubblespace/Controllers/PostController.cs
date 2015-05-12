@@ -311,10 +311,10 @@ namespace Bubblespace.Controllers
         public ActionResult GetAllPosts()
         {
             var allPosts = PostService.GetAllPosts();
-            var posterNames = ( from post in allPosts 
-                                select post.AspNetUsers.NickName).ToList();
-            var postBody = (    from post in allPosts
-                                select post.content_text).ToList();
+            var posterNames = (from post in allPosts
+                               select post.AspNetUsers.NickName).ToList();
+            var postBody = (from post in allPosts
+                            select post.content_text).ToList();
             var profileImage = (from post in allPosts
                                 select post.AspNetUsers.profile_image).ToList();
             var posterId = (from post in allPosts
@@ -326,6 +326,13 @@ namespace Bubblespace.Controllers
             returnJson.Add(profileImage);
             returnJson.Add(posterId);
             return Json(returnJson);
+        }
+        [HttpPost]
+        public ActionResult GetAllUserPosts()
+        {
+            AspNetUsers user = UserService.GetUserByEmail(User.Identity.Name);
+            var posts = PostService.GetAllUserPosts(user);
+            return Json(posts);
         }
 
     }
