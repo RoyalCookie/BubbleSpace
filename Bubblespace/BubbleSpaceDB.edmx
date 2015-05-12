@@ -39,7 +39,7 @@
           <Key>
             <PropertyRef Name="_ID" />
           </Key>
-          <Property Name="_ID" Type="int" Nullable="false" />
+          <Property Name="_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="group_name" Type="nvarchar" MaxLength="255" />
           <Property Name="group_description" Type="text" />
           <Property Name="FK_bubble_groups_users" Type="nvarchar" MaxLength="128" />
@@ -113,7 +113,7 @@
           <Key>
             <PropertyRef Name="_ID" />
           </Key>
-          <Property Name="_ID" Type="int" Nullable="false" />
+          <Property Name="_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="message" Type="text" />
           <Property Name="FK_messages_user" Type="nvarchar" MaxLength="128" />
           <Property Name="time_stamp" Type="datetime" Nullable="false" />
