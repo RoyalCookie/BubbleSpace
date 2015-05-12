@@ -48,10 +48,25 @@ namespace Bubblespace.Controllers
             var allEvents = EventService.GetAllEvents();
             var eventNames = (from eve in allEvents select eve.event_name).ToList();
             var eventImages = (from eve in allEvents select eve.event_profile_image).ToList();
+            var eventId = (from eve in allEvents select eve.C_ID.ToString()).ToList();
 
             List<List<string>> returnJson = new List<List<string>>();
             returnJson.Add(eventNames);
             returnJson.Add(eventImages);
+            returnJson.Add(eventId);
+            return Json(returnJson);
+        }
+
+        [HttpPost]
+        public ActionResult GetEventById(FormCollection collection)
+        {
+            events eve = EventService.GetEventById(Convert.ToInt32(collection["eventId"]));
+            List<string> returnJson = new List<string>();
+            returnJson.Add(eve.event_name);
+            returnJson.Add(eve.event_description);
+            returnJson.Add(eve.event_profile_image);
+            returnJson.Add(eve.event_start_time.ToString());
+            returnJson.Add(eve.event_end_time.ToString());
             return Json(returnJson);
         }
 	}

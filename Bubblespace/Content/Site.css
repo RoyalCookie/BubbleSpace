@@ -187,10 +187,20 @@
         width: auto;
     }
 
-    .profile-header-username{
+    .profile-header{
         display: inline-block;
         vertical-align: top;
         margin-left: 20px;
+    }
+
+    .profile-description, .profile-description-time{
+        font-size: 10px;
+        margin-left: 140px;
+        bottom: 100px;
+    }
+
+    .profile-description-time{
+        font-weight: bold;
     }
 
     #registerLink, #loginLink{
@@ -229,9 +239,13 @@
         margin-top: 2px;
     }
 
-    search-bar{
-        list-style: none;
-        width: 100%;
+    li{
+        list-style-type: none;
+    }
+
+    #search-bar{
+        width: calc(100% + 50px); 
+        margin-left: -50px;
     }
 }
 
