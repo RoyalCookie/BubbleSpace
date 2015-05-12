@@ -20,7 +20,7 @@ function groupsTab() {
     var groupList = $("#list-view-items");
     groupList.empty();
     addSearchFeature();
-    groupList.append("<li><a onclick='createGroup(); return false;' title='Create Group' class='create-button btn btn-default btn-sm'><span class='glyphicon glyphicon-plus'></span></a></li>");
+    groupList.append("<li><a onclick='createGroupMain(); return false;' title='Create Group' class='create-button btn btn-default btn-sm'><span class='glyphicon glyphicon-plus'></span></a></li>");
     $.post("/Group/GetAllGroups", function (data) {
         for (var i = 0; i < data[0].length; i++) {
             groupList.append(
@@ -32,21 +32,21 @@ function groupsTab() {
     })
 }
 
-function createGroup() {
+function createGroupMain() {
     var headView = $("#head-view");
     headView.empty();
     headView.append("<h1>Create Group</h1>")
     var mainView = $("#main-view");
     mainView.empty();
     mainView.append(
-                 "<form>"
+                 "<form method='post' action='/Post/Create' enctype='multipart/form-data'>"
                + "<label for='group-name'>Group Name</label>"
-               + "<input type='text' class='form-control' name='group-name'>"
+               + "<input type='text' class='form-control' id='groupName' name='group-name'>"
                + "<br>"
                + "<label for='group-description'>Group Description</label>"
                + "<textarea class='form-control' name='group-description'></textarea>"
                + "<input type='file' id='image-upload' name='contentImage' accept='image/*'>"
-               + "<button type='button' onclick='createGroup(); return false;' id='create-submit' class='btn btn-default'>Submit</button>"    
+               + "<button type='submit' class='create-submit' class='btn btn-default'>Create</button>"    
                + "</form>"
             );
 
@@ -54,10 +54,6 @@ function createGroup() {
     $(":file").filestyle({ input: false });
     $(":file").filestyle({ iconName: "glyphicon-inbox" });
     $(":file").filestyle('size', 'xs');
-}
-
-function createGroup() {
-
 }
 
 function groupMain(id) {
@@ -75,7 +71,6 @@ function groupMain(id) {
        headView.append("<p class='profile-description'>" + info[1] + "</p>");
        var mainView = $("#main-view");
        mainView.empty();
-
    });
 }
 
