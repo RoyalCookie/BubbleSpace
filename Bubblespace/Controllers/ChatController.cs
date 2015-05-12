@@ -32,6 +32,10 @@ namespace Bubblespace.Controllers
         [HttpPost]
         public ActionResult GetUserChats()
         {
+            if (!User.Identity.IsAuthenticated){
+                return Json("No Authentication");
+            }
+
             AspNetUsers user = UserService.GetUserByEmail(User.Identity.Name);
             List<chats> usersChats;
             try 
@@ -56,10 +60,21 @@ namespace Bubblespace.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetChatUsers(int id) 
+        public ActionResult GetChatUsers(FormCollection collection) 
         {
+            int id = Convert.ToInt32(collection["chat_id"]);
             chats chat = ChatService.GetChatById(id);
             List<AspNetUsers> chatUsers = ChatService.GetChatUsers(chat);
+            var retObj = new
+            {
+                userId = (from user in chatUsers
+                         select user.Id).ToList(),
+                userName = (from user in chatUsers
+                            select user.NickName).ToList(),
+                userProfileImage = (from user in chatUsers
+                            select user.profile_image).ToList()
+            };
+            return Json(retObj);
         }
 
         public ActionResult Create(FormCollection fc)

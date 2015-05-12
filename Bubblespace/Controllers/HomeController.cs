@@ -11,6 +11,10 @@ namespace Bubblespace.Controllers
     {
         public ActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Home", "Home");
+            }
             return View();
         }
 
