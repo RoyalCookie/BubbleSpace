@@ -252,8 +252,9 @@
         left: 5px;
     }
 
-    #create-submit{
-        margin-left: 20px;
+    .btn-create{
+        position: absolute;
+        left: 230px !important;
     }
 }
 
