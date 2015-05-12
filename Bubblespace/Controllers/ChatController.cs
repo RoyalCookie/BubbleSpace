@@ -10,23 +10,61 @@ namespace Bubblespace.Controllers
     public class ChatController : Controller
     {
         [HttpPost]
-        public ActionResult Send(FormCollection fc)
+        public ActionResult Send(FormCollection collection)
         {
             messages message = new messages();
-            message.FK_messages_chat_id = Convert.ToInt32(fc["chat_id"]);
-            message.FK_messages_user = fc["user"];
-            message.message = fc["message"];
+            message.FK_messages_chat_id = Convert.ToInt32(collection["chatId"]);
+            message.FK_messages_user = UserService.GetUserByEmail(User.Identity.Name).Id;
+            message.message = collection["message"];
             message.time_stamp = DateTime.Now;
+            
             try
             {
                 ChatService.CreateMessage(message);
             }
             catch (Exception)
             {
-
+                return Json(new { error = "Couldnt save message to server"});
+            }
+            AspNetUsers sender;
+            try
+            {
+                sender = UserService.GetUserByEmail(User.Identity.Name);
+            }
+            catch (Exception)
+            {
+                return Json("Couldnt get user for message");
             }
 
-            return Json("");
+
+            var retObj = new
+            {
+                id = message.C_ID,
+                sender = sender.NickName,
+                message = message.message,
+                timeStamp = message.time_stamp
+            };
+
+            return Json(retObj);
+        }
+
+        [HttpPost]
+        public ActionResult GetAllMessagesFromChat(FormCollection collection) 
+        {
+            chats chat = ChatService.GetChatById(Convert.ToInt32(collection["chatId"]));
+            List<messages> messages = ChatService.GetMessages(chat);
+            var retObj = new 
+            {
+                id =        (from message in messages
+                            select message.C_ID).ToList(),
+                sender =    (from message in messages
+                            select message.AspNetUsers.NickName).ToList(),
+                message =   (from message in messages
+                            select message.message).ToList(),
+                timeStamp = (from message in messages
+                            select message.time_stamp).ToList()
+            };
+            return Json(retObj);
         }
 
         [HttpPost]
@@ -62,16 +100,16 @@ namespace Bubblespace.Controllers
         [HttpPost]
         public ActionResult GetChatUsers(FormCollection collection) 
         {
-            int id = Convert.ToInt32(collection["chat_id"]);
+            int id = Convert.ToInt32(collection["chatId"]);
             chats chat = ChatService.GetChatById(id);
             List<AspNetUsers> chatUsers = ChatService.GetChatUsers(chat);
             var retObj = new
-            {
+            {   
                 userId = (from user in chatUsers
                          select user.Id).ToList(),
                 userName = (from user in chatUsers
                             select user.NickName).ToList(),
-                userProfileImage = (from user in chatUsers
+                profileImage = (from user in chatUsers
                             select user.profile_image).ToList()
             };
             return Json(retObj);
@@ -80,11 +118,6 @@ namespace Bubblespace.Controllers
         public ActionResult Create(FormCollection fc)
         {
             chats chat = new chats();
-            //TODO: fix this
-            //chat. = new chat_members
-            //{
-
-            //};
             chat.chat_name = fc["chat_name"];
 
             try

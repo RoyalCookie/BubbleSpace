@@ -1,6 +1,14 @@
 ﻿/*
     TODO: This page requires javascript alert on noscript!
 */
+
+
+
+
+
+
+
+// Main Functions
 function friendsTab() {
     var friendslist = $("#list-view-items");
     friendslist.empty();
@@ -144,48 +152,114 @@ function newPost(type, id) {
     }
 }
 
+
+// Start Of Chat Section
+
+
+// Helper Functions
+
+function appendMessageToView(view, time, sender, message) {
+    view.append(
+        "<li>"
+        + "<p class='post-text'> Time:" + time + " - " + sender + ": " + message
+        + "</p></li>"
+    );
+}
+
+function updateOrCreateLastInsertId(id) {
+    var lastMessageId = document.getElementById("lastMessageId");
+    if (lastMessageId.length === 0) {
+        mainView.append(
+                "<input type=\"hidden\" name=\"lastMessageId\" id=\"lastMessageId\" value=\"" + id + "\">"
+            );
+        alert("lastMessageId Not Found");
+    } else {
+        lastMessageId.value = id;
+        alert("lastMessageId Found");
+    }
+}
+
+function sendMessage(chatId) {
+    var message = document.getElementById("messageBox").value;
+
+    console.log(chatId);
+    console.log(message);
+    var view = $("#main-view");
+    $.ajax({
+        method: "POST",
+        url: "/Chat/Send",
+        data: { chatId: chatId, message: message }
+    }).success(function (message) {
+        appendMessageToView(view, message["timeStamp"], message["sender"], message["message"]);
+    });
+}
+
+// Main Functions
+
+// User can get any chats by changing the buttons id for the chat
+
 function chatTab() {
-    var friendslist = $("#list-view-items");
-    friendslist.empty();
+    var chatlist = $("#list-view-items");
+   chatlist.empty();
     //addSearchFeature();
     $.post("/Chat/GetUserChats", function (data) {
         console.log(data);
         for (var i = 0; i < data["chatId"].length; i++) {
-            friendslist.append(
+            chatlist.append(
                   "<li class='list-item'>"
-                + "<a onclick='chatMain(\"" + data["chatId"][i] + "\"); return false;'>" + data["chatName"][i] + "</a></li>"
+                + "<a onclick='chatHead(\"" + data["chatId"][i] + "\"); return false;'>" + data["chatName"][i] + "</a></li>"
             );
         }
     })
 }
 
 function chatHead(id) {
+    var chatUsers = $("#head-view");
+    chatUsers.empty();
+
+    $.ajax({
+        method: "POST",
+        url: "/Chat/GetChatUsers",
+        data: { chatId: id }
+    }).success(function (users) {
+        console.log(users);
+        for (var i = users["profileImage"].length - 1; i >= 0; i--) {
+            chatUsers.append(
+                    "<div class=\"col-md-3\">"
+                  + "<img class='post-profile-image' src='/Content/Assets/" + users["profileImage"][i] + ".png' />"
+                  + "<div class='post-user-name'>" + users["userName"][i] + "</div>"
+                  + "</p></div>"
+              );
+        }
+        chatMain(id);
+    });
+
     
 }
 
 function chatMain(id) {
     $.ajax({
         method: "POST",
-        url: "/User/GetUserInformation",
-        data: { userId: id }
+        url: "/Chat/GetAllMessagesFromChat",
+        data: { chatId: id }
     })
-    .success(function (info) {
+    .success(function (message) {
         var mainView = $("#main-view");
         mainView.empty();
-        for (var i = info["posts"].length - 1; i >= 0; i--) {
+        for (var i = message["sender"].length - 1; i >= 0; i--) {
+            appendMessageToView(mainView, message["timeStamp"][i], message["sender"][i],  message["message"][i]);
+        }
+        if (message["id"].length > 0) {
             mainView.append(
-                    "<li class='feed-post'>"
-                  + "<img class='post-profile-image' src='/Content/Assets/" + info["profileImage"] + ".png' />"
-                  + "<div class='post-user-name'>" + info["userName"] + "</div>"
-                  + "<p class='post-text'>" + info["posts"][i]
-                  + "</p></li>"
-              );
-            mainView.append(
-                  "<i class='fa fa-thumbs-up'></i>"
-                + "<i class='fa fa-thumb-tack'></i>"
-                + "<i class='fa fa-comment'></i>"
+                "<input type=\"hidden\" name=\"lastMessageId\" id=\"lastMessageId\" value=\"" + message["id"][0] + "\">"
             );
         }
+        
+        mainView.append(
+                "<input type=\"text\" name=\"messageBox\" id=\"messageBox\">"
+                +"<button type=\"button\" onClick=\"sendMessage(" + id + ")\">Click Me!</button>"
+            );
+        
     });
 }
 
