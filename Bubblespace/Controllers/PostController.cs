@@ -30,12 +30,11 @@ namespace Bubblespace.Controllers
             // Check For Authentication
             if (!User.Identity.IsAuthenticated)
             {
-                return Json("{\"Error\": \"Bad Authentication\",\"Code\": 1}");
+                return RedirectToAction("Home", "Home");
             }
 
             // Get The Current User So We Can Reference Him As A Post Owner
             AspNetUsers userModel = UserService.GetUserByEmail(User.Identity.Name);
-
 
             // Create the post we insert, And fill in relative information below
             posts postToInsert = new posts();
@@ -92,10 +91,9 @@ namespace Bubblespace.Controllers
             }
             catch (Exception)
             {
-                return Json("{\"Error\":\"We've Encountered An Error\"}");
+                return RedirectToAction("Home", "Home");
             }
-
-            return Json(postToInsert);
+            return RedirectToAction("Home", "Home");
         }
 
 
@@ -319,11 +317,14 @@ namespace Bubblespace.Controllers
                                 select post.content_text).ToList();
             var profileImage = (from post in allPosts
                                 select post.AspNetUsers.profile_image).ToList();
+            var posterId = (from post in allPosts
+                            select post.AspNetUsers.Id).ToList();
 
             List<List<string>> returnJson = new List<List<string>>();
             returnJson.Add(posterNames);
             returnJson.Add(postBody);
             returnJson.Add(profileImage);
+            returnJson.Add(posterId);
             return Json(returnJson);
         }
 

@@ -21,7 +21,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            @Html.ActionLink("(B)", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <a onclick="refresh(); return false;" class="navbar-brand">(B)</a>
         </div>
         <div class="navbar-collapse collapse">            
             @Html.Partial("_LoginPartial")
