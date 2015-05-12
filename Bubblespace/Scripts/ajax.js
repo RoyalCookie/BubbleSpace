@@ -20,6 +20,7 @@ function groupsTab() {
     var groupList = $("#list-view-items");
     groupList.empty();
     addSearchFeature();
+    groupList.append("<li><a onclick='createGroup(); return false;' title='Create Group' class='create-button btn btn-default btn-sm'><span class='glyphicon glyphicon-plus'></span></a></li>");
     $.post("/Group/GetAllGroups", function (data) {
         for (var i = 0; i < data[0].length; i++) {
             groupList.append(
@@ -29,6 +30,29 @@ function groupsTab() {
             );
         }
     })
+}
+
+function createGroup() {
+    var headView = $("#head-view");
+    headView.empty();
+    headView.append("<h1>Create Group</h1>")
+    var mainView = $("#main-view");
+    mainView.empty();
+    mainView.append(
+                 "<form>"
+               + "Group Name:<br>"
+               + "<input type='text' name='group-name'>"
+               + "<br>"
+               + "Group Description:<br>"
+               + "<textarea name='group-description'></textarea>"
+               + "<input type='file' data-iconName='glyphicon-inbox' name='contentImage' accept='image/*'>"
+               + "</form>"
+            );
+
+    // FileStyle: styles the file submit button.
+    $(":file").filestyle({ input: false });
+    $(":file").filestyle({ iconName: "glyphicon-inbox" });
+    $(":file").filestyle('size', 'xs');
 }
 
 function groupMain(id) {

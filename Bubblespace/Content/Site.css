@@ -243,7 +243,7 @@
         list-style-type: none;
     }
 
-    #search-bar{
+    #search-bar, .create-button{
         width: calc(100% + 50px); 
         margin-left: -50px;
     }
