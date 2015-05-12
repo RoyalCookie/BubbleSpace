@@ -247,7 +247,7 @@ function newPost(type, id) {
 function appendMessageToView(view, time, sender, message) {
     view.append(
         "<li>"
-        + "<p class='post-text'> Time:" + time + " - " + sender + ": " + message
+        + "<p class='post-text'> " + sender + ": " + message
         + "</p></li>"
     );
 }
@@ -270,7 +270,7 @@ function sendMessage(chatId) {
 
     console.log(chatId);
     console.log(message);
-    var view = $("#main-view");
+    var view = $("#chatBox");
     $.ajax({
         method: "POST",
         url: "/Chat/Send",
@@ -330,16 +330,24 @@ function chatMain(id) {
         data: { chatId: id }
     })
     .success(function (message) {
+
         var mainView = $("#main-view");
         mainView.empty();
         mainView.append(
                 "<div id=\"chatBox\"></div>"
             );
-        for (var i = message["sender"].length - 1; i >= 0; i--) {
-            appendMessageToView(mainView, message["timeStamp"][i], message["sender"][i],  message["message"][i]);
+
+        var chatBox = $("#chatBox");
+        if (chatBox === 0) {
+            console.log("Chat is empty");
+        } else {
+            console.log("Chat aint empty");
+        }
+        for (var i =0; i < message["sender"].length; i++) {
+            appendMessageToView(chatBox, message["timeStamp"][i], message["sender"][i],  message["message"][i]);
         }
         if (message["id"].length > 0) {
-            mainView.append(
+            chatBox.append(
                 "<input type=\"hidden\" name=\"lastMessageId\" id=\"lastMessageId\" value=\"" + message["id"][0] + "\">"
             );
         }
