@@ -44,7 +44,7 @@ namespace Bubblespace.Services
         static public AspNetUsers GetUserById(string id)
         {
             var db = new VERK2015_H17Entities1();
-            AspNetUsers user = (db.AspNetUsers.ToList().Where(x => x.Id == id)).Single();
+            AspNetUsers user = (db.AspNetUsers.ToList().Where(x => x.Id == id)).SingleOrDefault(null);
             return user;
         }
         
