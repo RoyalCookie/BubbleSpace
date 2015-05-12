@@ -94,7 +94,6 @@ function groupMain(id) {
         data: { groupId: id }
     })
    .success(function (info) {
-       console.log(info);
        newPost("groupPage");
        var headView = $("#head-view");       
        headView.append("<img class='profile-header-image' src='/Images/Groups/" + info[2] + "'/>");
@@ -238,10 +237,7 @@ function newPost(type, id) {
     }
 }
 
-
 // Start Of Chat Section
-
-
 // Helper Functions
 
 function appendMessageToView(view, time, sender, message) {
@@ -267,9 +263,6 @@ function updateOrCreateLastInsertId(id) {
 
 function sendMessage(chatId) {
     var message = document.getElementById("messageBox").value;
-
-    console.log(chatId);
-    console.log(message);
     var view = $("#main-view");
     $.ajax({
         method: "POST",
@@ -289,7 +282,6 @@ function chatTab() {
    chatlist.empty();
     //addSearchFeature();
     $.post("/Chat/GetUserChats", function (data) {
-        console.log(data);
         for (var i = 0; i < data["chatId"].length; i++) {
             chatlist.append(
                   "<li class='list-item'>"
@@ -302,13 +294,11 @@ function chatTab() {
 function chatHead(id) {
     var chatUsers = $("#head-view");
     chatUsers.empty();
-
     $.ajax({
         method: "POST",
         url: "/Chat/GetChatUsers",
         data: { chatId: id }
     }).success(function (users) {
-        console.log(users);
         for (var i = users["profileImage"].length - 1; i >= 0; i--) {
             chatUsers.append(
                     "<div class=\"col-md-3\">"
@@ -319,8 +309,6 @@ function chatHead(id) {
         }
         chatMain(id);
     });
-
-    
 }
 
 function chatMain(id) {
@@ -348,7 +336,6 @@ function chatMain(id) {
                 "<input type=\"text\" name=\"messageBox\" id=\"messageBox\">"
                 +"<button type=\"button\" onClick=\"sendMessage(" + id + ")\">Click Me!</button>"
             );
-        
     });
 }
 
