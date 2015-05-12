@@ -60,6 +60,7 @@ namespace Bubblespace.Controllers
         {
             chats chat = ChatService.GetChatById(id);
             List<AspNetUsers> chatUsers = ChatService.GetChatUsers(chat);
+            return null;
             
         }
 
