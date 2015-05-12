@@ -55,13 +55,13 @@ namespace Bubblespace.Controllers
             return Json(retObj);
         }
 
-        [HttpPost]
-        public ActionResult GetChatUsers(int id) 
-        {
-            chats chat = ChatService.GetChatById(id);
-            List<AspNetUsers> chatUsers = ChatService.GetChatUsers(chat);
+        //[HttpPost]
+        //public ActionResult GetChatUsers(int id) 
+        //{
+        //    chats chat = ChatService.GetChatById(id);
+        //    List<AspNetUsers> chatUsers = ChatService.GetChatUsers(chat);
             
-        }
+        //}
 
         public ActionResult Create(FormCollection fc)
         {

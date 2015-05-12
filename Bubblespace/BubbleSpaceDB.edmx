@@ -49,7 +49,7 @@
           <Key>
             <PropertyRef Name="_ID" />
           </Key>
-          <Property Name="_ID" Type="int" Nullable="false" />
+          <Property Name="_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FK_chat_members_user" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="FK_chat_members_chat" Type="int" Nullable="false" />
         </EntityType>
