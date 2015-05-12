@@ -81,7 +81,6 @@ function createEventMain() {
                + "<input type='submit' class='btn btn-default btn-create' value='Create'>"
                + "</form>"
             );
-
     // FileStyle: styles the file submit button.
     $(":file").filestyle({ input: false });
     $(":file").filestyle({ iconName: "glyphicon-inbox" });
@@ -98,7 +97,7 @@ function groupMain(id) {
        console.log(info);
        newPost("groupPage");
        var headView = $("#head-view");       
-       headView.append("<img class='profile-header-image' src='/Images/Users/" + info[2] + "'/>");
+       headView.append("<img class='profile-header-image' src='/Images/Groups/" + info[2] + "'/>");
        headView.append("<h1 class='profile-header'>" + info[0] + "</h1>");
        headView.append("<p class='profile-description'>" + info[1] + "</p>");
        var mainView = $("#main-view");
@@ -350,7 +349,7 @@ function chatMain(id) {
     });
 }
 
-function addSearchFeature(type) {
+function addSearchFeature() {
     var list = $("#list-view-items");
     list.empty();
     list.append(
@@ -362,7 +361,7 @@ function addSearchFeature(type) {
         console.log($("#search-bar").val());
     }
 }
-
+    
 function refresh() {    
     friendsTab();
     newsFeed();
