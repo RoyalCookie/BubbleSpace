@@ -24,11 +24,13 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
-        static public void CreateEvent(events ev)
+        static public events CreateEvent(events ev)
 		{
             var db = new VERK2015_H17Entities1();
             db.events.Add(ev);
             db.SaveChanges();
+
+            return ev;
 		}
 
        /* <summary></summary>

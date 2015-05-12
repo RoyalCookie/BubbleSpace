@@ -16,10 +16,18 @@ namespace Bubblespace.Controllers
         {
             return View();
         }
-
-        public ActionResult Create()
+        [HttpPost]
+        public ActionResult Create(FormCollection fc)
         {
-            return View();
+            events ev = new events();
+            ev.event_description = fc["description"];
+            ev.event_end_time = Convert.ToDateTime(fc["end_time"]);
+            ev.event_name = fc["event_name"];
+            ev.event_profile_image = fc["profile_image"];
+            ev.event_start_time = Convert.ToDateTime(fc["start_time"]);
+            ev.FK_events_owner = User.Identity.Name;
+
+            return Json(EventService.CreateEvent(ev));
         }
 
         public ActionResult PostToEvent()
