@@ -313,7 +313,7 @@ function chatHead(id) {
         for (var i = users["profileImage"].length - 1; i >= 0; i--) {
             chatUsers.append(
                     "<div class=\"col-md-3\">"
-                  + "<img class='post-profile-image' src='/Content/Assets/" + users["profileImage"][i] + ".png' />"
+                  + "<img class='post-profile-image' src='/Images/Users/" + users["profileImage"][i] + "' />"
                   + "<div class='post-user-name'>" + users["userName"][i] + "</div>"
                   + "</p></div>"
               );
@@ -333,6 +333,9 @@ function chatMain(id) {
     .success(function (message) {
         var mainView = $("#main-view");
         mainView.empty();
+        mainView.append(
+                "<div id=\"chatBox\"></div>"
+            );
         for (var i = message["sender"].length - 1; i >= 0; i--) {
             appendMessageToView(mainView, message["timeStamp"][i], message["sender"][i],  message["message"][i]);
         }
