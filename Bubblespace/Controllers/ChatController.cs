@@ -30,7 +30,7 @@ namespace Bubblespace.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetUsersChats(FormCollection collection)
+        public ActionResult GetUserChats()
         {
             AspNetUsers user = UserService.GetUserByEmail(User.Identity.Name);
             List<chats> usersChats;
@@ -53,6 +53,14 @@ namespace Bubblespace.Controllers
 
             System.Diagnostics.Debug.WriteLine("Line 2");
             return Json(retObj);
+        }
+
+        [HttpPost]
+        public ActionResult GetChatUsers(int id) 
+        {
+            chats chat = ChatService.GetChatById(id);
+            List<AspNetUsers> chatUsers = ChatService.GetChatUsers(chat);
+            
         }
 
         public ActionResult Create(FormCollection fc)
