@@ -39,14 +39,38 @@ function createGroupMain() {
     var mainView = $("#main-view");
     mainView.empty();
     mainView.append(
-                 "<form method='post' action='/Post/Create' enctype='multipart/form-data'>"
+                 "<form method='post' action='/Group/Create' enctype='multipart/form-data'>"
                + "<label for='group-name'>Group Name</label>"
                + "<input type='text' class='form-control' id='groupName' name='group-name'>"
                + "<br>"
                + "<label for='group-description'>Group Description</label>"
                + "<textarea class='form-control' name='group-description'></textarea>"
                + "<input type='file' id='image-upload' name='contentImage' accept='image/*'>"
-               + "<button type='submit' class='create-submit' class='btn btn-default'>Create</button>"    
+               + "<input type='submit' class='btn btn-default btn-create' value='Create'>"
+               + "</form>"
+            );
+
+    // FileStyle: styles the file submit button.
+    $(":file").filestyle({ input: false });
+    $(":file").filestyle({ iconName: "glyphicon-inbox" });
+    $(":file").filestyle('size', 'xs');
+}
+
+function createEventMain() {
+    var headView = $("#head-view");
+    headView.empty();
+    headView.append("<h1>Create Event</h1>")
+    var mainView = $("#main-view");
+    mainView.empty();
+    mainView.append(
+                 "<form method='post' action='/Event/Create' enctype='multipart/form-data'>"
+               + "<label for='event-name'>Event Name</label>"
+               + "<input type='text' class='form-control' id='eventName' name='event-name'>"
+               + "<br>"
+               + "<label for='event-description'>Event Description</label>"
+               + "<textarea class='form-control' name='event-description'></textarea>"
+               + "<input type='file' id='image-upload' name='contentImage' accept='image/*'>"
+               + "<input type='submit' class='btn btn-default btn-create' value='Create'>"
                + "</form>"
             );
 
@@ -105,6 +129,7 @@ function eventsTab() {
     var eventsList = $("#list-view-items");
     eventsList.empty();
     addSearchFeature();
+    eventsList.append("<li><a onclick='createEventMain(); return false;' title='Create Event' class='create-button btn btn-default btn-sm'><span class='glyphicon glyphicon-plus'></span></a></li>");
     $.post("/Event/Events", function (events) {
         for (var i = 0; i < events[0].length; i++) {
             eventsList.append(
