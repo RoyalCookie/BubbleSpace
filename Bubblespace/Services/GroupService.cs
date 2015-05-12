@@ -13,11 +13,12 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
-        static public void CreateGroup(bubble_groups group)
+        static public bubble_groups CreateGroup(bubble_groups group)
 		{
             var db = new VERK2015_H17Entities1();
             db.bubble_groups.Add(group);
             db.SaveChanges();
+            return group;
 		}
 
        /* <summary></summary>

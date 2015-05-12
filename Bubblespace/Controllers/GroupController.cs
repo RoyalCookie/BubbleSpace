@@ -15,10 +15,17 @@ namespace Bubblespace.Controllers
         {
             return View();
         }
-
-        public ActionResult Create()
+        [HttpPost]
+        public ActionResult Create(FormCollection fc)
         {
-            return View();
+            bubble_groups bGroup = new bubble_groups();
+            bGroup.group_description = fc["description"];
+            bGroup.group_name = fc["group_name"];
+            bGroup.group_profile_image = fc["profile_image"];
+            bGroup.FK_bubble_groups_users = User.Identity.Name;
+            var newGroup = GroupService.CreateGroup(bGroup);
+
+            return Json(newGroup);
         }
 
         public ActionResult Join()
