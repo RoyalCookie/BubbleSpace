@@ -8,6 +8,12 @@ namespace Bubblespace.Services
 {
 	public class ChatService
 	{
+        static public chats GetChatById(int id)
+        {
+            var db = new VERK2015_H17Entities1();
+            return db.chats.Where(x => x.C_ID == id).Single();
+        }
+
         static public void CreateMessage(messages message)
         {
             var db = new VERK2015_H17Entities1();
@@ -46,11 +52,11 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
-        static public List<chat_members> GetChatUsers(chats chat)
+        static public List<AspNetUsers> GetChatUsers(chats chat)
 		{
             var db = new VERK2015_H17Entities1();
             var chatUsers = (from x in db.chat_members.Where(y => y.FK_chat_members_chat == chat.C_ID)
-                             select x).ToList();
+                             select x.AspNetUsers).ToList();
 			return chatUsers;
 		}
 
