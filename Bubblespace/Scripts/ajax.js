@@ -9,7 +9,7 @@ function friendsTab() {
         for (var i = 0; i < data[0].length; i++) {
             friendslist.append(     
                   "<li class='list-item'>"
-                + "<img src='/Content/Assets/" + data[1][i] + ".png'/>"
+                + "<img src='/Images/Users/" + data[1][i] + "'/>"
                 + "<a onclick='friendMain(\"" + data[2][i] + "\"); return false;' id='user-name'>" + data[0][i] + "</a></li>"
             );
         }
@@ -25,7 +25,7 @@ function groupsTab() {
         for (var i = 0; i < data[0].length; i++) {
             groupList.append(
                   "<li class='list-item'>"
-                + "<img src='/Content/Assets/" + data[1][i] + ".png'/>"
+                + "<img src='/Images/Groups/" + data[1][i] + "'/>"
                 + "<a onclick='groupMain(\"" + data[2][i] + "\"); return false;' id='group-name'>" + data[0][i] + "</a></li>"
             );
         }
@@ -90,7 +90,7 @@ function groupMain(id) {
        console.log(info);
        newPost("groupPage");
        var headView = $("#head-view");       
-       headView.append("<img class='profile-header-image' src='/Content/Assets/" + info[2] + ".png'/>");
+       headView.append("<img class='profile-header-image' src='/Images/Users/" + info[2] + "'/>");
        headView.append("<h1 class='profile-header'>" + info[0] + "</h1>");
        headView.append("<p class='profile-description'>" + info[1] + "</p>");
        var mainView = $("#main-view");
@@ -110,7 +110,7 @@ function friendMain(id) {
        for (var i = info["posts"].length - 1; i >= 0; i--) {
            mainView.append(
                    "<li class='feed-post'>"
-                 + "<img class='post-profile-image' src='/Content/Assets/" + info["profileImage"] + ".png' />"
+                 + "<img class='post-profile-image' src='/Images/Users/" + info["profileImage"] + "' />"
                  + "<div class='post-user-name'><a onclick='friendMain(\"" + info["Id"] + "\"); return false;'>" + info["userName"] + "</a></div>"
                  + "<p class='post-text'>" + info["posts"][i]
                  + "</p></li>"
@@ -134,7 +134,7 @@ function eventsTab() {
         for (var i = 0; i < events[0].length; i++) {
             eventsList.append(
                   "<li class='list-item'>"
-                + "<img src='/Content/Assets/" + events[1][i] + ".png'/>"
+                + "<img src='/Images/Events/" + events[1][i] + "'/>"
                 + "<div class='post-user-name'><a onclick='eventMain(\"" + events[2][i] + "\"); return false;'>" + events[0][i] + "</a></div>"
             );
         }
@@ -150,7 +150,7 @@ function eventMain(id) {
     .success(function (data) {
         var headView = $("#head-view");
         headView.empty();
-        headView.append("<img class='profile-header-image' src='/Content/Assets/" + data[2] + ".png'/>");
+        headView.append("<img class='profile-header-image' src='/Images/Events/" + data[2] + "'/>");
         headView.append("<h1 class='profile-header'>" + data[0] + "</h1><br>");
         headView.append("<p class='profile-description'>" + data[1] + "</p>");
         headView.append("<p class='profile-description-time'>From: &nbsp&nbsp" + data[3].substring(0, 10) + "</p>");
@@ -166,7 +166,7 @@ function newsFeed() {
         for (var i = posts[0].length - 1; i >= 0; i--) {
             mainView.append(
                     "<li class='feed-post'>"
-                  + "<img class='post-profile-image' src='/Content/Assets/" + posts[2][i] + ".png' />"
+                  + "<img class='post-profile-image' src='/Images/Users/" + posts[2][i] + "' />"
                   + "<div class='post-user-name'><a onclick='friendMain(\"" + posts[3][i] + "\"); return false;'>" + posts[0][i] + "</a></div>"
                   + "<p class='post-text'>" + posts[1][i]
                   + "</p></li>"
@@ -184,7 +184,6 @@ function newsFeed() {
 
 function newPost(type, id) {
     var headView = $("#head-view");
-    
     if (type == "newsFeed") {
         headView.empty();
         headView.append(
@@ -200,7 +199,7 @@ function newPost(type, id) {
         $(":file").filestyle('size', 'xs');
 
         $.post("/User/GetLoggedInUserInfo", function (data) {
-            headView.append("<img class='profile-header-image' src='/Content/Assets/" + data[1] + ".png'/>");
+            headView.append("<img class='profile-header-image' src='/Images/Users/" + data[1] + "'/>");
             headView.append("<h1 class='profile-header'>" + data[0] + "</h1>");
         });
     }
@@ -212,7 +211,7 @@ function newPost(type, id) {
         })
         .success(function (data) {
             headView.empty();
-            headView.append("<img class='profile-header-image' src='/Content/Assets/" + data["profileImage"] + ".png'/>");
+            headView.append("<img class='profile-header-image' src='/Images/Users/" + data["profileImage"] + "'/>");
             headView.append("<h1 class='profile-header'>" + data["userName"] + "</h1>");
         });
     }
@@ -263,7 +262,7 @@ function chatMain(id) {
         for (var i = info["posts"].length - 1; i >= 0; i--) {
             mainView.append(
                     "<li class='feed-post'>"
-                  + "<img class='post-profile-image' src='/Content/Assets/" + info["profileImage"] + ".png' />"
+                  + "<img class='post-profile-image' src='/Images/Users/" + info["profileImage"] + "' />"
                   + "<div class='post-user-name'>" + info["userName"] + "</div>"
                   + "<p class='post-text'>" + info["posts"][i]
                   + "</p></li>"
