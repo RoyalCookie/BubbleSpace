@@ -108,11 +108,25 @@ namespace Bubblespace.Controllers
             var userInformation = new
             {
                 userName = user.NickName,
-                profileImage = user.profile_image,
+                profileImage = user.profile_image,               
                 posts = (from post in userPosts
-                         select post.content_text).ToList()
+                         select post.content_text).ToList(),
+                Id = user.Id
             };
             return Json(userInformation);
+        }
+
+        [HttpPost]
+        public ActionResult GetLoggedInUserInfo()
+        {
+            AspNetUsers user = UserService.GetUserByEmail(User.Identity.Name);
+            var username = user.NickName;
+            var image = user.profile_image;
+
+            List<string> returnJson = new List<string>();
+            returnJson.Add(username);
+            returnJson.Add(image);
+            return Json(returnJson);
         }
 	}
 }

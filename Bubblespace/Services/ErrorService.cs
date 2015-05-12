@@ -17,12 +17,7 @@ namespace Bubblespace.Services
 		{
 			var db = new VERK2015_H17Entities1();
 			
-			bubble_errors errorLog = new bubble_errors();
-			errorLog.error_msg = error.error_msg;
-			errorLog.error_owner = error.error_owner;
-			errorLog.time_of_error = error.time_of_error;
-			
-			db.bubble_errors.Add(errorLog);
+			db.bubble_errors.Add(error);
 			db.SaveChanges();
 		}
 	}	

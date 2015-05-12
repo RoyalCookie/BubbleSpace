@@ -55,13 +55,12 @@ namespace Bubblespace.Controllers
             return Json(retObj);
         }
 
-        //[HttpPost]
-        //public ActionResult GetChatUsers(int id) 
-        //{
-        //    chats chat = ChatService.GetChatById(id);
-        //    List<AspNetUsers> chatUsers = ChatService.GetChatUsers(chat);
-            
-        //}
+        [HttpPost]
+        public ActionResult GetChatUsers(int id) 
+        {
+            chats chat = ChatService.GetChatById(id);
+            List<AspNetUsers> chatUsers = ChatService.GetChatUsers(chat);
+        }
 
         public ActionResult Create(FormCollection fc)
         {
@@ -86,7 +85,7 @@ namespace Bubblespace.Controllers
 
         public ActionResult Rename(FormCollection fc)
         {
-            chats chat = new chats();
+        	chats chat = new chats();
             chat.chat_name = fc["new_chat_name"];
 
             try
