@@ -146,16 +146,20 @@ function newPost(type, id) {
 function chatTab() {
     var friendslist = $("#list-view-items");
     friendslist.empty();
-    $.post("/User/GetFriends", function (data) {
+    //addSearchFeature();
+    $.post("/Chat/GetUserChats", function (data) {
         console.log(data);
-        for (var i = 0; i < data[0].length; i++) {
+        for (var i = 0; i < data["chatId"].length; i++) {
             friendslist.append(
                   "<li class='list-item'>"
-                + "<img src='/Content/Assets/" + data[1][i] + ".png'/>"
-                + "<a onclick='chatMain(\"" + data[2][i] + "\"); return false;' id='user-name' data-val='" + data[2][i] + "'>" + data[0][i] + "</a></li>"
+                + "<a onclick='chatMain(\"" + data["chatId"][i] + "\"); return false;'>" + data["chatName"][i] + "</a></li>"
             );
         }
     })
+}
+
+function chatHead(id) {
+    
 }
 
 function chatMain(id) {
