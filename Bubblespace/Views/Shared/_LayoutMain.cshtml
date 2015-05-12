@@ -9,9 +9,7 @@
     @Styles.Render("~/Content/perfect-scrollbar.css")
     @Styles.Render("~/Content/font-awesome.css")
     @Scripts.Render("~/bundles/modernizr")
-    
     <link href='http://fonts.googleapis.com/css?family=Lato:400,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top frontPageTop">
@@ -29,11 +27,11 @@
     </div>
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
-            <li><a onclick="friendsTab(); return false;"            id="nav-button-friends"></a></li>
-            <li><a onclick="groupsTab(); return false;" id="nav-button-groups"></a></li>
-            <li><a onclick="eventsTab(); return false;" href="#"    id="nav-button-events"></a></li>
-            <li><a onclick="chatTab(); return false;"   href="#"    id="nav-button-chat"></a></li>
-            <li><a href="#" id="nav-button-settings"></a></li>
+            <li><a onclick="friendsTab(); return false;" title="Friends" id="nav-button-friends"></a></li>
+            <li><a onclick="groupsTab(); return false;" title="Groups" id="nav-button-groups"></a></li>
+            <li><a onclick="eventsTab(); return false;" title="Events" id="nav-button-events"></a></li>
+            <li><a onclick="chatTab(); return false;" title="Chat" id="nav-button-chat"></a></li>
+            <li><a onclick="" title="Settings" id="nav-button-settings"></a></li>
         </ul>
     </div>
     <div class="container body-content">

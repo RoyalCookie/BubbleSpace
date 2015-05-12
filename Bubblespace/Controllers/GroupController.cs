@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -15,10 +16,43 @@ namespace Bubblespace.Controllers
         {
             return View();
         }
-
-        public ActionResult Create()
+        [HttpPost]
+        public ActionResult Create(FormCollection fc, HttpPostedFileBase contentImage)
         {
-            return View();
+            bubble_groups bGroup = new bubble_groups();
+            bGroup.group_description = fc["group-description"];
+            bGroup.group_name = fc["group-name"];
+            bGroup.FK_bubble_groups_users = UserService.GetUserByEmail(User.Identity.Name).Id;
+
+            if(contentImage != null)
+            {
+                string pic = System.IO.Path.GetFileName(contentImage.FileName);
+
+                // Generate a random filename
+                var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                var random = new Random();
+                var result = new string(
+                    Enumerable.Repeat(chars, 64)
+                              .Select(s => s[random.Next(s.Length)])
+                              .ToArray());
+
+
+                // We extract the file ending and combine it with the generated filename
+                Regex regex = new Regex(@"\.\w{1,3}");
+                result = result + regex.Match(pic).Value.ToLower();
+
+                // Creating an absolute path
+                string path = System.IO.Path.Combine(Server.MapPath("~/Images/Groups"), result);
+
+                // File is uploaded
+                contentImage.SaveAs(path);
+
+                // Setting the image name
+                bGroup.group_profile_image = result;
+            }
+            var newGroup = GroupService.CreateGroup(bGroup);
+
+            return Json(newGroup);
         }
 
         public ActionResult Join()
@@ -69,6 +103,9 @@ namespace Bubblespace.Controllers
 
         public ActionResult GetGroupById(FormCollection collection)
         {
+            if(!User.Identity.IsAuthenticated) {
+                return Json("No Authentication");
+            } 
             bubble_groups group = GroupService.GetGroupById(Convert.ToInt32(collection["groupId"]));
             List<string> returnJson = new List<string>();
 

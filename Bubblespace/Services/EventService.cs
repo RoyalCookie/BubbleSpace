@@ -24,11 +24,13 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
-        static public void CreateEvent(events ev)
+        static public events CreateEvent(events ev)
 		{
             var db = new VERK2015_H17Entities1();
             db.events.Add(ev);
             db.SaveChanges();
+
+            return ev;
 		}
 
        /* <summary></summary>
@@ -81,7 +83,20 @@ namespace Bubblespace.Services
 		static public List<events> eventsUserFollowing(AspNetUsers user)
         {
             return null;
-        }		
+        }
+
+        /* <summary>Returns an event with the given id</summary>
+       * <param name="user">Takes an int</param>
+       * <returns>Event object</returns>
+       * <author>Andri Rafn</author>
+       */
+        static public events GetEventById(int id)
+        {
+            var db = new VERK2015_H17Entities1();
+            var eve = (from x in db.events.Where(x => x.C_ID == id)
+                            select x).SingleOrDefault();
+            return eve;
+        }	
 	}
 	
 }

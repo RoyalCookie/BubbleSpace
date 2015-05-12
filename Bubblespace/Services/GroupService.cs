@@ -13,11 +13,12 @@ namespace Bubblespace.Services
         * <returns></returns>
         * <author></author>
         */
-        static public void CreateGroup(bubble_groups group)
+        static public bubble_groups CreateGroup(bubble_groups group)
 		{
             var db = new VERK2015_H17Entities1();
             db.bubble_groups.Add(group);
             db.SaveChanges();
+            return group;
 		}
 
        /* <summary></summary>
@@ -128,9 +129,9 @@ namespace Bubblespace.Services
         }
 
         /*
-         * <summary> </summary>
+         * <summary>Gets a bubble_group by id</summary>
          * <param name="id"></param>
-         * <returns></returns>
+         * <returns>a bubble_groups object</returns>
          * <author>Andri Rafn</author>
          */
         static public bubble_groups GetGroupById(int id)
@@ -138,6 +139,19 @@ namespace Bubblespace.Services
             var db = new VERK2015_H17Entities1();
             bubble_groups group = (db.bubble_groups.ToList().Where(x => x.C_ID == id)).Single();
             return group;
+        }
+
+        /*
+        * <summary> returns a list of group_users </summary>
+        * <param name="id"></param>
+        * <returns>a list of group users</returns>
+        * <author>Andri Rafn</author>
+        */
+        static public List<group_users> GetGroupUsersByGroupId(int id)
+        {
+            var db = new VERK2015_H17Entities1();
+            var users = (db.group_users.ToList().Where(x => x.FK_group_users_bubble_group == id)).ToList();
+            return users;
         }
 	}	
 }
