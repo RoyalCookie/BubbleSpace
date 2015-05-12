@@ -137,15 +137,37 @@ function chatTab() {
             friendslist.append(
                   "<li class='list-item'>"
                 + "<img src='/Content/Assets/" + data[1][i] + ".png'/>"
-                + "<a onclick='friendMain(\"" + data[2][i] + "\"); return false;' id='user-name' data-val='" + data[2][i] + "'>" + data[0][i] + "</a></li>"
+                + "<a onclick='chatMain(\"" + data[2][i] + "\"); return false;' id='user-name' data-val='" + data[2][i] + "'>" + data[0][i] + "</a></li>"
             );
         }
     })
 }
 
 
-function chatView(id) {
-    
+function chatMain(id) {
+    $.ajax({
+        method: "POST",
+        url: "/User/GetUserInformation",
+        data: { userId: id }
+    })
+.success(function (info) {
+    var mainView = $("#main-view");
+    mainView.empty();
+    for (var i = info["posts"].length - 1; i >= 0; i--) {
+        mainView.append(
+                "<li class='feed-post'>"
+              + "<img class='post-profile-image' src='/Content/Assets/" + info["profileImage"] + ".png' />"
+              + "<div class='post-user-name'>" + info["userName"] + "</div>"
+              + "<p class='post-text'>" + info["posts"][i]
+              + "</p></li>"
+          );
+        mainView.append(
+              "<i class='fa fa-thumbs-up'></i>"
+            + "<i class='fa fa-thumb-tack'></i>"
+            + "<i class='fa fa-comment'></i>"
+        );
+    }
+});
 }
 
 

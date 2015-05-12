@@ -86,8 +86,17 @@ namespace Bubblespace.Controllers
         public ActionResult Test()
         {
             AspNetUsers user = UserService.GetUserByEmail(User.Identity.Name);
-            UserService.GetAllFriends(user);
-            return Json("A S D");
+            AspNetUsers userToAdd = UserService.GetUserByEmail("j@h.com");
+            System.Diagnostics.Debug.WriteLine(userToAdd.Id);
+            var chats = ChatService.GetAllChats(user);
+            foreach (chats chat in chats) {
+                System.Diagnostics.Debug.WriteLine(chat.chat_name);
+            }
+            chats chatter = (from chate in chats
+                         where chate.C_ID == 1
+                         select chate).Single();
+            ChatService.AddChatUsers(chatter, userToAdd);
+            return Json("It Ran");
         }
 
         [HttpPost]
