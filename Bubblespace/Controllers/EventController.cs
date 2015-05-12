@@ -21,10 +21,10 @@ namespace Bubblespace.Controllers
         public ActionResult Create(FormCollection fc, HttpPostedFileBase contentImage)
         {
             events ev = new events();
-            ev.event_description = fc["description"];
-            ev.event_end_time = Convert.ToDateTime(fc["end_time"]);
-            ev.event_name = fc["event_name"];
-            ev.event_start_time = Convert.ToDateTime(fc["start_time"]);
+            ev.event_description = fc["event-description"];
+            ev.event_end_time = Convert.ToDateTime(fc["end-time"]);
+            ev.event_name = fc["event-name"];
+            ev.event_start_time = Convert.ToDateTime(fc["start-time"]);
             ev.FK_events_owner = User.Identity.Name;
 
             if (contentImage != null)
