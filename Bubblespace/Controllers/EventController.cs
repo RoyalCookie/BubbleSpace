@@ -20,11 +20,12 @@ namespace Bubblespace.Controllers
         [HttpPost]
         public ActionResult Create(FormCollection fc, HttpPostedFileBase contentImage)
         {
+            string dateFormat = "yyyy-MM-dd HH:mm:ss";
             events ev = new events();
             ev.event_description = fc["event-description"];
-            ev.event_end_time = Convert.ToDateTime(fc["end-time"]);
+            ev.event_end_time = DateTime.ParseExact(fc["end-time"], dateFormat, System.Globalization.CultureInfo.CurrentCulture);
             ev.event_name = fc["event-name"];
-            ev.event_start_time = Convert.ToDateTime(fc["start-time"]);
+            ev.event_start_time = DateTime.ParseExact(fc["start-time"], dateFormat, System.Globalization.CultureInfo.CurrentCulture);
             ev.FK_events_owner = User.Identity.Name;
 
             if (contentImage != null)
