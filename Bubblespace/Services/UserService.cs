@@ -109,19 +109,22 @@ namespace Bubblespace.Services
             //Selects friend that added you
             var friendAddeRemoved = (from x in db.friends_added.Where (y => y.FK_friends_added_users_Added == userFriend.Id).Where(z => z.FK_friends_added_users_Addee == userAdder.Id)
                                      select x).SingleOrDefault();
-            //If the friend was added by you, then change friended = false
-            if (friendRemoved.C_ID != 0 && friendRemoved.FK_friends_added_users_Added != null)
+            if(friendRemoved != null && friendAddeRemoved != null)
             {
-                friendRemoved.friended = false;
-                db.SaveChanges();
-                return true;
-            }
-            //If the friend added you, then change friended to false
-            else if(friendAddeRemoved.C_ID != 0 && friendAddeRemoved.FK_friends_added_users_Added != null)
-            {
-                friendAddeRemoved.friended = false;
-                db.SaveChanges();
-                return true;
+                //If the friend was added by you, then change friended = false
+                if(friendRemoved.C_ID != 0 && friendRemoved.FK_friends_added_users_Added != null)
+                {
+                    friendRemoved.friended = false;
+                    db.SaveChanges();
+                    return true;
+                }
+                //If the friend added you, then change friended to false
+                else if(friendAddeRemoved.C_ID != 0 && friendAddeRemoved.FK_friends_added_users_Added != null)
+                {
+                    friendAddeRemoved.friended = false;
+                    db.SaveChanges();
+                    return true;
+                }
             }
             return false;
         }
