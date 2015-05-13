@@ -49,7 +49,22 @@ namespace Bubblespace.Services
             db.post_comments.Add(comment);
             db.SaveChanges();
         }
+        static public List<post_likes> GetBurstCount(posts postBurst)
+        {
+            var db = new VERK2015_H17Entities1();
+            var burstCount = (from x in db.post_likes.Where(y => y.posts.C_ID == postBurst.C_ID || y.post_burst == true)
+                        select x).ToList();
 
+            return burstCount;
+        }
+        static public List<post_likes> GetBurstCount(post_comments postComment)
+        {
+            var db = new VERK2015_H17Entities1();
+            var burstCount = (from x in db.post_likes.Where(y => y.posts.C_ID == postComment.C_ID || y.post_burst == true)
+                              select x).ToList();
+
+            return burstCount;
+        }
         /* <summary>
          * Creates a like or a burst into the database depending on the values in the parameter
          * </summary>

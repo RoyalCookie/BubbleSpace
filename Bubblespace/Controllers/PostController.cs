@@ -283,9 +283,20 @@ namespace Bubblespace.Controllers
         }
 
         [HttpPost]
-        public ActionResult CommentBurstCount() 
+        public ActionResult CommentBurstCount(FormCollection fc) 
         {
-            return View();
+            posts post = new posts();
+            post.C_ID = Convert.ToInt32(fc["post_id"]);
+
+            return Json(PostService.GetBurstCount(post));
+        }
+        [HttpPost]
+        public ActionResult PostBurstCount(FormCollection fc)
+        {
+            post_comments postComment = new post_comments();
+            postComment.C_ID = Convert.ToInt32(fc["post_id"]);
+
+            return Json(PostService.GetBurstCount(postComment));
         }
 
         [HttpPost]

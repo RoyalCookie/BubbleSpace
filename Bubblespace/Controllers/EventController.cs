@@ -20,7 +20,7 @@ namespace Bubblespace.Controllers
                 string year = date[6].ToString() + date[7].ToString() + date[8].ToString() + date[9].ToString();
                 return new DateTime(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(day));
             }
-            return new DateTime(1753,1,1);
+            return new DateTime(6666, 6, 6);
         }
         [HttpPost]
         public ActionResult Create(FormCollection fc, HttpPostedFileBase contentImage)
