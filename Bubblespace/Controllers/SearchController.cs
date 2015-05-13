@@ -14,7 +14,6 @@ namespace Bubblespace.Controllers
         {
             AspNetUsers user = UserService.GetUserByEmail(User.Identity.Name);
             var users = SearchService.SearchUsersByName(user);
-
             return Json(users);
         }
         [HttpPost]

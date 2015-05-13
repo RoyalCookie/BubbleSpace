@@ -1,10 +1,8 @@
 ﻿/*
     TODO: This page requires javascript alert on noscript!
+
+    TODO: Show user posted to group on the newsfeed!
 */
-
-
-
-
 
 
 
@@ -286,7 +284,7 @@ function sendMessage(chatId) {
 function chatTab() {
     var chatlist = $("#list-view-items");
    chatlist.empty();
-    //addSearchFeature();
+    addSearchFeature();
     $.post("/Chat/GetUserChats", function (data) {
         for (var i = 0; i < data["chatId"].length; i++) {
             chatlist.append(
@@ -362,6 +360,7 @@ function addSearchFeature() {
         + "</li>"
     );
     document.getElementById("search-bar").onkeyup = function (event) {
+
         console.log($("#search-bar").val());
     }
 }
