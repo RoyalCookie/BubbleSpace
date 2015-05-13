@@ -369,7 +369,7 @@ $(function() {
                               "<li class='list-item'>"
                             + "<img src='/Images/Users/" + results[0][1][i] + "'/>"
                             + "<a onclick='friendMain(\"" + results[0][2][i] + "\"); return false;' id='user-name'>" + results[0][0][i] + "</a></li>"
-                            + "<img onclick='followUser(\""+ results[0][2][i] +"\")' title='Add Friend' class='add-friend-img' src='/Content/Assets/addFriend.png'/>"
+                            + "<div id='friendrequest-icon'><img onclick='followUser(\""+ results[0][2][i] +"\")' title='Add Friend' class='add-friend-img' src='/Content/Assets/addFriend.png'/></div>"
                         );
                     }
                 }
@@ -414,7 +414,20 @@ function followUser(id) {
     })
     .success(function (results) {
         if (result) {
-            alert(result);
+            $("#friendrequest-icon").empty().append("<img onclick='unfollowUser(\"" + id + "\")' title='Add Friend' class='add-friend-img' src='/Content/Assets/removeFriend.png'/>");
+        }
+    });
+}
+
+function followUser(id) {
+    $.ajax({
+        method: "POST",
+        url: "/User/RemoveFriend",
+        data: { user_id: id }
+    })
+    .success(function (results) {
+        if (result) {
+            $("#friendrequest-icon").empty().append("<img onclick='followUser(\"" + id + "\")' title='Add Friend' class='add-friend-img' src='/Content/Assets/addFriend.png'/>");
         }
     });
 }
