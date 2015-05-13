@@ -169,6 +169,7 @@ function newsFeed() {
     var mainView = $("#main-view");
     mainView.empty();
     $.post("/Post/GetAllUserPosts", function (posts) {
+        console.log(posts);
         for (var i = posts[0].length - 1; i >= 0; i--) {
             mainView.append(
                     "<li class='feed-post'>"
@@ -179,7 +180,7 @@ function newsFeed() {
               );
             mainView.append(
                   "<div class='post-feedback'>"
-                + "<i onclick=\"likePost(); return false;\" class='fa fa-thumbs-up'></i>"
+                + "<i onclick=\"likePost(" + posts[4][i] + "); return false;\" class='fa fa-thumbs-up'></i>"
                 + "<i class='fa fa-thumb-tack'></i>"
                 + "<i class='fa fa-comment'></i></div>"
             );
@@ -189,8 +190,15 @@ function newsFeed() {
     Ps.initialize(document.getElementById('main-view'));
 }
 
-function likePost() {
-    alert("like");
+function likePost(id) {
+    $.ajax({
+        method: "POST",
+        url: "/Post/LikePost",
+        data: { postId: id }
+    })
+    .success(function (data) {
+
+    });
 }
 
 function newPost(type, id) {
