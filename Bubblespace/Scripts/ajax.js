@@ -78,6 +78,8 @@ function createEventMain() {
                + "<label for='event-description'>Event Description</label>"
                + "<textarea class='form-control' name='event-description'></textarea>"
                + "<input type='file' id='image-upload' name='contentImage' accept='image/*'>"
+               + "<p>From: <input type='text' id='datepickerFrom' name='from'></p>"
+               + "<p>To: <input type='text' id='datepickerTo' name='to'></p>"
                + "<input type='submit' class='btn btn-default btn-create' value='Create'>"
                + "</form>"
             );
@@ -85,6 +87,9 @@ function createEventMain() {
     $(":file").filestyle({ input: false });
     $(":file").filestyle({ iconName: "glyphicon-inbox" });
     $(":file").filestyle('size', 'xs');
+
+    $("#datepickerFrom").datepicker();
+    $("#datepickerTo").datepicker();
 }
 
 function groupMain(id) {
