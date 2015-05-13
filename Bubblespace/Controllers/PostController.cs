@@ -316,7 +316,12 @@ namespace Bubblespace.Controllers
 
             return Json(returnObject);
         }
+        [HttpPost]
+        public ActionResult GetPostLikes(FormCollection collection)
+        {
 
+            return View();
+        }
         [HttpPost]
         public ActionResult GetAllPosts()
         {
@@ -350,12 +355,15 @@ namespace Bubblespace.Controllers
                                 select post.AspNetUsers.profile_image).ToList();
             var posterId = (from post in allPosts
                             select post.AspNetUsers.Id).ToList();
+            var postLikeCount = (from post in allPosts
+                                 select post.post_likes.Count.ToString()).ToList();
 
             List<List<string>> returnJson = new List<List<string>>();
             returnJson.Add(posterNames);
             returnJson.Add(postBody);
             returnJson.Add(profileImage);
             returnJson.Add(posterId);
+            returnJson.Add(postLikeCount);
             return Json(returnJson);
         }
 

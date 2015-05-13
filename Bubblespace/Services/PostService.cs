@@ -76,8 +76,13 @@ namespace Bubblespace.Services
         static public void SaveLikeComment(like_comments commentLike)
         {
             var db = new VERK2015_H17Entities1();
-            db.like_comments.Add(commentLike);
-            db.SaveChanges();
+            int allowUserToLike = (from x in db.post_likes.Where(y => y.FK_group_post_like_users == commentLike.AspNetUsers.UserName || y.FK_group_post_likes_group_posts == commentLike.FK_like_comments_post_comments)
+                                   select x).Count();
+            if(allowUserToLike == 0)
+            {
+                db.like_comments.Add(commentLike);
+                db.SaveChanges();
+            }
         }
 
         static public List<posts> GetAllPosts()
@@ -132,12 +137,14 @@ namespace Bubblespace.Services
 
             var userFriends = UserService.GetAllFriends(user);
             var userPosts = (from x in db.posts.Where(y => y.FK_posts_users == user.Id)
-                         select x).ToList();
+                             join p in db.post_likes on x.C_ID equals p.FK_group_post_likes_group_posts
+                             select x).ToList();
 
             foreach(AspNetUsers u in userFriends)
             {
                 friendPosts.AddRange((from x in db.posts.Where(y => y.FK_posts_users == u.Id)
-                               select x).ToList());
+                                      join p in db.post_likes on x.C_ID equals p.FK_group_post_likes_group_posts
+                                      select x).ToList());
             }
 
             postRet.AddRange(friendPosts);
