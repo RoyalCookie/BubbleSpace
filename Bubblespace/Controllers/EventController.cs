@@ -1,39 +1,40 @@
-﻿
-using Bubblespace.Services;
+﻿using Bubblespace.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace Bubblespace.Controllers
 {
     public class EventController : Controller
     {
-        private DateTime ParseDate(string date)
+        private DateTime? ParseDate(string date)
         {
-            if(date != string.Empty)
-            {
-                string month = date[0].ToString() + date[1].ToString();
-                string day = date[3].ToString() + date[4].ToString();
-                string year = date[6].ToString() + date[7].ToString() + date[8].ToString() + date[9].ToString();
-                return new DateTime(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(day));
+            if (date == String.Empty) {
+                return null;
             }
-            return new DateTime(6666, 6, 6);
+            DateTime dt = DateTime.ParseExact(date,
+                                  "MM/dd/yyyy",
+                                  CultureInfo.InvariantCulture);
+            return dt;
         }
+
         [HttpPost]
-        public ActionResult Create(FormCollection fc, HttpPostedFileBase contentImage)
+        public ActionResult Create(FormCollection collection, HttpPostedFileBase contentImage)
         {
             //05/16/2015
-            events ev = new events();
-            ev.event_description = fc["event-description"];
-            ev.event_end_time = ParseDate(fc["end-time"]);
-            ev.event_start_time = ParseDate(fc["start-time"]);
-            ev.event_name = fc["event-name"];
-            ev.event_end_time = ParseDate(fc["end-time"]);
-            ev.FK_events_owner = UserService.GetUserByEmail(User.Identity.Name).Id;
-
+            events eventToAdd = new events();
+            eventToAdd.event_description = collection["event-description"];
+            eventToAdd.event_end_time = ParseDate(collection["end-time"]);
+            eventToAdd.event_start_time = ParseDate(collection["start-time"]);
+            eventToAdd.event_name = collection["event-name"];
+            eventToAdd.event_end_time = ParseDate(collection["end-time"]);
+            eventToAdd.FK_events_owner = UserService.GetUserByEmail(User.Identity.Name).Id;
+            System.Diagnostics.Debug.WriteLine(collection["start-time"]);
             if (contentImage != null)
             {
                 string pic = System.IO.Path.GetFileName(contentImage.FileName);
@@ -58,10 +59,10 @@ namespace Bubblespace.Controllers
                 contentImage.SaveAs(path);
 
                 // Setting the image name
-                ev.event_profile_image = result;
+                eventToAdd.event_profile_image = result;
             }
 
-            return Json(EventService.CreateEvent(ev));
+            return Json(EventService.CreateEvent(eventToAdd));
         }
 
         public ActionResult PostToEvent()

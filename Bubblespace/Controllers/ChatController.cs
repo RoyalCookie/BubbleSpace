@@ -49,6 +49,24 @@ namespace Bubblespace.Controllers
         }
 
         [HttpPost]
+        public ActionResult GetLiveMessages(FormCollection collection){
+            chats chat = ChatService.GetChatById(Convert.ToInt32(collection["chatId"]));
+            List<messages> retMessages = ChatService.GetMessages(chat).Where(x => x.C_ID > Convert.ToInt32(collection["lastId"])).ToList();
+            var retObj = new
+            {
+                id =        (from message in retMessages
+                            select message.C_ID).ToList(),
+                sender =    (from message in retMessages
+                            select message.AspNetUsers.NickName).ToList(),
+                message =   (from message in retMessages
+                            select message.message).ToList(),
+                timeStamp = (from message in retMessages
+                            select message.time_stamp).ToList()
+            };
+            return Json(retObj);
+        }
+        
+        [HttpPost]
         public ActionResult GetAllMessagesFromChat(FormCollection collection) 
         {
             chats chat = ChatService.GetChatById(Convert.ToInt32(collection["chatId"]));
