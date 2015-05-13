@@ -104,7 +104,21 @@ namespace Bubblespace.Services
             db.posts.Add(newPost);
             db.SaveChanges();			
 		}
+        static public List<posts> GetAllGroupPosts(bubble_groups bubbleGroup)
+        {
+            var db = new VERK2015_H17Entities1();
+            var groupPosts = (from x in db.posts.Where(y => y.FK_posts_bubble_groups == bubbleGroup.C_ID)
+                              select x).ToList();
 
+            return groupPosts;
+        }
+        static public List<group_users> GetAllGroupUsers(bubble_groups bubbleGroup)
+        {
+            var db = new VERK2015_H17Entities1();
+            var groupUsers = (from x in db.group_users.Where(y => y.FK_group_users_bubble_group == bubbleGroup.C_ID)
+                              select x).ToList();
+            return groupUsers;
+        }
        /* <summary></summary>
         * <param name="ID"></param>
         * <returns></returns>
