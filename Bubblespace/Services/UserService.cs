@@ -50,10 +50,10 @@ namespace Bubblespace.Services
         
         /* <summary>user adds a friend</summary>
          * <param name="friends">object of the model friends_added</param>
-         * <returns>no return</returns>
+         * <returns>bool</returns>
          * <author>Valgeir</author>
          */
-        static public void AddFriend(AspNetUsers userAdder, AspNetUsers userFriended)
+        static public bool AddFriend(AspNetUsers userAdder, AspNetUsers userFriended)
         {
             //TODO: Add trigger function for if the friend was a friend before and then removed
               var db = new VERK2015_H17Entities1();
@@ -64,31 +64,33 @@ namespace Bubblespace.Services
              //Checks if the user added you
              var friendExistOther = (from x in db.friends_added.Where(y => y.FK_friends_added_users_Added == userFriended.Id).Where(z => z.FK_friends_added_users_Addee == userAdder.Id)
                                 select x).SingleOrDefault();
-             //If there already exist a record of your friendship where you added him, change friended to true                  
-             if(friendExist.C_ID != 0 && friendExist.FK_friends_added_users_Added != null)
-             {
-                friendExist.friended = true;
-                db.SaveChanges();
-             }
-             //If there exists a record of your friendship where user added you, change friended to true
-             else if(friendExistOther.C_ID != 0 && friendExistOther.FK_friends_added_users_Added != null)
-             {
-                 friendExistOther.friended = true;
-                 db.SaveChanges();
-             }
              //Else create a new record of friendship
-             else
-             {
+            if(friendExist == null && friendExistOther == null)
+            {
                 friends_added addFriend = new friends_added();
                 addFriend.FK_friends_added_users_Added = userAdder.Id;
                 addFriend.FK_friends_added_users_Addee = userFriended.Id;
                 addFriend.friended = true;
              
                 db.friends_added.Add(addFriend);
-                db.SaveChanges();     
+                db.SaveChanges();
+                return true;
              }
-             
-             
+             //If there already exist a record of your friendship where you added him, change friended to true                  
+             else if(friendExist.C_ID != 0 && friendExist.FK_friends_added_users_Added != null)
+             {
+                friendExist.friended = true;
+                db.SaveChanges();
+                return true;
+             }
+             //If there exists a record of your friendship where user added you, change friended to true
+             else if(friendExistOther.C_ID != 0 && friendExistOther.FK_friends_added_users_Added != null)
+             {
+                 friendExistOther.friended = true;
+                 db.SaveChanges();
+                 return true;
+             }
+            return false;
         }
 
         /* <summary>user removes a friend</summary>

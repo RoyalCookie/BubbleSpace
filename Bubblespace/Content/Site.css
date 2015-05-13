@@ -256,6 +256,11 @@
         position: absolute;
         left: 230px !important;
     }
+
+    .add-friend-img{
+        margin-left: 90%;
+        margin-top: -50px;
+    }
 }
 
 /* Animation Logic */

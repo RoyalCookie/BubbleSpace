@@ -2,12 +2,9 @@
     TODO: This page requires javascript alert on noscript!
 
     TODO: Show user posted to group on the newsfeed!
-
         
     MAYBE: replace datepicker with http://xdsoft.net/jqplugins/datetimepicker/
 */
-
-
 
 
 // Main Functions
@@ -356,21 +353,51 @@ $(function() {
         if (!$("#search-bar").val() == "") {
             $.ajax({
                 method: "POST",
-                url: "/Search/Users",
-                data: { prefix_string: $("#search-bar").val() }
+                url: "/Search/GetResults",
+                data: { search_string: $("#search-bar").val() }
             })
-            .success(function (users) {
+            .success(function (results) {
                 var searchList = $("#list-view-items");
                 searchList.empty();
                 searchList.append("<li>Users</li>")
-                if (users[0].length == 0) {
+                if (results[0][0].length == 0) {
                     searchList.append("<li class='list-item'>Nothing Found</li>")
                 }
                 else {
-                    for (var i = 0; i < users[0].length; i++) {
+                    for (var i = 0; i < results[0][0].length; i++) {
                         searchList.append(
                               "<li class='list-item'>"
-                            + "<a onclick='friendMain('" + users[1][i] + "'); return false;' id='user-name'>" + users[0][i] + "</a></li>"
+                            + "<img src='/Images/Users/" + results[0][1][i] + "'/>"
+                            + "<a onclick='friendMain(\"" + results[0][2][i] + "\"); return false;' id='user-name'>" + results[0][0][i] + "</a></li>"
+                            + "<img onclick='followUser(\""+ results[0][2][i] +"\")' title='Add Friend' class='add-friend-img' src='/Content/Assets/addFriend.png'/>"
+                        );
+                    }
+                }
+
+                searchList.append("<li>Groups</li>")
+                if (results[1][0].length == 0) {
+                    searchList.append("<li class='list-item'>Nothing Found</li>")
+                }
+                else {
+                    for (var i = 0; i < results[1][0].length; i++) {
+                        searchList.append(
+                              "<li class='list-item'>"
+                            + "<img src='/Images/Groups/" + results[1][1][i] + "'/>"
+                            + "<a onclick='groupMain(\"" +results[1][2][i]+ "\"); return false;' id='user-name'>" + results[1][0][i] + "</a></li>"
+                        );
+                    }
+                }
+
+                searchList.append("<li>Events</li>")
+                if (results[2][0].length == 0) {
+                    searchList.append("<li class='list-item'>Nothing Found</li>")
+                }
+                else {
+                    for (var i = 0; i < results[2][0].length; i++) {
+                        searchList.append(
+                              "<li class='list-item'>"
+                            + "<img src='/Images/Events/" + results[2][1][i] + "'/>"
+                            + "<a onclick='eventMain(\"" + results[2][2][i] + "\"); return false;' id='user-name'>" + results[2][0][i] + "</a></li>"
                         );
                     }
                 }
@@ -379,6 +406,19 @@ $(function() {
     }
 });
     
+function followUser(id) {
+    $.ajax({
+        method: "POST",
+        url: "/User/FriendRequest",
+        data: { user_id: id }
+    })
+    .success(function (results) {
+        if (result) {
+            alert(result);
+        }
+    });
+}
+
 function refresh() {    
     friendsTab();
     newsFeed();

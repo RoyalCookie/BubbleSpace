@@ -26,9 +26,14 @@ namespace Bubblespace.Controllers
             return View();
         }
 
-        public ActionResult FriendRequest()
+        public ActionResult FriendRequest(FormCollection fc)
         {
-            return View();
+            AspNetUsers currentUser = UserService.GetUserByEmail(User.Identity.Name);
+            AspNetUsers possibleFriend = UserService.GetUserById(fc["user_id"]);
+
+            UserService.AddFriend(currentUser, possibleFriend);
+
+            return Json(null);
         }
 
         public ActionResult FriendRemove()
