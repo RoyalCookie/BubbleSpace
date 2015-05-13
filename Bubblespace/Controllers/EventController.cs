@@ -11,21 +11,27 @@ namespace Bubblespace.Controllers
 {
     public class EventController : Controller
     {
-        //
-        // GET: /Event/
-        public ActionResult Index()
+        private DateTime ParseDate(string date)
         {
-            return View();
+            if(date != string.Empty)
+            {
+                string month = date[0].ToString() + date[1].ToString();
+                string day = date[3].ToString() + date[4].ToString();
+                string year = date[6].ToString() + date[7].ToString() + date[8].ToString() + date[9].ToString();
+                return new DateTime(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(day));
+            }
+            return new DateTime();
         }
         [HttpPost]
         public ActionResult Create(FormCollection fc, HttpPostedFileBase contentImage)
         {
-            string dateFormat = "yyyy-MM-dd HH:mm:ss";
+            //05/16/2015
             events ev = new events();
             ev.event_description = fc["event-description"];
-            ev.event_end_time = DateTime.ParseExact(fc["end-time"], dateFormat, System.Globalization.CultureInfo.CurrentCulture);
+            ev.event_end_time = ParseDate(fc["end-time"]);
+            ev.event_start_time = ParseDate(fc["start-time"]);
             ev.event_name = fc["event-name"];
-            ev.event_start_time = DateTime.ParseExact(fc["start-time"], dateFormat, System.Globalization.CultureInfo.CurrentCulture);
+            ev.event_end_time = ParseDate(fc["end-time"]);
             ev.FK_events_owner = User.Identity.Name;
 
             if (contentImage != null)
