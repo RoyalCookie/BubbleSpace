@@ -99,7 +99,7 @@ namespace Bubblespace.Services
          * <returns>no return</returns>
          * <author>Valgeir</author>
          */
-        static public void RemoveFriend(AspNetUsers userAdder, AspNetUsers userFriend)
+        static public bool RemoveFriend(AspNetUsers userAdder, AspNetUsers userFriend)
         {
             var db = new VERK2015_H17Entities1();
             
@@ -114,13 +114,16 @@ namespace Bubblespace.Services
             {
                 friendRemoved.friended = false;
                 db.SaveChanges();
+                return true;
             }
             //If the friend added you, then change friended to false
             else if(friendAddeRemoved.C_ID != 0 && friendAddeRemoved.FK_friends_added_users_Added != null)
             {
                 friendAddeRemoved.friended = false;
                 db.SaveChanges();
+                return true;
             }
+            return false;
         }
 
         /* <summary>Admin bans a user from BubbleSpace</summary>
