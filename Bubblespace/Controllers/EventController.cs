@@ -20,7 +20,7 @@ namespace Bubblespace.Controllers
                 string year = date[6].ToString() + date[7].ToString() + date[8].ToString() + date[9].ToString();
                 return new DateTime(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(day));
             }
-            return new DateTime();
+            return new DateTime(1753,1,1);
         }
         [HttpPost]
         public ActionResult Create(FormCollection fc, HttpPostedFileBase contentImage)
@@ -32,7 +32,7 @@ namespace Bubblespace.Controllers
             ev.event_start_time = ParseDate(fc["start-time"]);
             ev.event_name = fc["event-name"];
             ev.event_end_time = ParseDate(fc["end-time"]);
-            ev.FK_events_owner = User.Identity.Name;
+            ev.FK_events_owner = UserService.GetUserByEmail(User.Identity.Name).Id;
 
             if (contentImage != null)
             {
