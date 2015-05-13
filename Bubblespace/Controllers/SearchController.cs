@@ -10,11 +10,19 @@ namespace Bubblespace.Controllers
     public class SearchController : Controller
     {
         [HttpPost]
-        public ActionResult Users()
+        public ActionResult Users(FormCollection fc)
         {
-            AspNetUsers user = UserService.GetUserByEmail(User.Identity.Name);
-            var users = SearchService.SearchUsersByName(user);
-            return Json(users);
+            AspNetUsers user = new AspNetUsers();
+            user.NickName = fc["prefix_string"];
+            var searchResults = SearchService.SearchUsersByName(user);
+            List<List<string>> returnJson = new List<List<string>>();
+            var userNames = (from usr in searchResults
+                              select usr.NickName).ToList();
+            var userImages = (from usr in searchResults
+                              select usr.profile_image).ToList();
+            returnJson.Add(userNames);
+            returnJson.Add(userNames);
+            return Json(returnJson);
         }
         [HttpPost]
         public ActionResult Groups(FormCollection fc)
