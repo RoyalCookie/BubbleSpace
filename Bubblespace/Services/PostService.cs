@@ -31,11 +31,12 @@ namespace Bubblespace.Services
         * <returns>Nothing</returns>
         * <author>Janus</author>
         */
-        static public void SaveLikePost(post_likes postLike)
+        static public int SaveLikePost(post_likes postLike)
         {
             var db = new VERK2015_H17Entities1();
             db.post_likes.Add(postLike);
             db.SaveChanges();
+            return db.post_likes.Count();
         }
 
         /* <summary></summary>

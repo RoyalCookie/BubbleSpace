@@ -123,14 +123,13 @@ namespace Bubblespace.Controllers
             likeToInsert.post_like = true;
             try
             {
-                PostService.SaveLikePost(likeToInsert);
+                int likeCount = PostService.SaveLikePost(likeToInsert);
+                return Json(likeCount);
             }
             catch (Exception)
             {
                 return Json("{\"Error\": \"Couldn't Insert Into Database\",\"Code\": 2}");
-            }
-
-            return Json(likeToInsert);
+            }            
         }
 
         /* <summary>
