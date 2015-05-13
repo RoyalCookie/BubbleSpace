@@ -16,7 +16,7 @@ function friendsTab() {
             friendslist.append(     
                   "<li class='list-item'>"
                 + "<img src='/Images/Users/" + data[1][i] + "'/>"
-                + "<a onclick='friendMain(\"" + data[2][i] + "\"); return false;' id='user-name'>" + data[0][i] + "</a></li>"
+                + "<a onclick='friendMain(\"" + data[2][i] + "\"); return false;' class='list-name'>" + data[0][i] + "</a></li>"
             );
         }
     })
@@ -119,13 +119,13 @@ function friendMain(id) {
                    "<li class='feed-post'>"
                  + "<img class='post-profile-image' src='/Images/Users/" + info["profileImage"] + "' />"
                  + "<div class='post-user-name'><a onclick='friendMain(\"" + info["Id"] + "\"); return false;'>" + info["userName"] + "</a></div>"
-                 + "<p class='post-text'>" + info["posts"][i]
-                 + "</p></li>"
+                 + "<p class='post-text'>" + info["posts"][i] + "</p>"
+                 + "</li>"
              );
            mainView.append(
-                 "<i class='fa fa-thumbs-up'></i>"
+                 "<div class='post-feedback'><i class='fa fa-thumbs-up'></i>"
                + "<i class='fa fa-thumb-tack'></i>"
-               + "<i class='fa fa-comment'></i>"
+               + "<i class='fa fa-comment'></i></div>"
            );
        }
        newPost("friendPage", info["Id"]);
@@ -178,14 +178,19 @@ function newsFeed() {
                   + "</p></li>"
               );
             mainView.append(
-                  "<i class='fa fa-thumbs-up'></i>"
+                  "<div class='post-feedback'>"
+                + "<i onclick=\"likePost(); return false;\" class='fa fa-thumbs-up'></i>"
                 + "<i class='fa fa-thumb-tack'></i>"
-                + "<i class='fa fa-comment'></i>"
+                + "<i class='fa fa-comment'></i></div>"
             );
         }
     })
     mainView.perfectScrollbar();
     Ps.initialize(document.getElementById('main-view'));
+}
+
+function likePost() {
+    alert("like");
 }
 
 function newPost(type, id) {
@@ -368,7 +373,7 @@ $(function() {
                         searchList.append(
                               "<li class='list-item'>"
                             + "<img src='/Images/Users/" + results[0][1][i] + "'/>"
-                            + "<a onclick='friendMain(\"" + results[0][2][i] + "\"); return false;' id='user-name'>" + results[0][0][i] + "</a></li>"
+                            + "<a onclick='friendMain(\"" + results[0][2][i] + "\"); return false;' class='list-name'>" + results[0][0][i] + "</a></li>"
                             + "<div id='friendrequest-icon-" + results[0][2][i] + "'><img onclick='followUser(\""+ results[0][2][i] +"\")' title='Add Friend' class='add-friend-img' src='/Content/Assets/addFriend.png'/></div>"
                         );
                     }
@@ -383,7 +388,7 @@ $(function() {
                         searchList.append(
                               "<li class='list-item'>"
                             + "<img src='/Images/Groups/" + results[1][1][i] + "'/>"
-                            + "<a onclick='groupMain(\"" +results[1][2][i]+ "\"); return false;' id='user-name'>" + results[1][0][i] + "</a></li>"
+                            + "<a onclick='groupMain(\"" +results[1][2][i]+ "\"); return false;' class='list-name'>" + results[1][0][i] + "</a></li>"
                         );
                     }
                 }
@@ -397,7 +402,7 @@ $(function() {
                         searchList.append(
                               "<li class='list-item'>"
                             + "<img src='/Images/Events/" + results[2][1][i] + "'/>"
-                            + "<a onclick='eventMain(\"" + results[2][2][i] + "\"); return false;' id='user-name'>" + results[2][0][i] + "</a></li>"
+                            + "<a onclick='eventMain(\"" + results[2][2][i] + "\"); return false;' class='list-name'>" + results[2][0][i] + "</a></li>"
                         );
                     }
                 }

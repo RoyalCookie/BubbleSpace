@@ -3,6 +3,7 @@
 
 @media (min-width: 768px) {
     body {
+        background-color: rgb(237,237,237);
         padding-bottom: 20px;
         height: 100%;
         overflow-x: hidden;
@@ -82,18 +83,20 @@
     }
 
     #list-view {
-        height: 80vh;
+        border-radius: 2%;
+        height: 85vh;
         top: 5px;
         left: 5px;
     }
 
     #main-view {
         padding-top: 10px;
-        height: 65vh;
+        height: 60vh;
         left: 10px; 
         top: 5px;
-        margin-top: 1vh;
+        margin-top: 10vh;
         overflow-y:scroll;
+        border-radius: 2%;
     }
 
     #head-view {
@@ -171,10 +174,10 @@
         list-style: none;
         font-size: 12px;
         left: -55px;
-        border-bottom: rgb(145, 145, 145) 1px solid;
-        border-left: rgb(145, 145, 145) 1px solid;
-        margin-left: -52px;
-        margin-top: 2px;  
+        background-color: rgb(233,233,233);
+        border-radius: 2%;
+        margin-left: -45px;
+        margin-top: 5px;  
     }
 
     .post-profile-image, .list-item img{
@@ -208,12 +211,18 @@
     }
 
     .feed-post{
-        border: rgb(145, 145, 145) 1px solid;
         list-style: none;
+        padding-bottom: 10px;
+        border-radius: 2%;
         margin-top: 15px;
+        margin-bottom: 15px;
     }
 
-    .post-user-name{
+    .list-name, .post-user-name{
+        margin-left: 10px;
+    }
+
+   .post-user-name{
         display: inline;
         color: rgb(26,18,2);
         font-weight: bold;
@@ -223,11 +232,16 @@
     }
 
     .post-text{
-        margin-left: 50px;
+        margin-left: 80px;
+        margin-bottom: 25px;
     }
 
     .new-post{
         float: right;
+    }
+
+    .feed-post{
+        background-color: rgb(233,233,233);
     }
 
     .bootstrap-filestyle{
@@ -244,8 +258,10 @@
     }
 
     #search-bar, .create-button{
+        margin-top: 5px;
+        margin-bottom: 5px;
         width: calc(100% + 50px); 
-        margin-left: -50px;
+        margin-left: -46px;
     }
 
     .bootstrap-filestyle{
@@ -261,6 +277,17 @@
         margin-left: 90%;
         margin-top: -50px;
     }
+
+    a{ 
+        cursor: pointer; 
+    }
+    
+    .post-feedback{
+        position: absolute;
+        margin-top: -40px;
+        padding-left: 5px !important;
+    }
+
 }
 
 /* Animation Logic */
