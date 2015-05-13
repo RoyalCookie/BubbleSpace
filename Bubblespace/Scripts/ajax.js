@@ -2,7 +2,11 @@
     TODO: This page requires javascript alert on noscript!
 
     TODO: Show user posted to group on the newsfeed!
+
+        
+    MAYBE: replace datepicker with http://xdsoft.net/jqplugins/datetimepicker/
 */
+
 
 
 
@@ -10,7 +14,6 @@
 function friendsTab() {
     var friendslist = $("#list-view-items");
     friendslist.empty();
-    addSearchFeature();
     $.post("/User/GetFriends", function (data) {
         for (var i = 0; i < data[0].length; i++) {
             friendslist.append(     
@@ -25,7 +28,6 @@ function friendsTab() {
 function groupsTab() {
     var groupList = $("#list-view-items");
     groupList.empty();
-    addSearchFeature();
     groupList.append("<li><a onclick='createGroupMain(); return false;' title='Create Group' class='create-button btn btn-default btn-sm'><span class='glyphicon glyphicon-plus'></span></a></li>");
     $.post("/Group/GetAllGroups", function (data) {
         for (var i = 0; i < data[0].length; i++) {
@@ -136,7 +138,6 @@ function friendMain(id) {
 function eventsTab() {
     var eventsList = $("#list-view-items");
     eventsList.empty();
-    addSearchFeature();
     eventsList.append("<li><a onclick='createEventMain(); return false;' title='Create Event' class='create-button btn btn-default btn-sm'><span class='glyphicon glyphicon-plus'></span></a></li>");
     $.post("/Event/Events", function (events) {
         for (var i = 0; i < events[0].length; i++) {
@@ -284,7 +285,6 @@ function sendMessage(chatId) {
 function chatTab() {
     var chatlist = $("#list-view-items");
    chatlist.empty();
-    addSearchFeature();
     $.post("/Chat/GetUserChats", function (data) {
         for (var i = 0; i < data["chatId"].length; i++) {
             chatlist.append(
@@ -351,19 +351,33 @@ function chatMain(id) {
     });
 }
 
-function addSearchFeature() {
-    var list = $("#list-view-items");
-    list.empty();
-    list.append(
-          "<li>"
-        + "<input type='text' id='search-bar' class='form-control' placeholder='search..'/>"
-        + "</li>"
-    );
+$(function() {
     document.getElementById("search-bar").onkeyup = function (event) {
-
-        console.log($("#search-bar").val());
+        if (!$("#search-bar").val() == "") {
+            $.ajax({
+                method: "POST",
+                url: "/Search/Users",
+                data: { prefix_string: $("#search-bar").val() }
+            })
+            .success(function (users) {
+                var searchList = $("#list-view-items");
+                searchList.empty();
+                searchList.append("<li>Users</li>")
+                if (users[0].length == 0) {
+                    searchList.append("<li class='list-item'>Nothing Found</li>")
+                }
+                else {
+                    for (var i = 0; i < users[0].length; i++) {
+                        searchList.append(
+                              "<li class='list-item'>"
+                            + "<a onclick='friendMain('" + users[1][i] + "'); return false;' id='user-name'>" + users[0][i] + "</a></li>"
+                        );
+                    }
+                }
+            });
+        }
     }
-}
+});
     
 function refresh() {    
     friendsTab();
