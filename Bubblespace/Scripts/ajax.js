@@ -369,7 +369,7 @@ $(function() {
                               "<li class='list-item'>"
                             + "<img src='/Images/Users/" + results[0][1][i] + "'/>"
                             + "<a onclick='friendMain(\"" + results[0][2][i] + "\"); return false;' id='user-name'>" + results[0][0][i] + "</a></li>"
-                            + "<div id='friendrequest-icon'><img onclick='followUser(\""+ results[0][2][i] +"\")' title='Add Friend' class='add-friend-img' src='/Content/Assets/addFriend.png'/></div>"
+                            + "<div id='friendrequest-icon-" + results[0][2][i] + "'><img onclick='followUser(\""+ results[0][2][i] +"\")' title='Add Friend' class='add-friend-img' src='/Content/Assets/addFriend.png'/></div>"
                         );
                     }
                 }
@@ -412,22 +412,22 @@ function followUser(id) {
         url: "/User/FriendRequest",
         data: { user_id: id }
     })
-    .success(function (results) {
+    .success(function (result) {
         if (result) {
-            $("#friendrequest-icon").empty().append("<img onclick='unfollowUser(\"" + id + "\")' title='Add Friend' class='add-friend-img' src='/Content/Assets/removeFriend.png'/>");
+            $("#friendrequest-icon-" + id).empty().append("<img onclick='unfollowUser(\"" + id + "\")' title='Add Friend' class='add-friend-img' src='/Content/Assets/removeFriend.png'/>");
         }
     });
 }
 
-function followUser(id) {
+function unfollowUser(id) {
     $.ajax({
         method: "POST",
-        url: "/User/RemoveFriend",
+        url: "/User/FriendRemove",
         data: { user_id: id }
     })
-    .success(function (results) {
+    .success(function (result) {
         if (result) {
-            $("#friendrequest-icon").empty().append("<img onclick='followUser(\"" + id + "\")' title='Add Friend' class='add-friend-img' src='/Content/Assets/addFriend.png'/>");
+            $("#friendrequest-icon-" + id).empty().append("<img onclick='followUser(\"" + id + "\")' title='Add Friend' class='add-friend-img' src='/Content/Assets/addFriend.png'/>");
         }
     });
 }
