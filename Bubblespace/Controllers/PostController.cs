@@ -84,7 +84,6 @@ namespace Bubblespace.Controllers
                 postToInsert.content_picture = result;
             }
 
-
             try
             {
                 PostService.SavePostToDB(postToInsert);
@@ -107,7 +106,6 @@ namespace Bubblespace.Controllers
         [HttpPost]
         public ActionResult LikePost(FormCollection collection)
         {
-
             if (!User.Identity.IsAuthenticated)
             {
                 return Json("{\"Error\": \"Bad Authentication\",\"Code\": 1}");
@@ -330,14 +328,18 @@ namespace Bubblespace.Controllers
                                 select post.AspNetUsers.profile_image).ToList();
             var posterId = (from post in allPosts
                             select post.AspNetUsers.Id).ToList();
+            var postId = (from post in allPosts
+                          select post.C_ID.ToString()).ToList();
 
             List<List<string>> returnJson = new List<List<string>>();
             returnJson.Add(posterNames);
             returnJson.Add(postBody);
             returnJson.Add(profileImage);
             returnJson.Add(posterId);
+            returnJson.Add(postId);
             return Json(returnJson);
         }
+
         [HttpPost]
         public ActionResult GetAllUserPosts()
         {
@@ -351,12 +353,15 @@ namespace Bubblespace.Controllers
                                 select post.AspNetUsers.profile_image).ToList();
             var posterId = (from post in allPosts
                             select post.AspNetUsers.Id).ToList();
+            var postId = (from post in allPosts
+                          select post.C_ID.ToString()).ToList();
 
             List<List<string>> returnJson = new List<List<string>>();
             returnJson.Add(posterNames);
             returnJson.Add(postBody);
             returnJson.Add(profileImage);
             returnJson.Add(posterId);
+            returnJson.Add(postId);
             return Json(returnJson);
         }
 
