@@ -112,7 +112,6 @@ namespace Bubblespace.Controllers
             returnJson.Add(group.group_name);
             returnJson.Add(group.group_description);
             returnJson.Add(group.group_profile_image);
-
             return Json(returnJson);
         }
 
@@ -126,9 +125,32 @@ namespace Bubblespace.Controllers
             bubble_groups group = new bubble_groups();
             group.C_ID = Convert.ToInt32(collection["groupId"]);
             List<posts> allPosts = GroupService.GetAllGroupPosts(group);
-            var allContent = (from pst in allPosts
-                              select pst.content_text).ToList();
-            return Json(allContent);
+            var posterNames = (from post in allPosts
+                               select post.AspNetUsers.NickName).ToList();
+            var postBody = (from post in allPosts
+                            select post.content_text).ToList();
+            var profileImage = (from post in allPosts
+                                select post.AspNetUsers.profile_image).ToList();
+            var posterId = (from post in allPosts
+                            select post.AspNetUsers.Id).ToList();
+            var postId = (from post in allPosts
+                          select post.C_ID.ToString()).ToList();
+            var postLikeCount = (from post in allPosts
+                                 select post.post_likes.Where(y => y.post_like == true).Count().ToString()).ToList();
+            var postBurstcount = (from post in allPosts
+                                  select post.post_likes.Where(y => y.post_burst == true).Count().ToString()).ToList();
+
+            List<List<string>> returnJson = new List<List<string>>();
+
+            returnJson.Add(posterNames);
+            returnJson.Add(postBody);
+            returnJson.Add(profileImage);
+            returnJson.Add(posterId);
+            returnJson.Add(postId);
+            returnJson.Add(postLikeCount);
+            returnJson.Add(postBurstcount);
+
+            return Json(returnJson);
         }
 	}
 }
