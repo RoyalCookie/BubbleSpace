@@ -139,6 +139,8 @@ namespace Bubblespace.Controllers
                                  select post.post_likes.Where(y => y.post_like == true).Count().ToString()).ToList();
             var postBurstcount = (from post in allPosts
                                   select post.post_likes.Where(y => y.post_burst == true).Count().ToString()).ToList();
+            var postImage = (from post in allPosts
+                             select post.content_picture).ToList();
 
             List<List<string>> returnJson = new List<List<string>>();
 
@@ -149,6 +151,7 @@ namespace Bubblespace.Controllers
             returnJson.Add(postId);
             returnJson.Add(postLikeCount);
             returnJson.Add(postBurstcount);
+            returnJson.Add(postImage);
 
             return Json(returnJson);
         }

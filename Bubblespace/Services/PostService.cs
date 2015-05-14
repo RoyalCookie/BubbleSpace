@@ -46,6 +46,8 @@ namespace Bubblespace.Services
             
             return totalPostLikes;
         }
+
+
         static public int SaveBurstPost(post_likes burst)
         {
             var db = new VERK2015_H17Entities1();
@@ -61,6 +63,7 @@ namespace Bubblespace.Services
                               select x).Count();
             return burstCount;
         }
+
         /* <summary></summary>
          * <param name="ID"></param>
          * <returns></returns>
@@ -72,6 +75,7 @@ namespace Bubblespace.Services
             db.post_comments.Add(comment);
             db.SaveChanges();
         }
+
         static public List<post_likes> GetBurstCount(posts postBurst)
         {
             var db = new VERK2015_H17Entities1();
@@ -80,6 +84,7 @@ namespace Bubblespace.Services
 
             return burstCount;
         }
+
         static public List<post_likes> GetBurstCount(post_comments postComment)
         {
             var db = new VERK2015_H17Entities1();
@@ -88,6 +93,7 @@ namespace Bubblespace.Services
 
             return burstCount;
         }
+
         /* <summary>
          * Creates a like or a burst into the database depending on the values in the parameter
          * </summary>
@@ -151,6 +157,7 @@ namespace Bubblespace.Services
                                    select post).ToList();
             return userPosts;
         }
+
         static public List<posts> GetAllUserPosts(AspNetUsers user)
         {
             var db = new VERK2015_H17Entities1();
@@ -158,7 +165,7 @@ namespace Bubblespace.Services
             var postRet = new List<posts>();
 
             var userFriends = UserService.GetAllFriends(user);
-            var userPosts = (from x in db.posts.Where(y => y.FK_posts_users == user.Id && y.FK_posts_bubble_groups == null)
+            var userPosts = (from x in db.posts.Where(y => y.FK_posts_users == user.I*d && y.FK_posts_bubble_groups == null)
                              select x).ToList();
 
             foreach(AspNetUsers u in userFriends)

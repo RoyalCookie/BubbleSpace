@@ -237,6 +237,11 @@ function newsFeed() {
                 post_class = "feed-post";
             }
 
+            var image = "";
+            if (results[7][i] != "") {
+                image = "<img src='/Images/Posts/" + results[7][i] + "' />";
+            }
+
             // The post itself.
             mainView.append(                    
                     "<li class=\"" + post_class + "\">"
@@ -244,6 +249,7 @@ function newsFeed() {
                   + "<div class='post-user-name'>"
                   + "<a onclick='friendMain(\"" + results[3][i] + "\"); return false;'>" + results[0][i] + "</a>"
                   + "</div>"
+                  + image
                   + "<p class='post-text'>" + results[1][i] + "</p>"
                   + "</li>"
               );
@@ -258,6 +264,7 @@ function newsFeed() {
                 + "<i class='fa fa-comment'></i>"
                 + "</div>"
             );
+            console.log(results[7][i]);
         }
     })
 
@@ -368,6 +375,11 @@ function groupMain(id) {
                    post_class = "feed-post";
                }
 
+               var image = "";
+               if (results[7][i] != "") {
+                   image = "<img class='post-image' src='/Images/Posts/" + results[7][i] + "' />";
+               }
+
                // The post itself.
                mainView.append(
                        "<li class=\"" + post_class + "\">"
@@ -375,6 +387,7 @@ function groupMain(id) {
                      + "<div class='post-user-name'>"
                      + "<a onclick='friendMain(\"" + results[3][i] + "\"); return false;'>" + results[0][i] + "</a>"
                      + "</div>"
+                     + image
                      + "<p class='post-text'>" + results[1][i] + "</p>"
                      + "</li>"
                  );

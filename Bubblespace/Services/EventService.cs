@@ -85,7 +85,7 @@ namespace Bubblespace.Services
             return null;
         }
 
-        /* <summary>Returns an event with the given id</summary>
+      /* <summary>Returns an event with the given id</summary>
        * <param name="user">Takes an int</param>
        * <returns>Event object</returns>
        * <author>Andri Rafn</author>
