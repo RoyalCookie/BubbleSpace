@@ -20,7 +20,10 @@ namespace Bubblespace.Controllers
 
         public ActionResult Home()
         {
-            ViewBag.Message = "This is the main page! (edit this in HomeController.cs)";
+            if(!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             return View();
         }
     }
