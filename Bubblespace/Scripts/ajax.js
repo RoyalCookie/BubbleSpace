@@ -180,6 +180,7 @@ function newsFeed() {
               );
             mainView.append(
                   "<div class='post-feedback'>"
+                + posts[5][i]
                 + "<i onclick=\"likePost(" + posts[4][i] + "); return false;\" class='fa fa-thumbs-up'></i>"
                 + "<i class='fa fa-thumb-tack'></i>"
                 + "<i class='fa fa-comment'></i></div>"
