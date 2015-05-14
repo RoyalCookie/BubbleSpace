@@ -248,15 +248,17 @@ function newsFeed() {
     })
 
     // We append the appropriate version of the new post form to the head view.
-    newPost("newsFeed");
+
 
     // Here we populate the head view with the users information.
     $.post("/User/GetLoggedInUserInfo", function (results) {
         var headView = $("#head-view");
+        headView.empty();
         headView.append(
               "<img class='profile-header-image' src='/Images/Users/" + results[1] + "'/>"
             + "<h1 class='profile-header'>" + results[0] + "</h1>"
         );
+        newPost("newsFeed");
     });
 }
 
