@@ -1,4 +1,3 @@
-using Bubblespace.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,14 +11,6 @@ namespace Bubblespace.Services
     //</summary>
     static public class UserService
     {
-
-        private readonly IAppDataContext _db;
-
-        public UserService(IAppDataContext context)
-        {
-            _db = context ?? new ApplicationDbContext();
-        }
-
 
         /* <summary>gets all users in the system</summary>
          * <param name="ID">takes no param</param>
