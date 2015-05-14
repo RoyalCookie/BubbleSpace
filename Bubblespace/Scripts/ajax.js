@@ -476,8 +476,8 @@ function likePost(id) {
     })
     .success(function (data) {
         console.log("TODO: FIX LIKE BUTTON! @likePost()");
-        var oldCount = $("#post-id-" + id).val();
-        console.log(oldCount);
+        console.log("#post-id-" + id);
+        $("#post-id-" + id).empty().append(data);
     });
 }
 
