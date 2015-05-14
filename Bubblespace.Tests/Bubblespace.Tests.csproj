@@ -58,6 +58,10 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\GroupServiceTest.cs" />
+    <Compile Include="Services\PostServiceTest.cs" />
+    <Compile Include="Services\ChatServiceTest.cs" />
+    <Compile Include="Services\EventServiceTest.cs" />
     <Compile Include="Services\UserServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
