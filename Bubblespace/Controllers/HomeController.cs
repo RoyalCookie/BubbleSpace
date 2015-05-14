@@ -17,6 +17,7 @@ namespace Bubblespace.Controllers
             }
             return View();
         }
+
         public ActionResult Home()
         {
             if(!User.Identity.IsAuthenticated)
