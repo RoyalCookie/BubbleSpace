@@ -40,7 +40,7 @@ namespace Bubblespace.Controllers
             posts postToInsert = new posts();
 
             postToInsert.content_text = Regex.Replace(collection["content_text"], "janus", "#TakkJanus", RegexOptions.IgnoreCase);
-            postToInsert.content_is_video = Convert.ToByte(0);
+            postToInsert.content_is_video = PostService.IsYoutubeVideo(collection["content_text"]);
             postToInsert.time_inserted = DateTime.Now;
             postToInsert.FK_posts_users = userModel.Id;
 
