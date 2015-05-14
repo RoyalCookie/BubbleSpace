@@ -1,27 +1,132 @@
 ﻿/*
     TODO: This page requires javascript alert on noscript!
-
     TODO: Show user posted to group on the newsfeed!
-        
-    MAYBE: replace datepicker with http://xdsoft.net/jqplugins/datetimepicker/
 */
 
+$(document).ready(function () {
+    refresh();
+});
 
-// Main Functions
+// This function refreshes the main view to it's intro state.
+// Displays the friends tab and logged in user news feed including the post form.
+function refresh() {
+    friendsTab();
+    newsFeed();
+    newPost("newsFeed");
+}
+
+// This applies the onkeyup event handler to the search input at the top of the list view.
+// The event fires an ajax post call with a string to the server that returns search results.
+// Results cover all users, groups and events in the database.
+$(document).ready(function () {
+    document.getElementById("search-bar").onkeyup = function (event) {
+
+        // We get the search string and check if it contains a value.
+        var searchString = $("#search-bar").val();
+        if (!searchString == "") {
+            $.ajax({
+                method: "POST",
+                url: "/Search/GetResults",
+                data: { search_string: searchString }
+            })
+            .success(function (results) {
+                // Results:
+                // [users/groups/events][name/image/id][indexer]
+
+                // We get the search result container and empty it.
+                var searchList = $("#list-view-items");
+                searchList.empty();
+
+                // We populate it with user results.
+                searchList.append("<li class='search-header'>Users</li>")
+                if (results[0][0].length == 0) {
+                    searchList.append("<li class='list-item'>Nothing Found</li>")
+                }
+                else {
+                    console.log(results);
+                    for (var i = 0; i < results[0][0].length; i++) {
+                        searchList.append(
+                              "<li class='list-item'>"
+                            +     "<img src='/Images/Users/" + results[0][1][i] + "'/>"
+                            +     "<a onclick='friendMain(\"" + results[0][2][i] + "\"); return false;' class='list-name'>"
+                            +         results[0][0][i]
+                            +     "</a>"
+                            + "</li>"
+                            + "<div class='friendrequest-icon-container' id='friendrequest-icon-" + results[0][2][i] + "'>"
+                            +     "<img onclick='followUser(\"" + results[0][2][i] + "\")' title='Add Friend' class='add-friend-img' src='/Content/Assets/addFriend.png'/>"
+                            + "</div>"
+                        );
+                    }
+                }
+
+                // We populate it with group results.
+                searchList.append("<li class='search-header'>Groups</li>")
+                if (results[1][0].length == 0) {
+                    searchList.append("<li class='list-item'>Nothing Found</li>")
+                }
+                else {
+                    for (var i = 0; i < results[1][0].length; i++) {
+                        searchList.append(
+                              "<li class='list-item'>"
+                            +     "<img src='/Images/Groups/" + results[1][1][i] + "'/>"
+                            +     "<a onclick='groupMain(\"" + results[1][2][i] + "\"); return false;' class='list-name'>" + results[1][0][i] + "</a>"
+                            + "</li>"
+                        );
+                    }
+                }
+
+                // We populate it with event results.
+                searchList.append("<li class='search-header'>Events</li>")
+                if (results[2][0].length == 0) {
+                    searchList.append("<li class='list-item'>Nothing Found</li>")
+                }
+                else {
+                    for (var i = 0; i < results[2][0].length; i++) {
+                        searchList.append(
+                              "<li class='list-item'>"
+                            +     "<img src='/Images/Events/" + results[2][1][i] + "'/>"
+                            +     "<a onclick='eventMain(\"" + results[2][2][i] + "\"); return false;' class='list-name'>" + results[2][0][i] + "</a>"
+                            + "</li>"
+                        );
+                    }
+                }
+            });
+        }
+        else {
+            // If the search input did not contain anything we display an empty list.
+            var searchList = $("#list-view-items");
+            searchList.empty();
+        }
+    }
+});
+
+
+// Tab Content: 
+// These functions populate the list view with post return content.
+
+// Friends Tab
 function friendsTab() {
+    // We get the friends list container and empty it.
     var friendslist = $("#list-view-items");
     friendslist.empty();
-    $.post("/User/GetFriends", function (data) {
-        for (var i = 0; i < data[0].length; i++) {
-            friendslist.append(     
+
+    // We request a list of friends from the server.
+    $.post("/User/GetFriends", function (results) {
+        // Results:
+        // [usernames/images/userIds][indexer]
+        for (var i = 0; i < results[0].length; i++) {
+            friendslist.append(
                   "<li class='list-item'>"
-                + "<img src='/Images/Users/" + data[1][i] + "'/>"
-                + "<a onclick='friendMain(\"" + data[2][i] + "\"); return false;' class='list-name'>" + data[0][i] + "</a></li>"
+                +     "<img src='/Images/Users/" + results[1][i] + "'/>"
+                +     "<a onclick='friendMain(\"" + results[2][i] + "\"); return false;' class='list-name'>" + results[0][i] + "</a>"
+                + "</li>"
             );
         }
     })
 }
 
+
+// Groups Tab
 function groupsTab() {
     var groupList = $("#list-view-items");
     groupList.empty();
@@ -36,6 +141,39 @@ function groupsTab() {
         }
     })
 }
+
+function eventsTab() {
+    var eventsList = $("#list-view-items");
+    eventsList.empty();
+    eventsList.append("<li><a onclick='createEventMain(); return false;' title='Create Event' class='create-button btn btn-default btn-sm'><span class='glyphicon glyphicon-plus'></span></a></li>");
+    $.post("/Event/Events", function (events) {
+        for (var i = 0; i < events[0].length; i++) {
+            eventsList.append(
+                  "<li class='list-item'>"
+                + "<img src='/Images/Events/" + events[1][i] + "'/>"
+                + "<div class='post-user-name'><a onclick='eventMain(\"" + events[2][i] + "\"); return false;'>" + events[0][i] + "</a></div>"
+            );
+        }
+    })
+}
+
+function chatTab() {
+    var chatlist = $("#list-view-items");
+    chatlist.empty();
+    $.post("/Chat/GetUserChats", function (data) {
+        for (var i = 0; i < data["chatId"].length; i++) {
+            chatlist.append(
+                  "<li class='list-item'>"
+                + "<a onclick='chatHead(\"" + data["chatId"][i] + "\"); return false;'>" + data["chatName"][i] + "</a></li>"
+            );
+        }
+    })
+}
+
+
+
+
+
 
 function createGroupMain() {
     var headView = $("#head-view");
@@ -132,20 +270,7 @@ function friendMain(id) {
    });
 }
 
-function eventsTab() {
-    var eventsList = $("#list-view-items");
-    eventsList.empty();
-    eventsList.append("<li><a onclick='createEventMain(); return false;' title='Create Event' class='create-button btn btn-default btn-sm'><span class='glyphicon glyphicon-plus'></span></a></li>");
-    $.post("/Event/Events", function (events) {
-        for (var i = 0; i < events[0].length; i++) {
-            eventsList.append(
-                  "<li class='list-item'>"
-                + "<img src='/Images/Events/" + events[1][i] + "'/>"
-                + "<div class='post-user-name'><a onclick='eventMain(\"" + events[2][i] + "\"); return false;'>" + events[0][i] + "</a></div>"
-            );
-        }
-    })
-}
+
 
 function eventMain(id) {
     $.ajax({
@@ -294,18 +419,7 @@ function sendMessage(chatId) {
 
 // User can get any chats by changing the buttons id for the chat
 
-function chatTab() {
-    var chatlist = $("#list-view-items");
-   chatlist.empty();
-    $.post("/Chat/GetUserChats", function (data) {
-        for (var i = 0; i < data["chatId"].length; i++) {
-            chatlist.append(
-                  "<li class='list-item'>"
-                + "<a onclick='chatHead(\"" + data["chatId"][i] + "\"); return false;'>" + data["chatName"][i] + "</a></li>"
-            );
-        }
-    })
-}
+
 
 function chatHead(id) {
     var chatUsers = $("#head-view");
@@ -363,63 +477,7 @@ function chatMain(id) {
     });
 }
 
-$(function() {
-    document.getElementById("search-bar").onkeyup = function (event) {
-        if (!$("#search-bar").val() == "") {
-            $.ajax({
-                method: "POST",
-                url: "/Search/GetResults",
-                data: { search_string: $("#search-bar").val() }
-            })
-            .success(function (results) {
-                var searchList = $("#list-view-items");
-                searchList.empty();
-                searchList.append("<li>Users</li>")
-                if (results[0][0].length == 0) {
-                    searchList.append("<li class='list-item'>Nothing Found</li>")
-                }
-                else {
-                    for (var i = 0; i < results[0][0].length; i++) {
-                        searchList.append(
-                              "<li class='list-item'>"
-                            + "<img src='/Images/Users/" + results[0][1][i] + "'/>"
-                            + "<a onclick='friendMain(\"" + results[0][2][i] + "\"); return false;' class='list-name'>" + results[0][0][i] + "</a></li>"
-                            + "<div id='friendrequest-icon-" + results[0][2][i] + "'><img onclick='followUser(\""+ results[0][2][i] +"\")' title='Add Friend' class='add-friend-img' src='/Content/Assets/addFriend.png'/></div>"
-                        );
-                    }
-                }
 
-                searchList.append("<li>Groups</li>")
-                if (results[1][0].length == 0) {
-                    searchList.append("<li class='list-item'>Nothing Found</li>")
-                }
-                else {
-                    for (var i = 0; i < results[1][0].length; i++) {
-                        searchList.append(
-                              "<li class='list-item'>"
-                            + "<img src='/Images/Groups/" + results[1][1][i] + "'/>"
-                            + "<a onclick='groupMain(\"" +results[1][2][i]+ "\"); return false;' class='list-name'>" + results[1][0][i] + "</a></li>"
-                        );
-                    }
-                }
-
-                searchList.append("<li>Events</li>")
-                if (results[2][0].length == 0) {
-                    searchList.append("<li class='list-item'>Nothing Found</li>")
-                }
-                else {
-                    for (var i = 0; i < results[2][0].length; i++) {
-                        searchList.append(
-                              "<li class='list-item'>"
-                            + "<img src='/Images/Events/" + results[2][1][i] + "'/>"
-                            + "<a onclick='eventMain(\"" + results[2][2][i] + "\"); return false;' class='list-name'>" + results[2][0][i] + "</a></li>"
-                        );
-                    }
-                }
-            });
-        }
-    }
-});
     
 function followUser(id) {
     $.ajax({
@@ -447,12 +505,3 @@ function unfollowUser(id) {
     });
 }
 
-function refresh() {    
-    friendsTab();
-    newsFeed();
-    newPost("newsFeed");
-}
-
-$(document).ready(function () {
-    refresh();
-});

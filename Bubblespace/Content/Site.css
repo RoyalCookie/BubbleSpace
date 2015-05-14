@@ -274,8 +274,14 @@
     }
 
     .add-friend-img{
+        position: relative;
         margin-left: 90%;
-        margin-top: -50px;
+        top: -25px;
+    }
+
+    .friendrequest-icon-container{
+        display: inline;
+        padding-bottom: -50px;
     }
 
     a{ 
@@ -286,6 +292,14 @@
         position: absolute;
         margin-top: -40px;
         padding-left: 5px !important;
+    }
+
+    .search-header{
+        margin-left: -45px;
+        padding-left: 10px;
+        margin-top: 20px;
+        padding-bottom: 10px;
+        background-color: rgb(145, 199, 244);
     }
 
 }
