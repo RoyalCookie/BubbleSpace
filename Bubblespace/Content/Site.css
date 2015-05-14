@@ -241,6 +241,17 @@
         margin-top: -60px;
     }
 
+    .like-count{
+        color: green;
+    }
+
+    .burst-count{
+        color: red;
+        position:absolute;
+        left: 40px;
+        top: 0px;
+    }
+
     .feed-post{
         background-color: rgb(233,233,233);
     }
