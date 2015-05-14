@@ -109,23 +109,26 @@ namespace Bubblespace.Controllers
             bubble_groups group = GroupService.GetGroupById(Convert.ToInt32(collection["groupId"]));
             List<string> returnJson = new List<string>();
 
-            var groupPosts = GroupService.GetAllGroupPosts(group);
-            var groupUsers = GroupService.GetAllGroupUsers(group);
-            var groupUsernames = (from x in groupUsers
-                                  select x.AspNetUsers.UserName).ToString();
-            var postUsername = (from x in groupPosts
-                                select x.AspNetUsers.UserName).ToString();
-            var postContent = (from x in groupPosts
-                               select x.content_text).ToString();
-
             returnJson.Add(group.group_name);
             returnJson.Add(group.group_description);
             returnJson.Add(group.group_profile_image);
-            returnJson.Add(groupUsernames);
-            returnJson.Add(postUsername);
-            returnJson.Add(postContent);
 
             return Json(returnJson);
+        }
+
+        public ActionResult GetGroupPosts(FormCollection collection)
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Json("No Authentication");
+            }
+
+            bubble_groups group = new bubble_groups();
+            group.C_ID = Convert.ToInt32(collection["groupId"]);
+            List<posts> allPosts = GroupService.GetAllGroupPosts(group);
+            var allContent = (from pst in allPosts
+                              select pst.content_text).ToList();
+            return Json(allContent);
         }
 	}
 }

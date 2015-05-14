@@ -278,12 +278,14 @@ namespace Bubblespace.Controllers
 
             return Json(returnObject);
         }
+
         [HttpPost]
         public ActionResult GetPostLikes(FormCollection collection)
         {
 
             return View();
         }
+
         [HttpPost]
         public ActionResult GetAllPosts()
         {

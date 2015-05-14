@@ -75,7 +75,6 @@ $(document).ready(function () {
                     searchList.append("<li class='list-item'>Nothing Found</li>")
                 }
                 else {
-                    console.log(results);
                     for (var i = 0; i < results[0][0].length; i++) {
                         searchList.append(
                               "<li class='list-item'>"
@@ -231,8 +230,6 @@ function newsFeed() {
             var likes = results[5][i];
             var dislikes = results[6][i];
 
-            console.log("likes: " + likes);
-            console.log("dislikes: " + dislikes);
             if (dislikes >= 10) {
                 post_class = "burst-feed-post";
             }
@@ -348,11 +345,20 @@ function groupMain(id) {
        var mainView = $("#main-view");
        mainView.empty();
 
+       $.ajax({
+           method: "POST",
+           url: "/Group/GetGroupPosts",
+           data: { groupId: id }
+       })
+       .success(function (info) {
+           // TODO DISPLAY!
+           console.log(info);
+       });
+
        // Friendly reminders.
        console.log("TODO: DISPLAY GROUP POSTS. @groupMain()");
-       console.log("TODO: ADD ID TO FORM");
        // We append the appropriate version of the new post form to the head view.
-       newPost("groupPage");
+       newPost("groupPage", id);
    });
 }
 
@@ -572,7 +578,7 @@ function newPost(type, id) {
              "<form class='new-post' method='post' action='/Post/Create' enctype='multipart/form-data'>"
            + "<textarea id='content_text' class='form-control' name='content_text' rows='3' cols='40'></textarea><br />"
            + "<input type='submit' class='btn btn-default' value='Post' />"
-           + "<input type='hidden' value=\"" + id  + "\" />"
+           + "<input type='hidden' name='group-id' value=\"" + id + "\" />"
            + "<input type='file' data-iconName='glyphicon-inbox' name='contentImage' accept='image/*'>"
            + "</form>"
         );
@@ -604,8 +610,6 @@ function updateOrCreateLastInsertId(id) {
 
 function sendMessage(chatId) {
     var message = document.getElementById("messageBox").value;
-    console.log(chatId);
-    console.log(message);
     var view = $("#chatBox");
     $.ajax({
         method: "POST",

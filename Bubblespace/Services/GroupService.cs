@@ -104,6 +104,7 @@ namespace Bubblespace.Services
             db.posts.Add(newPost);
             db.SaveChanges();			
 		}
+
         static public List<posts> GetAllGroupPosts(bubble_groups bubbleGroup)
         {
             var db = new VERK2015_H17Entities1();
@@ -112,6 +113,7 @@ namespace Bubblespace.Services
 
             return groupPosts;
         }
+
         static public List<group_users> GetAllGroupUsers(bubble_groups bubbleGroup)
         {
             var db = new VERK2015_H17Entities1();
@@ -119,6 +121,7 @@ namespace Bubblespace.Services
                               select x).ToList();
             return groupUsers;
         }
+
        /* <summary></summary>
         * <param name="ID"></param>
         * <returns></returns>
