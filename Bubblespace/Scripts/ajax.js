@@ -468,6 +468,7 @@ function createEventMain() {
 // Minor functional calls.
 
 // This adds a like from the logged in user to the post with the given id.
+// Success updates the number of likes. One like per user!
 function likePost(id) {
     $.ajax({
         method: "POST",
@@ -475,9 +476,21 @@ function likePost(id) {
         data: { postId: id }
     })
     .success(function (data) {
-        console.log("TODO: FIX LIKE BUTTON! @likePost()");
-        console.log("#post-id-" + id);
         $("#post-id-" + id).empty().append(data);
+    });
+}
+
+// WORK IN PROGRESS
+// This adds a burst from the logged in user to the post with the given id.
+// Success updates the number of burst. One burst per user!
+function burstPost(id) {
+    $.ajax({
+        method: "POST",
+        url: "/Post/BurstPost",
+        data: { postId: id }
+    })
+    .success(function (data) {
+        console.log(data);
     });
 }
 
