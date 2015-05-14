@@ -43,7 +43,7 @@ namespace Bubblespace.Controllers
             postToInsert.content_is_video = Convert.ToByte(0);
             postToInsert.time_inserted = DateTime.Now;
             postToInsert.FK_posts_users = userModel.Id;
-            postToInsert.FK_posts_bubble_groups = null;
+            postToInsert.FK_posts_bubble_groups = Convert.ToInt32(collection["group-id"]);
             //Upload image
             postToInsert.content_picture = FileUploadService.UploadImage(contentImage, "Posts");
 
@@ -320,7 +320,9 @@ namespace Bubblespace.Controllers
             var postId = (from post in allPosts
                           select post.C_ID.ToString()).ToList();
             var postLikeCount = (from post in allPosts
-                                 select post.post_likes.Count.ToString()).ToList();
+                                 select post.post_likes.Where(y => y.post_like == true).Count().ToString()).ToList();
+            var postBurstcount = (from post in allPosts
+                                  select post.post_likes.Where(y => y.post_burst == true).Count().ToString()).ToList();
 
             List<List<string>> returnJson = new List<List<string>>();
 
@@ -330,6 +332,8 @@ namespace Bubblespace.Controllers
             returnJson.Add(posterId);
             returnJson.Add(postId);
             returnJson.Add(postLikeCount);
+            returnJson.Add(postBurstcount);
+
             return Json(returnJson);
         }
 

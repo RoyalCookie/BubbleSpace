@@ -241,8 +241,28 @@
         margin-top: -60px;
     }
 
-    .feed-post{
+    .like-count{
+        color: green;
+    }
+
+    .burst-count{
+        color: red;
+        position:absolute;
+        left: 33px;
+        top: 0px;
+    }
+
+    .feed-post, .burst-feed-post, .liked-feed-post{
         background-color: rgb(233,233,233);
+        margin-bottom: 20px;
+    }
+
+    .liked-feed-post{
+        border: 1px solid green;
+    }
+
+    .burst-feed-post{
+        border: 1px solid red;
     }
 
     .bootstrap-filestyle{
@@ -291,7 +311,7 @@
     
     .post-feedback{
         position: absolute;
-        margin-top: -40px;
+        margin-top: -60px;
         padding-left: 5px !important;
     }
 

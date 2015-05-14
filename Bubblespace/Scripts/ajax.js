@@ -224,9 +224,25 @@ function newsFeed() {
         // We populate the news feed with relevant posts to the logged in user.
         for (var i = results[0].length - 1; i >= 0; i--) {
 
+            // If the post has 10 bursts (dislikes) the post gets a red border.
+            // If the post has 10 likes the post gets a green border.
+            // If both are above 10 the higher one wins, if they are the same red wins.
+            var post_class;
+            var likes = results[5][i];
+            var dislikes = results[6][i];
+
+            console.log("likes: " + likes);
+            console.log("dislikes: " + dislikes);
+            if (dislikes >= 10) {
+                post_class = "burst-feed-post";
+            }
+            else {
+                post_class = "feed-post";
+            }
+
             // The post itself.
-            mainView.append(
-                    "<li class='feed-post'>"
+            mainView.append(                    
+                    "<li class=\"" + post_class + "\">"
                   + "<img class='post-profile-image' src='/Images/Users/" + results[2][i] + "' />"
                   + "<div class='post-user-name'>"
                   + "<a onclick='friendMain(\"" + results[3][i] + "\"); return false;'>" + results[0][i] + "</a>"
@@ -238,7 +254,8 @@ function newsFeed() {
             // Feedback to the post.
             mainView.append(
                   "<div class='post-feedback'>"
-                + "<div id=\"like-post-id-" + results[4][i] + "\">" + results[5][i] + "</div>"
+                + "<div class='like-count' id=\"like-post-id-" + results[4][i] + "\">" + results[5][i] + "</div>"
+                + "<div class='burst-count' id=\"burst-post-id-" + results[4][i] + "\">" + results[6][i] + "</div>"
                 + "<i onclick=\"likePost(" + results[4][i] + "); return false;\" class='fa fa-thumbs-up'></i>"
                 + "<i onclick=\"burstPost(" + results[4][i] + "); return false;\" class='fa fa-thumb-tack'></i>"
                 + "<i class='fa fa-comment'></i>"
@@ -490,7 +507,7 @@ function burstPost(id) {
         data: { postId: id }
     })
     .success(function (data) {
-        console.log(data);
+        $("#burst-post-id-" + id).empty().append(data);
     });
 }
 
@@ -533,7 +550,7 @@ function styleTheFilePicker() {
     $(":file").filestyle('size', 'xs');
 }
 
-// This takes in a type and id and appends the appropriate post submittion form to the head view container.
+// This takes in a type and id (for groups) and appends the appropriate post submission form to the head view container.
 function newPost(type, id) {
     var headView = $("#head-view");
 
@@ -555,6 +572,7 @@ function newPost(type, id) {
              "<form class='new-post' method='post' action='/Post/Create' enctype='multipart/form-data'>"
            + "<textarea id='content_text' class='form-control' name='content_text' rows='3' cols='40'></textarea><br />"
            + "<input type='submit' class='btn btn-default' value='Post' />"
+           + "<input type='hidden' value=\"" + id  + "\" />"
            + "<input type='file' data-iconName='glyphicon-inbox' name='contentImage' accept='image/*'>"
            + "</form>"
         );
