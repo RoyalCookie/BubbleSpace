@@ -20,7 +20,17 @@ namespace Bubblespace.Models
         public bool user_status { get; set; }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public interface IAppDataContext
+    {
+         IDbSet<AspNetUsers> AspNetUsers { get; set; }
+         IDbSet<bubble_groups> bubble_groups { get; set; }
+         IDbSet<events> events { get; set; }
+         IDbSet<posts> posts { get; set; }
+         
+         int SaveChanges();
+    }
+
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IAppDataContext
     {
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

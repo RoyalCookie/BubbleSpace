@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bubblespace", "Bubblespace\Bubblespace.csproj", "{C05CB577-4238-473F-980A-56BD48C11E1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bubblespace.Tests", "Bubblespace.Tests\Bubblespace.Tests.csproj", "{0EA28962-9D66-4EB5-8FE6-DF893F472B5A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{C05CB577-4238-473F-980A-56BD48C11E1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C05CB577-4238-473F-980A-56BD48C11E1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C05CB577-4238-473F-980A-56BD48C11E1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EA28962-9D66-4EB5-8FE6-DF893F472B5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EA28962-9D66-4EB5-8FE6-DF893F472B5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EA28962-9D66-4EB5-8FE6-DF893F472B5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EA28962-9D66-4EB5-8FE6-DF893F472B5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
