@@ -90,13 +90,21 @@
     }
 
     #main-view {
-        padding-top: 10px;
-        height: 60vh;
+        margin-top: 100px !important;
+        height: 55vh;
         left: 10px; 
         top: 5px;
         margin-top: 10vh;
         overflow-y:scroll;
         border-radius: 2%;
+    }
+
+    .post-image{
+        padding-left: 50px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        height: 400px;
+        width: auto;
     }
 
     #head-view {
