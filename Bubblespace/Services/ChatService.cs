@@ -34,10 +34,10 @@ namespace Bubblespace.Services
             getChat.chat_name = chat.chat_name;
             db.SaveChanges(); 
         }
-       /* <summary></summary>
-        * <param name="ID"></param>
-        * <returns></returns>
-        * <author></author>
+       /* <summary>Gets messeages by ID</summary>
+        * <param name="chat">Chat model</param>
+        * <returns>list of messages</returns>
+        * <author>Janus</author>
         */
 		static public List<messages>GetMessages(chats chat)
 		{
@@ -47,10 +47,10 @@ namespace Bubblespace.Services
             return messages;
 		}
 
-       /* <summary></summary>
-        * <param name="ID"></param>
-        * <returns></returns>
-        * <author></author>
+       /* <summary>Gets chat users by ID</summary>
+        * <param name="chat">Chat model</param>
+        * <returns>list of chaat users</returns>
+        * <author>Janus</author>
         */
         static public List<AspNetUsers> GetChatUsers(chats chat)
 		{
@@ -60,11 +60,11 @@ namespace Bubblespace.Services
 			return chatUsers;
 		}
 
-        /* <summary></summary>
+        /* <summary>Adds user to chat</summary>
         * <param name="chat">The chat we add the user too</param>
         * <param name="user">The user we add to the chat</param>
         * <returns>nothing</returns>
-        * <author></author>
+        * <author>Janus</author>
         */
         static public void AddChatUsers(chats chat, AspNetUsers user)
         {
@@ -86,15 +86,16 @@ namespace Bubblespace.Services
 
         }
 
-       /* <summary></summary>
-        * <param name="ID"></param>
-        * <returns></returns>
-        * <author></author>
-        */
+        /* <summary>Gets messeages from a certain date</summary>
+         * <param name="chat">Chat model</param>
+         * <param name="date">Datetime object</param>
+         * <returns>list of messages</returns>
+         * <author>Sveinbjorn</author>
+         */
         static public List<messages> GetMessagesSince(chats chat, DateTime date)
 		{
             var db = new VERK2015_H17Entities1();
-            var messages = (from x in db.messages.Where(y => y.FK_messages_chat_id == chat.C_ID || y.time_stamp >= date)
+            var messages = (from x in db.messages.Where(y => y.FK_messages_chat_id == chat.C_ID && y.time_stamp >= date)
                             select x).ToList();
 			return messages;
 		}
