@@ -254,6 +254,7 @@ namespace Bubblespace.Controllers
             return Json(likeToInsert);
         }
 
+        // Hasn't Been Implemented
         [HttpPost]
         public ActionResult Delete()
         {
@@ -268,6 +269,7 @@ namespace Bubblespace.Controllers
 
             return Json(PostService.GetBurstCount(post));
         }
+
         [HttpPost]
         public ActionResult PostBurstCount(FormCollection fc)
         {
@@ -303,6 +305,12 @@ namespace Bubblespace.Controllers
             return View();
         }
 
+        /* <summary>
+        * Gets all posts in the db
+        * </summary>
+        * <returns>Returns a json object of all posts in the database</returns>
+        * <author>Janus</author>
+        */
         [HttpPost]
         public ActionResult GetAllPosts()
         {
@@ -325,6 +333,12 @@ namespace Bubblespace.Controllers
         }
         [HttpPost]
 
+        /* <summary>
+        *   Gets all posts that belong to the user that is logged on
+        * </summary>
+        * <returns>Returns all posts belonging to the user</returns>
+        * <author>Janus</author>
+        */
         public ActionResult GetAllUserPosts()
         {
             AspNetUsers user = UserService.GetUserByEmail(User.Identity.Name);

@@ -1,7 +1,7 @@
 ﻿/*
-    TODO: This page requires javascript alert on noscript!
-    TODO: Show user posted to group on the newsfeed!
-    TODO: Check authentication before loading the main view!
+TODO: This page requires javascript alert on noscript!
+TODO: Show user posted to group on the newsfeed!
+TODO: Check authentication before loading the main view!
 */
 
 
@@ -30,6 +30,9 @@
         a. style the file picker
         b. new post form
 */
+
+
+var chatInterval;
 
 $(document).ready(function () {
     refresh();
@@ -78,13 +81,13 @@ $(document).ready(function () {
                     for (var i = 0; i < results[0][0].length; i++) {
                         searchList.append(
                               "<li class='list-item'>"
-                            +     "<img src='/Images/Users/" + results[0][1][i] + "'/>"
-                            +     "<a onclick='friendMain(\"" + results[0][2][i] + "\"); return false;' class='list-name'>"
-                            +         results[0][0][i]
-                            +     "</a>"
+                            + "<img src='/Images/Users/" + results[0][1][i] + "'/>"
+                            + "<a onclick='friendMain(\"" + results[0][2][i] + "\"); return false;' class='list-name'>"
+                            + results[0][0][i]
+                            + "</a>"
                             + "</li>"
                             + "<div class='friendrequest-icon-container' id='friendrequest-icon-" + results[0][2][i] + "'>"
-                            +     "<img onclick='followUser(\"" + results[0][2][i] + "\")' title='Add Friend' class='add-friend-img' src='/Content/Assets/addFriend.png'/>"
+                            + "<img onclick='followUser(\"" + results[0][2][i] + "\")' title='Add Friend' class='add-friend-img' src='/Content/Assets/addFriend.png'/>"
                             + "</div>"
                         );
                     }
@@ -99,8 +102,8 @@ $(document).ready(function () {
                     for (var i = 0; i < results[1][0].length; i++) {
                         searchList.append(
                               "<li class='list-item'>"
-                            +     "<img src='/Images/Groups/" + results[1][1][i] + "'/>"
-                            +     "<a onclick='groupMain(\"" + results[1][2][i] + "\"); return false;' class='list-name'>" + results[1][0][i] + "</a>"
+                            + "<img src='/Images/Groups/" + results[1][1][i] + "'/>"
+                            + "<a onclick='groupMain(\"" + results[1][2][i] + "\"); return false;' class='list-name'>" + results[1][0][i] + "</a>"
                             + "</li>"
                         );
                     }
@@ -115,8 +118,8 @@ $(document).ready(function () {
                     for (var i = 0; i < results[2][0].length; i++) {
                         searchList.append(
                               "<li class='list-item'>"
-                            +     "<img src='/Images/Events/" + results[2][1][i] + "'/>"
-                            +     "<a onclick='eventMain(\"" + results[2][2][i] + "\"); return false;' class='list-name'>" + results[2][0][i] + "</a>"
+                            + "<img src='/Images/Events/" + results[2][1][i] + "'/>"
+                            + "<a onclick='eventMain(\"" + results[2][2][i] + "\"); return false;' class='list-name'>" + results[2][0][i] + "</a>"
                             + "</li>"
                         );
                     }
@@ -148,8 +151,8 @@ function friendsTab() {
         for (var i = 0; i < results[0].length; i++) {
             friendslist.append(
                   "<li class='list-item'>"
-                +     "<img src='/Images/Users/" + results[1][i] + "'/>"
-                +     "<a onclick='friendMain(\"" + results[2][i] + "\"); return false;' class='list-name'>" + results[0][i] + "</a>"
+                + "<img src='/Images/Users/" + results[1][i] + "'/>"
+                + "<a onclick='friendMain(\"" + results[2][i] + "\"); return false;' class='list-name'>" + results[0][i] + "</a>"
                 + "</li>"
             );
         }
@@ -184,9 +187,9 @@ function eventsTab() {
             eventsList.append(
                   "<li class='list-item'>"
                 + "<img src='/Images/Events/" + results[1][i] + "'/>"
-                +     "<div class='post-user-name'>"
-                +         "<a onclick='eventMain(\"" + results[2][i] + "\"); return false;'>" + results[0][i] + "</a>"
-                +     "</div>"
+                + "<div class='post-user-name'>"
+                + "<a onclick='eventMain(\"" + results[2][i] + "\"); return false;'>" + results[0][i] + "</a>"
+                + "</div>"
                 + "</li>"
             );
         }
@@ -201,7 +204,7 @@ function chatTab() {
         for (var i = 0; i < results["chatId"].length; i++) {
             chatlist.append(
                   "<li class='list-item'>"
-                +     "<a onclick='chatHead(\"" + results["chatId"][i] + "\"); return false;'>" + results["chatName"][i] + "</a>"
+                + "<a onclick='chatHead(\"" + results["chatId"][i] + "\"); return false;'>" + results["chatName"][i] + "</a>"
                 + "</li>"
             );
         }
@@ -214,6 +217,8 @@ function chatTab() {
 
 //This displays the newsfeed, it is the default starting position of the page.
 function newsFeed() {
+    clearInterval(chatInterval);
+    chatInterval = null;
 
     // Get the view container and empty it.
     var mainView = $("#main-view");
@@ -243,7 +248,7 @@ function newsFeed() {
             }
 
             // The post itself.
-            mainView.append(                    
+            mainView.append(
                     "<li class=\"" + post_class + "\">"
                   + "<img class='post-profile-image' src='/Images/Users/" + results[2][i] + "' />"
                   + "<div class='post-user-name'>"
@@ -285,6 +290,8 @@ function newsFeed() {
 // Friend Main
 // This takes in a user ID and returns a main view with that users content.
 function friendMain(id) {
+    clearInterval(chatInterval);
+    chatInterval = null;
     $.ajax({
         method: "POST",
         url: "/User/GetUserInformation",
@@ -301,9 +308,9 @@ function friendMain(id) {
            mainView.append(
                    "<li class='feed-post'>"
                  + "<img class='post-profile-image' src='/Images/Users/" + results["profileImage"] + "' />"
-                 +     "<div class='post-user-name'>"
-                 +         "<a onclick='friendMain(\"" + results["Id"] + "\"); return false;'>" + results["userName"] + "</a>"
-                 +     "</div>"
+                 + "<div class='post-user-name'>"
+                 + "<a onclick='friendMain(\"" + results["Id"] + "\"); return false;'>" + results["userName"] + "</a>"
+                 + "</div>"
                  + "<p class='post-text'>" + results["posts"][i] + "</p>"
                  + "</li>"
              );
@@ -313,8 +320,8 @@ function friendMain(id) {
                + "<i class='fa fa-thumb-tack'></i>"
                + "<i class='fa fa-comment'></i></div>"
            );
-       }       
-    });
+       }
+   });
 
     // Here we populate the head view with the users information.
     $.ajax({
@@ -327,7 +334,7 @@ function friendMain(id) {
         headView.empty();
         headView.append(
                 "<img class='profile-header-image' src='/Images/Users/" + results["profileImage"] + "'/>"
-            +   "<h1 class='profile-header'>" + results["userName"] + "</h1>"
+            + "<h1 class='profile-header'>" + results["userName"] + "</h1>"
         );
     });
 }
@@ -335,6 +342,8 @@ function friendMain(id) {
 // Group Main
 // This takes in a group ID and returns a main view with that groups content.
 function groupMain(id) {
+    clearInterval(chatInterval);
+    chatInterval = null;
     $.ajax({
         method: "POST",
         url: "/Group/GetGroupById",
@@ -416,6 +425,8 @@ function groupMain(id) {
 // Event Main
 // This takes in an event ID and returns a main view with that events content.
 function eventMain(id) {
+    clearInterval(chatInterval);
+    chatInterval = null;
     $.ajax({
         method: "POST",
         url: "/Event/GetEventById",
@@ -427,10 +438,10 @@ function eventMain(id) {
 
         headView.append(
                 "<img class='profile-header-image' src='/Images/Events/" + results[2] + "'/>"
-            +   "<h1 class='profile-header'>" + results[0] + "</h1><br>"
-            +   "<p class='profile-description'>" + results[1] + "</p>"
-            +   "<p class='profile-description-time'>From: &nbsp&nbsp" + results[3].substring(0, 10) + "</p>"
-            +   "<p class='profile-description-time'>To: &nbsp&nbsp&nbsp&nbsp&nbsp " + results[4].substring(0, 10) + "</p>"
+            + "<h1 class='profile-header'>" + results[0] + "</h1><br>"
+            + "<p class='profile-description'>" + results[1] + "</p>"
+            + "<p class='profile-description-time'>From: &nbsp&nbsp" + results[3].substring(0, 10) + "</p>"
+            + "<p class='profile-description-time'>To: &nbsp&nbsp&nbsp&nbsp&nbsp " + results[4].substring(0, 10) + "</p>"
         );
 
         // Main view is left empty.
@@ -438,53 +449,14 @@ function eventMain(id) {
     });
 }
 
-// Chat Main
-// This takes in a chat ID and returns a main view with that chats content.
-function chatMain(id) {
-        $.ajax({
-            method: "POST",
-            url: "/Chat/GetAllMessagesFromChat",
-        data: { chatId: id }
-    })
-    .success(function (results) {
 
-        var mainView = $("#main-view");
-
-        mainView.empty();
-        mainView.append("<div id=\"chatBox\"></div>");
-
-        var chatBox = $("#chatBox");
-
-        // We populate the chat with names and messages.
-        for (var i = 0; i < results["sender"].length; i++) {
-            console.log("message from: " + results["sender"][i]);
-            if (chatBox === 0) {
-                console.log("chatbox not found");
-            }
-            chatBox.append(
-                  "<li>"
-                +     "<p class='post-text'> " + results["sender"][i] + ": " + results["message"][i] + "</p>"
-                + "</li>"
-            );
-        }
-
-        // We store the id of the newest message, this is usefull for looking up and appending newer messages later.
-        if (results["id"].length > 0) {
-            chatBox.append("<input type=\"hidden\" name=\"lastMessageId\" id=\"lastMessageId\" value=\"" + results["id"][0] + "\">");
-        }
-
-        // The input box.
-        mainView.append(
-                "<input type=\"text\" name=\"messageBox\" id=\"messageBox\">"
-            +   "<button type=\"button\" onClick=\"sendMessage(" + id + ")\">Click Me!</button>"
-        );
-    });
-}
 
 // Here we have Create views for groups and events.
 
 // Create Group.
 function createGroupMain() {
+    clearInterval(chatInterval);
+    chatInterval = null;
     // We get the head view container and display a header message.
     var headView = $("#head-view");
     headView.empty();
@@ -495,12 +467,12 @@ function createGroupMain() {
     mainView.empty();
     mainView.append(
                  "<form method='post' action='/Group/Create' enctype='multipart/form-data'>"
-               +      "<label for='group-name'>Group Name</label>"
-               +      "<input type='text' class='form-control' id='groupName' name='group-name'><br>"
-               +      "<label for='group-description'>Group Description</label>"
-               +      "<textarea class='form-control' name='group-description'></textarea>"
-               +      "<input type='file' id='image-upload' name='contentImage' accept='image/*'>"
-               +      "<input type='submit' class='btn btn-default btn-create' value='Create'>"
+               + "<label for='group-name'>Group Name</label>"
+               + "<input type='text' class='form-control' id='groupName' name='group-name'><br>"
+               + "<label for='group-description'>Group Description</label>"
+               + "<textarea class='form-control' name='group-description'></textarea>"
+               + "<input type='file' id='image-upload' name='contentImage' accept='image/*'>"
+               + "<input type='submit' class='btn btn-default btn-create' value='Create'>"
                + "</form>"
             );
 
@@ -510,6 +482,8 @@ function createGroupMain() {
 
 // Create Event.
 function createEventMain() {
+    clearInterval(chatInterval);
+    chatInterval = null;
     // We get the head view container and display a header message.
     var headView = $("#head-view");
     headView.empty();
@@ -520,15 +494,15 @@ function createEventMain() {
     mainView.empty();
     mainView.append(
                  "<form method='post' action='/Event/Create' enctype='multipart/form-data'>"
-               +     "<label for='event-name'>Event Name</label>"
-               +     "<input type='text' class='form-control' id='eventName' name='event-name'>"
-               +     "<br>"
-               +     "<label for='event-description'>Event Description</label>"
-               +     "<textarea class='form-control' name='event-description'></textarea>"
-               +     "<input type='file' id='image-upload' name='contentImage' accept='image/*'>"
-               +     "<p>From: <input type='text' id='datepickerFrom' name='start-time'></p>"
-               +     "<p>To: <input type='text' id='datepickerTo' name='end-time'></p>"
-               +     "<input type='submit' class='btn btn-default btn-create' value='Create'>"
+               + "<label for='event-name'>Event Name</label>"
+               + "<input type='text' class='form-control' id='eventName' name='event-name'>"
+               + "<br>"
+               + "<label for='event-description'>Event Description</label>"
+               + "<textarea class='form-control' name='event-description'></textarea>"
+               + "<input type='file' id='image-upload' name='contentImage' accept='image/*'>"
+               + "<p>From: <input type='text' id='datepickerFrom' name='start-time'></p>"
+               + "<p>To: <input type='text' id='datepickerTo' name='end-time'></p>"
+               + "<input type='submit' class='btn btn-default btn-create' value='Create'>"
                + "</form>"
             );
 
@@ -649,27 +623,6 @@ function newPost(type, id) {
     @JANUS -- Vantar að commenta þetta almennilega!
 */
 
-// Update Or Create Last Insert Id
-// Updates or creates a hidden input type so we know what messages we've displayed in the chat
-function updateOrCreateLastInsertId(id) {
-
-    // Try to find the hidden input
-    var lastMessageId = document.getElementById("lastMessageId");
-
-    // If it isn't found we add it.
-    if (lastMessageId.length === 0) {
-        mainView.append(
-                "<input type=\"hidden\" name=\"lastMessageId\" id=\"lastMessageId\" value=\"" + id + "\">"
-            );
-        alert("lastMessageId Not Found");
-    }
-    // Else we update the value
-    else {
-        lastMessageId.value = id;
-        alert("lastMessageId Found");
-    }
-}
-
 // Send Message
 // This function sends message and on success takes the info about the sent message and adds it to the chat
 function sendMessage(chatId) {
@@ -684,8 +637,8 @@ function sendMessage(chatId) {
         view.append(
         "<li>"
         + "<p class='post-text'> " + message["sender"] + ": " + message["message"]
-        + "</p></li>"
-    );
+        + "</p></li>");
+        $("#lastMessageId").val(message["id"]);
     });
 }
 
@@ -707,5 +660,87 @@ function chatHead(id) {
               );
         }
         chatMain(id);
+    });
+}
+
+// Chat Main
+// This takes in a chat ID and returns a main view with that chats content.
+function chatMain(id) {
+    $.ajax({
+        method: "POST",
+        url: "/Chat/GetAllMessagesFromChat",
+        data: { chatId: id }
+    })
+    .success(function (results) {
+
+        var mainView = $("#main-view");
+
+        mainView.empty();
+        mainView.append("<div id=\"chatBox\">"
+                        + "<input type=\"hidden\" id=\"chatId\" value=\"" + id + "\""
+                        + "</div>");
+        var chatBox = $("#chatBox");
+
+        // We populate the chat with names and messages.
+        for (var i = 0; i < results["sender"].length; i++) {
+            if (chatBox === 0) {
+                console.log("chatbox not found");
+            }
+            chatBox.append(
+                  "<li>"
+                + "<p class='post-text'> " + results["sender"][i] + ": " + results["message"][i] + "</p>"
+                + "</li>"
+            );
+        }
+
+        // We store the id of the newest message, this is usefull for looking up and appending newer messages later.
+        if (results["id"].length > 0) {
+            chatBox.append("<input type=\"hidden\" id=\"lastMessageId\" value=\"" + results["highestId"] + "\">");
+        }
+
+        // The input box.
+        mainView.append(
+                "<input type=\"text\" name=\"messageBox\" id=\"messageBox\">"
+            + "<button type=\"button\" onClick=\"sendMessage(" + id + ")\">Click Me!</button>"
+        );
+
+        chatInterval = setInterval(chatUpdate, 100);
+    });
+}
+
+function chatUpdate() {
+
+    var chatId = $("#chatId").val();
+    var lastId = $("#lastMessageId").val();
+
+    var chatBox = $("#chatBox");
+
+    $.ajax({
+        method: "POST",
+        url: "/Chat/GetChatUpdates",
+        data: { chatId: chatId, lastId: lastId}
+    }).success(function (results) {
+        for (var i = 0; i < results["sender"].length; i++) {
+            if (chatBox === 0) {
+                console.log("chatbox not found");
+            }
+            chatBox.append(
+                  "<li>"
+                + "<p class='post-text'> " + results["sender"][i] + ": " + results["message"][i] + "</p>"
+                + "</li>"
+            );
+        }
+        if (results["id"].length > 0) {
+            var temp = $("#lastMessageId");
+            if (temp === 0) {
+                console.log("This shouldn't happen in chatUpdate()");
+                chatBox.append("<input type=\"hidden\" id=\"lastMessageId\" value=\"" + results["id"][0] + "\">");
+            } else {
+                temp.val(results["id"][0]);
+            }
+            $(function () {
+                $("#main-view").scrollTop(1E10);
+            });
+        }
     });
 }

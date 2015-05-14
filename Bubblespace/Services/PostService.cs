@@ -165,7 +165,7 @@ namespace Bubblespace.Services
             var postRet = new List<posts>();
 
             var userFriends = UserService.GetAllFriends(user);
-            var userPosts = (from x in db.posts.Where(y => y.FK_posts_users == user.I*d && y.FK_posts_bubble_groups == null)
+            var userPosts = (from x in db.posts.Where(y => y.FK_posts_users == user.Id && y.FK_posts_bubble_groups == null)
                              select x).ToList();
 
             foreach(AspNetUsers u in userFriends)
