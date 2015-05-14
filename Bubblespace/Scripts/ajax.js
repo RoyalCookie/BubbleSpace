@@ -428,24 +428,27 @@ function eventMain(id) {
 // Chat Main
 // This takes in a chat ID and returns a main view with that chats content.
 function chatMain(id) {
-    $.ajax({
-        method: "POST",
-        url: "/Chat/GetAllMessagesFromChat",
+        $.ajax({
+            method: "POST",
+            url: "/Chat/GetAllMessagesFromChat",
         data: { chatId: id }
     })
     .success(function (results) {
 
         var mainView = $("#main-view");
-        var chatBox = $("#chatBox");
 
         mainView.empty();
         mainView.append("<div id=\"chatBox\"></div>");
-        
+
+        var chatBox = $("#chatBox");
+
         // We populate the chat with names and messages.
         for (var i = 0; i < results["sender"].length; i++) {
-            //Friendly Reminder
-            console.log("TODO: ADD TIMESTAMP TO CHAT? @chatMain()");
-            mainView.append(
+            console.log("message from: " + results["sender"][i]);
+            if (chatBox === 0) {
+                console.log("chatbox not found");
+            }
+            chatBox.append(
                   "<li>"
                 +     "<p class='post-text'> " + results["sender"][i] + ": " + results["message"][i] + "</p>"
                 + "</li>"
@@ -633,28 +636,43 @@ function newPost(type, id) {
     @JANUS -- Vantar að commenta þetta almennilega!
 */
 
+// Update Or Create Last Insert Id
+// Updates or creates a hidden input type so we know what messages we've displayed in the chat
 function updateOrCreateLastInsertId(id) {
+
+    // Try to find the hidden input
     var lastMessageId = document.getElementById("lastMessageId");
+
+    // If it isn't found we add it.
     if (lastMessageId.length === 0) {
         mainView.append(
                 "<input type=\"hidden\" name=\"lastMessageId\" id=\"lastMessageId\" value=\"" + id + "\">"
             );
         alert("lastMessageId Not Found");
-    } else {
+    }
+    // Else we update the value
+    else {
         lastMessageId.value = id;
         alert("lastMessageId Found");
     }
 }
 
+// Send Message
+// This function sends message and on success takes the info about the sent message and adds it to the chat
 function sendMessage(chatId) {
     var message = document.getElementById("messageBox").value;
+    $("#messageBox").val('');
     var view = $("#chatBox");
     $.ajax({
         method: "POST",
         url: "/Chat/Send",
         data: { chatId: chatId, message: message }
     }).success(function (message) {
-        appendMessageToView(view, message["timeStamp"], message["sender"], message["message"]);
+        view.append(
+        "<li>"
+        + "<p class='post-text'> " + message["sender"] + ": " + message["message"]
+        + "</p></li>"
+    );
     });
 }
 

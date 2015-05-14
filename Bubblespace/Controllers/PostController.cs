@@ -14,6 +14,10 @@ namespace Bubblespace.Controllers
         //
         // GET: /Post/
 
+
+       
+
+
         /* <summary>
          * Takes a few parameters and creates a post
          * </summary>
