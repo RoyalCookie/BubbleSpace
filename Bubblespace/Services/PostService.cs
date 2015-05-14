@@ -158,12 +158,12 @@ namespace Bubblespace.Services
             var postRet = new List<posts>();
 
             var userFriends = UserService.GetAllFriends(user);
-            var userPosts = (from x in db.posts.Where(y => y.FK_posts_users == user.Id)
+            var userPosts = (from x in db.posts.Where(y => y.FK_posts_users == user.Id && y.FK_posts_bubble_groups == null)
                              select x).ToList();
 
             foreach(AspNetUsers u in userFriends)
             {
-                friendPosts.AddRange((from x in db.posts.Where(y => y.FK_posts_users == u.Id)
+                friendPosts.AddRange((from x in db.posts.Where(y => y.FK_posts_users == u.Id && y.FK_posts_bubble_groups == null)
                                       select x).ToList());
             }
 
