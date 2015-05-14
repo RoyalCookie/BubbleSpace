@@ -49,8 +49,14 @@ namespace Bubblespace.Services
         static public int SaveBurstPost(post_likes burst)
         {
             var db = new VERK2015_H17Entities1();
-            db.post_likes.Add(burst);
-            db.SaveChanges();
+            int allowUserToBurst = (from x in db.post_likes.Where(y => y.FK_group_post_like_users == burst.FK_group_post_like_users && y.FK_group_post_likes_group_posts == burst.FK_group_post_likes_group_posts && y.post_burst == true)
+                                    select x).Count(); 
+            if(allowUserToBurst == 0)
+            {
+                db.post_likes.Add(burst);
+                db.SaveChanges();
+            }
+            
             var burstCount = (from x in db.post_likes.Where(y => y.FK_group_post_likes_group_posts == burst.FK_group_post_likes_group_posts && y.post_burst == true)
                               select x).Count();
             return burstCount;
