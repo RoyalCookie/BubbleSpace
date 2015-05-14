@@ -305,6 +305,7 @@ namespace Bubblespace.Controllers
             return Json(returnJson);
         }
         [HttpPost]
+
         public ActionResult GetAllUserPosts()
         {
             AspNetUsers user = UserService.GetUserByEmail(User.Identity.Name);
