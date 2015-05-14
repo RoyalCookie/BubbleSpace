@@ -355,6 +355,8 @@ namespace Bubblespace.Controllers
                                 select post.AspNetUsers.profile_image).ToList();
             var posterId = (from post in allPosts
                             select post.AspNetUsers.Id).ToList();
+            var postId = (from post in allPosts
+                          select post.C_ID.ToString()).ToList();
             var postLikeCount = (from post in allPosts
                                  select post.post_likes.Count.ToString()).ToList();
 
@@ -364,6 +366,7 @@ namespace Bubblespace.Controllers
             returnJson.Add(postBody);
             returnJson.Add(profileImage);
             returnJson.Add(posterId);
+            returnJson.Add(postId);
             returnJson.Add(postLikeCount);
             return Json(returnJson);
         }
