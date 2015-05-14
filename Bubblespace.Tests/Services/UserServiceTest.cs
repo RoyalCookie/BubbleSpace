@@ -11,7 +11,6 @@ namespace Bubblespace.Tests.Services
         [TestInitialize]
         public void Initialize()
         {
-            var db = new Bubblespace.VERK2015_H17Entities1();
 
         }
 
@@ -26,19 +25,6 @@ namespace Bubblespace.Tests.Services
 
             // Assert:
             Assert.AreEqual(2, friends.Count);
-        }
-
-        [TestMethod]
-        public void TestGetUserPostsByDroken()
-        {
-            // Arrange:
-            var userDroken = UserService.GetUserByEmail("asdasd@asda.sa");
-
-            // Act: 
-            var posts = UserService.GetUsersPosts(userDroken);
-
-            // Assert:
-            Assert.AreEqual(2, posts.Count);
         }
 
         [TestMethod]
