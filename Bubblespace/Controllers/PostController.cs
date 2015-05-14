@@ -39,7 +39,7 @@ namespace Bubblespace.Controllers
             // Create the post we insert, And fill in relative information below
             posts postToInsert = new posts();
 
-            postToInsert.content_text = collection["content_text"];
+            postToInsert.content_text = Regex.Replace(collection["content_text"], "janus", "#TakkJanus", RegexOptions.IgnoreCase);
             postToInsert.content_is_video = Convert.ToByte(0);
             postToInsert.time_inserted = DateTime.Now;
             postToInsert.FK_posts_users = userModel.Id;
