@@ -236,6 +236,7 @@
     <Compile Include="Services\ChatService.cs" />
     <Compile Include="Services\ErrorService.cs" />
     <Compile Include="Services\EventService.cs" />
+    <Compile Include="Services\FileUploadService.cs" />
     <Compile Include="Services\GroupService.cs" />
     <Compile Include="Services\PostService.cs" />
     <Compile Include="Services\SearchService.cs" />

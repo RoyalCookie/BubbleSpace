@@ -240,7 +240,7 @@ function newsFeed() {
                   "<div class='post-feedback'>"
                 + "<div id=\"like-post-id-" + results[4][i] + "\">" + results[5][i] + "</div>"
                 + "<i onclick=\"likePost(" + results[4][i] + "); return false;\" class='fa fa-thumbs-up'></i>"
-                + "<i onclick=\"burstPost(" + result[3][i] + "); return false;\" class='fa fa-thumb-tack'></i>"
+                + "<i onclick=\"burstPost(" + results[4][i] + "); return false;\" class='fa fa-thumb-tack'></i>"
                 + "<i class='fa fa-comment'></i>"
                 + "</div>"
             );
