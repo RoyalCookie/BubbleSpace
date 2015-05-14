@@ -1,10 +1,43 @@
 ﻿/*
     TODO: This page requires javascript alert on noscript!
     TODO: Show user posted to group on the newsfeed!
+    TODO: Check authentication before loading the main view!
+*/
+
+
+/*
+    Script Index:
+
+    1. Tab Content
+        a. friends
+        b. groups
+        c. events
+        d. chats
+    2. Main View Content
+        a. news feed
+        b. friend
+        c. group
+        d. event
+        e. chat
+    3. Create
+        a. group
+        b. event
+    4. Minor Functional Calls
+        a. like
+        b. follow
+        c. unfollow
+    5. Helper Functions
+        a. style the file picker
+        b. new post form
 */
 
 $(document).ready(function () {
     refresh();
+
+    // Replacing the default scrollbar look with perfect scrollbar.
+    var mainView = $("#main-view");
+    mainView.perfectScrollbar();
+    Ps.initialize(document.getElementById('main-view'));
 });
 
 // This function refreshes the main view to it's intro state.
@@ -12,7 +45,6 @@ $(document).ready(function () {
 function refresh() {
     friendsTab();
     newsFeed();
-    newPost("newsFeed");
 }
 
 // This applies the onkeyup event handler to the search input at the top of the list view.
@@ -181,6 +213,53 @@ function chatTab() {
 // These functions populate the main view with ajax return content.
 // We also populate the head view with basica content relative to the main view.
 
+//This displays the newsfeed, it is the default starting position of the page.
+function newsFeed() {
+
+    // Get the view container and empty it.
+    var mainView = $("#main-view");
+    mainView.empty();
+
+    $.post("/Post/GetAllUserPosts", function (results) {
+        // We populate the news feed with relevant posts to the logged in user.
+        for (var i = results[0].length - 1; i >= 0; i--) {
+
+            // The post itself.
+            mainView.append(
+                    "<li class='feed-post'>"
+                  + "<img class='post-profile-image' src='/Images/Users/" + results[2][i] + "' />"
+                  + "<div class='post-user-name'>"
+                  + "<a onclick='friendMain(\"" + results[3][i] + "\"); return false;'>" + results[0][i] + "</a>"
+                  + "</div>"
+                  + "<p class='post-text'>" + results[1][i] + "</p>"
+                  + "</li>"
+              );
+
+            // Feedback to the post.
+            mainView.append(
+                  "<div class='post-feedback'>"
+                + "<div id=\"post-id-" + results[4][i] + "\">" + results[5][i] + "</div>"
+                + "<i onclick=\"likePost(" + results[4][i] + "); return false;\" class='fa fa-thumbs-up'></i>"
+                + "<i class='fa fa-thumb-tack'></i>"
+                + "<i class='fa fa-comment'></i>"
+                + "</div>"
+            );
+        }
+    })
+
+    // We append the appropriate version of the new post form to the head view.
+    newPost("newsFeed");
+
+    // Here we populate the head view with the users information.
+    $.post("/User/GetLoggedInUserInfo", function (results) {
+        var headView = $("#head-view");
+        headView.append(
+              "<img class='profile-header-image' src='/Images/Users/" + results[1] + "'/>"
+            + "<h1 class='profile-header'>" + results[0] + "</h1>"
+        );
+    });
+}
+
 // Friend Main
 // This takes in a user ID and returns a main view with that users content.
 function friendMain(id) {
@@ -222,6 +301,7 @@ function friendMain(id) {
         data: { userId: id }
     })
     .success(function (results) {
+        var headView = $("#head-view");
         headView.empty();
         headView.append(
                 "<img class='profile-header-image' src='/Images/Users/" + results["profileImage"] + "'/>"
@@ -281,6 +361,8 @@ function eventMain(id) {
     });
 }
 
+// Chat Main
+// This takes in a chat ID and returns a main view with that chats content.
 function chatMain(id) {
     $.ajax({
         method: "POST",
@@ -321,7 +403,7 @@ function chatMain(id) {
 
 // Here we have Create views for groups and events.
 
-// Create Group
+// Create Group.
 function createGroupMain() {
     // We get the head view container and display a header message.
     var headView = $("#head-view");
@@ -343,72 +425,46 @@ function createGroupMain() {
             );
 
     // FileStyle: styles the file submit button.
-    $(":file").filestyle({ input: false });
-    $(":file").filestyle({ iconName: "glyphicon-inbox" });
-    $(":file").filestyle('size', 'xs');
+    styleTheFilePicker();
 }
 
+// Create Event.
 function createEventMain() {
+    // We get the head view container and display a header message.
     var headView = $("#head-view");
     headView.empty();
     headView.append("<h1>Create Event</h1>")
+
+    // We append the form.
     var mainView = $("#main-view");
     mainView.empty();
     mainView.append(
                  "<form method='post' action='/Event/Create' enctype='multipart/form-data'>"
-               + "<label for='event-name'>Event Name</label>"
-               + "<input type='text' class='form-control' id='eventName' name='event-name'>"
-               + "<br>"
-               + "<label for='event-description'>Event Description</label>"
-               + "<textarea class='form-control' name='event-description'></textarea>"
-               + "<input type='file' id='image-upload' name='contentImage' accept='image/*'>"
-               + "<p>From: <input type='text' id='datepickerFrom' name='start-time'></p>"
-               + "<p>To: <input type='text' id='datepickerTo' name='end-time'></p>"
-               + "<input type='submit' class='btn btn-default btn-create' value='Create'>"
+               +     "<label for='event-name'>Event Name</label>"
+               +     "<input type='text' class='form-control' id='eventName' name='event-name'>"
+               +     "<br>"
+               +     "<label for='event-description'>Event Description</label>"
+               +     "<textarea class='form-control' name='event-description'></textarea>"
+               +     "<input type='file' id='image-upload' name='contentImage' accept='image/*'>"
+               +     "<p>From: <input type='text' id='datepickerFrom' name='start-time'></p>"
+               +     "<p>To: <input type='text' id='datepickerTo' name='end-time'></p>"
+               +     "<input type='submit' class='btn btn-default btn-create' value='Create'>"
                + "</form>"
             );
+
     // FileStyle: styles the file submit button.
-    $(":file").filestyle({ input: false });
-    $(":file").filestyle({ iconName: "glyphicon-inbox" });
-    $(":file").filestyle('size', 'xs');
+    styleTheFilePicker();
+
+    // Adding jquery datepicker control to the date inputs.
     $("#datepickerFrom").datepicker();
     $("#datepickerTo").datepicker();
 }
 
 
 
+// Minor functional calls.
 
-
-
-
-
-
-function newsFeed() {
-    var mainView = $("#main-view");
-    mainView.empty();
-    $.post("/Post/GetAllUserPosts", function (posts) {
-        console.log(posts);
-        for (var i = posts[0].length - 1; i >= 0; i--) {
-            mainView.append(
-                    "<li class='feed-post'>"
-                  + "<img class='post-profile-image' src='/Images/Users/" + posts[2][i] + "' />"
-                  + "<div class='post-user-name'><a onclick='friendMain(\"" + posts[3][i] + "\"); return false;'>" + posts[0][i] + "</a></div>"
-                  + "<p class='post-text'>" + posts[1][i]
-                  + "</p></li>"
-              );
-            mainView.append(
-                  "<div class='post-feedback'>"
-                + "<div id=\"post-id-" + posts[4][i] + "\">" + posts[5][i] + "</div>"
-                + "<i onclick=\"likePost(" + posts[4][i] + "); return false;\" class='fa fa-thumbs-up'></i>"
-                + "<i class='fa fa-thumb-tack'></i>"
-                + "<i class='fa fa-comment'></i></div>"
-            );
-        }
-    })
-    mainView.perfectScrollbar();
-    Ps.initialize(document.getElementById('main-view'));
-}
-
+// This adds a like from the logged in user to the post with the given id.
 function likePost(id) {
     $.ajax({
         method: "POST",
@@ -416,13 +472,56 @@ function likePost(id) {
         data: { postId: id }
     })
     .success(function (data) {
+        console.log("TODO: FIX LIKE BUTTON! @likePost()");
         var oldCount = $("#post-id-" + id).val();
         console.log(oldCount);
     });
 }
 
+// This allows the logged in user to follow the user with the given id.
+function followUser(id) {
+    $.ajax({
+        method: "POST",
+        url: "/User/FriendRequest",
+        data: { user_id: id }
+    })
+    .success(function (result) {
+        // Result is a boolean, indicates wether the request was successful or not.
+        if (result) {
+            $("#friendrequest-icon-" + id).empty().append("<img onclick='unfollowUser(\"" + id + "\")' title='Add Friend' class='add-friend-img' src='/Content/Assets/removeFriend.png'/>");
+        }
+    });
+}
+
+//This allows the user to unfollow the user with the given id.
+function unfollowUser(id) {
+    $.ajax({
+        method: "POST",
+        url: "/User/FriendRemove",
+        data: { user_id: id }
+    })
+    .success(function (result) {
+        // Result is a boolean, indicates wether the request was successful or not.
+        if (result) {
+            $("#friendrequest-icon-" + id).empty().append("<img onclick='followUser(\"" + id + "\")' title='Add Friend' class='add-friend-img' src='/Content/Assets/addFriend.png'/>");
+        }
+    });
+}
+
+// Helper functions:
+
+// This applies filestile to the file input forms.
+function styleTheFilePicker() {
+    $(":file").filestyle({ input: false });
+    $(":file").filestyle({ iconName: "glyphicon-inbox" });
+    $(":file").filestyle('size', 'xs');
+}
+
+// This takes in a type and id and appends the appropriate post submittion form to the head view container.
 function newPost(type, id) {
     var headView = $("#head-view");
+
+    // If we are dealing with the news feed.
     if (type == "newsFeed") {
         headView.empty();
         headView.append(
@@ -433,33 +532,30 @@ function newPost(type, id) {
             + "</form>"
         );
         // FileStyle: styles the file submit button.
-        $(":file").filestyle({ input: false });
-        $(":file").filestyle({ iconName: "glyphicon-inbox" });
-        $(":file").filestyle('size', 'xs');
-
-        $.post("/User/GetLoggedInUserInfo", function (data) {
-            headView.append("<img class='profile-header-image' src='/Images/Users/" + data[1] + "'/>");
-            headView.append("<h1 class='profile-header'>" + data[0] + "</h1>");
-        });
-    }   
+        styleTheFilePicker();
+    }
+        // If we are dealing with the group page.
     else if (type == "groupPage") {
         console.log("here");
         headView.append(
-       "<form class='new-post' method='post' action='/Post/Create' enctype='multipart/form-data'>"
+             "<form class='new-post' method='post' action='/Post/Create' enctype='multipart/form-data'>"
            + "<textarea id='content_text' class='form-control' name='content_text' rows='3' cols='40'></textarea><br />"
            + "<input type='submit' class='btn btn-default' value='Post' />"
            + "<input type='file' data-iconName='glyphicon-inbox' name='contentImage' accept='image/*'>"
            + "</form>"
-       );
+        );
+
         // FileStyle: styles the file submit button.
-        $(":file").filestyle({ input: false });
-        $(":file").filestyle({ iconName: "glyphicon-inbox" });
-        $(":file").filestyle('size', 'xs');
+        styleTheFilePicker();
     }
 }
 
-// Start Of Chat Section
-// Helper Functions
+
+
+
+/*
+    @JANUS -- Vantar að commenta þetta almennilega!
+*/
 
 function updateOrCreateLastInsertId(id) {
     var lastMessageId = document.getElementById("lastMessageId");
@@ -488,12 +584,7 @@ function sendMessage(chatId) {
     });
 }
 
-// Main Functions
-
 // User can get any chats by changing the buttons id for the chat
-
-
-
 function chatHead(id) {
     var chatUsers = $("#head-view");
     chatUsers.empty();
@@ -513,34 +604,3 @@ function chatHead(id) {
         chatMain(id);
     });
 }
-
-
-
-
-    
-function followUser(id) {
-    $.ajax({
-        method: "POST",
-        url: "/User/FriendRequest",
-        data: { user_id: id }
-    })
-    .success(function (result) {
-        if (result) {
-            $("#friendrequest-icon-" + id).empty().append("<img onclick='unfollowUser(\"" + id + "\")' title='Add Friend' class='add-friend-img' src='/Content/Assets/removeFriend.png'/>");
-        }
-    });
-}
-
-function unfollowUser(id) {
-    $.ajax({
-        method: "POST",
-        url: "/User/FriendRemove",
-        data: { user_id: id }
-    })
-    .success(function (result) {
-        if (result) {
-            $("#friendrequest-icon-" + id).empty().append("<img onclick='followUser(\"" + id + "\")' title='Add Friend' class='add-friend-img' src='/Content/Assets/addFriend.png'/>");
-        }
-    });
-}
-
