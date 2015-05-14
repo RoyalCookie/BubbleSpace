@@ -34,7 +34,7 @@ namespace Bubblespace.Services
         static public int SaveLikePost(post_likes postLike)
         {
             var db = new VERK2015_H17Entities1();
-            int allowUserToLike = (from x in db.post_likes.Where(y => y.FK_group_post_like_users == postLike.AspNetUsers.UserName || y.FK_group_post_likes_group_posts == postLike.FK_group_post_likes_group_posts)
+            int allowUserToLike = (from x in db.post_likes.Where(y => y.FK_group_post_like_users == postLike.FK_group_post_like_users || y.C_ID == postLike.C_ID)
                                    select x).Count();
             if(allowUserToLike == 0)
             {
