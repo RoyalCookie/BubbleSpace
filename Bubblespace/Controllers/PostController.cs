@@ -323,8 +323,8 @@ namespace Bubblespace.Controllers
             returnJson.Add(posterId);
             return Json(returnJson);
         }
-        [HttpPost]
 
+        [HttpPost]
         public ActionResult GetAllUserPosts()
         {
             AspNetUsers user = UserService.GetUserByEmail(User.Identity.Name);
@@ -359,6 +359,5 @@ namespace Bubblespace.Controllers
 
             return Json(returnJson);
         }
-
     }
 }
