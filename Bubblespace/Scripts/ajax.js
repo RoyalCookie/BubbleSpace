@@ -320,6 +320,7 @@ function groupMain(id) {
     })
    .success(function (info) {
        var headView = $("#head-view");
+       headView.empty();
        headView.append(
              "<img class='profile-header-image' src='/Images/Groups/" + info[2] + "'/>"
            + "<h1 class='profile-header'>" + info[0] + "</h1>"
@@ -523,7 +524,6 @@ function newPost(type, id) {
 
     // If we are dealing with the news feed.
     if (type == "newsFeed") {
-        headView.empty();
         headView.append(
         "<form class='new-post' method='post' action='/Post/Create' enctype='multipart/form-data'>"
             + "<textarea id='content_text' class='form-control' name='content_text' rows='3' cols='40'></textarea><br />"
@@ -536,7 +536,6 @@ function newPost(type, id) {
     }
         // If we are dealing with the group page.
     else if (type == "groupPage") {
-        console.log("here");
         headView.append(
              "<form class='new-post' method='post' action='/Post/Create' enctype='multipart/form-data'>"
            + "<textarea id='content_text' class='form-control' name='content_text' rows='3' cols='40'></textarea><br />"
