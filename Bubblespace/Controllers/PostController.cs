@@ -40,50 +40,12 @@ namespace Bubblespace.Controllers
             posts postToInsert = new posts();
 
             postToInsert.content_text = collection["content_text"];
-            postToInsert.content_picture = "";                      // <-- Breyta Path Fyrir Myndir
             postToInsert.content_is_video = Convert.ToByte(0);
             postToInsert.time_inserted = DateTime.Now;
             postToInsert.FK_posts_users = userModel.Id;
             postToInsert.FK_posts_bubble_groups = null;
-
-            // Inside this if statement we handle the image if one is uploaded
-            if (contentImage != null)
-            {
-
-                System.Diagnostics.Debug.WriteLine("We have a file");
-
-                // Retreiving the file name
-                string pic = System.IO.Path.GetFileName(contentImage.FileName);
-
-                // Generate a random filename
-                var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-                var random = new Random();
-                var result = new string(
-                    Enumerable.Repeat(chars, 64)
-                              .Select(s => s[random.Next(s.Length)])
-                              .ToArray());
-
-
-                // We extract the file ending and combine it with the generated filename
-                Regex regex = new Regex(@"\.\w{1,3}");
-                result = result + regex.Match(pic).Value.ToLower();
-
-                // Debug Print
-                System.Diagnostics.Debug.WriteLine("The String: " + result);
-
-                // Creating an absolute path
-                string path = System.IO.Path.Combine(Server.MapPath("~/Images"), result);
-
-                // Debug Print
-                System.Diagnostics.Debug.WriteLine("The Path: " + path);
-
-                // File is uploaded
-                contentImage.SaveAs(path);
-
-                // Setting the image name
-                postToInsert.content_picture = result;
-            }
-
+            //Upload image
+            postToInsert.content_picture = FileUploadService.UploadImage(contentImage, "Posts");
 
             try
             {
