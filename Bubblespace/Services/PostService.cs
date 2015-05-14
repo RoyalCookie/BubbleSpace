@@ -34,14 +34,17 @@ namespace Bubblespace.Services
         static public int SaveLikePost(post_likes postLike)
         {
             var db = new VERK2015_H17Entities1();
-            int allowUserToLike = (from x in db.post_likes.Where(y => y.FK_group_post_like_users == postLike.FK_group_post_like_users || y.C_ID == postLike.C_ID)
+            int allowUserToLike = (from x in db.post_likes.Where(y => y.FK_group_post_like_users == postLike.FK_group_post_like_users && y.FK_group_post_likes_group_posts == postLike.FK_group_post_likes_group_posts && y.post_like == true)
                                    select x).Count();
             if(allowUserToLike == 0)
             {
                 db.post_likes.Add(postLike);
                 db.SaveChanges();
             }
-            return db.post_likes.Count();
+            int totalPostLikes = (from x in db.post_likes.Where(y => y.FK_group_post_likes_group_posts == postLike.FK_group_post_likes_group_posts && y.post_like == true)
+                                  select x).Count();
+            
+            return totalPostLikes;
         }
 
         /* <summary></summary>
