@@ -43,7 +43,7 @@ namespace Bubblespace.Controllers
             postToInsert.content_is_video = Convert.ToByte(0);
             postToInsert.time_inserted = DateTime.Now;
             postToInsert.FK_posts_users = userModel.Id;
-            postToInsert.FK_posts_bubble_groups = null;
+            postToInsert.FK_posts_bubble_groups = Convert.ToInt32(collection["group-id"]);
             //Upload image
             postToInsert.content_picture = FileUploadService.UploadImage(contentImage, "Posts");
 
