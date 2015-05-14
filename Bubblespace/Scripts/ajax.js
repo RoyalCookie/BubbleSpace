@@ -238,7 +238,8 @@ function newsFeed() {
             // Feedback to the post.
             mainView.append(
                   "<div class='post-feedback'>"
-                + "<div id=\"like-post-id-" + results[4][i] + "\">" + results[5][i] + "</div>"
+                + "<div class='like-count' id=\"like-post-id-" + results[4][i] + "\">" + results[5][i] + "</div>"
+                + "<div class='burst-count' id=\"burst-post-id-" + results[4][i] + "\">" + results[6][i] + "</div>"
                 + "<i onclick=\"likePost(" + results[4][i] + "); return false;\" class='fa fa-thumbs-up'></i>"
                 + "<i onclick=\"burstPost(" + results[4][i] + "); return false;\" class='fa fa-thumb-tack'></i>"
                 + "<i class='fa fa-comment'></i>"
@@ -533,7 +534,7 @@ function styleTheFilePicker() {
     $(":file").filestyle('size', 'xs');
 }
 
-// This takes in a type and id and appends the appropriate post submittion form to the head view container.
+// This takes in a type and id (for groups) and appends the appropriate post submission form to the head view container.
 function newPost(type, id) {
     var headView = $("#head-view");
 
@@ -555,6 +556,7 @@ function newPost(type, id) {
              "<form class='new-post' method='post' action='/Post/Create' enctype='multipart/form-data'>"
            + "<textarea id='content_text' class='form-control' name='content_text' rows='3' cols='40'></textarea><br />"
            + "<input type='submit' class='btn btn-default' value='Post' />"
+           + "<input type='hidden' value=\"" + id  + "\" />"
            + "<input type='file' data-iconName='glyphicon-inbox' name='contentImage' accept='image/*'>"
            + "</form>"
         );
