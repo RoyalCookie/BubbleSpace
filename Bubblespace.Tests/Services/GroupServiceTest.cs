@@ -7,7 +7,7 @@ namespace Bubblespace.Tests.Services
     public class GroupServiceTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void TestGetAllGroupPostForGroup1()
         {
             // Arrange:
             

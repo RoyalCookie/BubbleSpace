@@ -18,7 +18,7 @@ namespace Bubblespace.Tests.Services
             var posts = PostService.GetAllPosts(userDroken);
 
             // Assert:
-            Assert.AreEqual(2, posts.Count);
+            Assert.AreEqual(1, posts.Count);
         }
     }
 }

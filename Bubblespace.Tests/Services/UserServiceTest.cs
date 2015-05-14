@@ -24,7 +24,7 @@ namespace Bubblespace.Tests.Services
             var friends = UserService.GetAllFriends(userDroken);
 
             // Assert:
-            Assert.AreEqual(2, friends.Count);
+            Assert.AreEqual(3, friends.Count);
         }
 
         [TestMethod]
