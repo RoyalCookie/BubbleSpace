@@ -38,24 +38,11 @@ namespace Bubblespace.Services
             db.group_users.Add(groupUser);
 		}
 
-       /* <summary></summary>
-        * <param name="ID"></param>
-        * <returns></returns>
-        * <author></author>
-        */
-        static public List<posts> SortGroupPostBy(string sortingsorter, bubble_groups gr)
-		{
-            var db = new VERK2015_H17Entities1();
-            var sorted = (from x in db.posts.Where(y => y.FK_posts_bubble_groups == gr.C_ID)
-                          orderby x.time_inserted ascending
-                          select x).ToList();
-            return sorted;
-		}
 
-       /* <summary></summary>
-        * <param name="ID"></param>
-        * <returns></returns>
-        * <author></author>
+       /* <summary>Make a group description</summary>
+        * <param name="gr">Group model</param>
+        * <returns>Nothing</returns>
+        * <author>Sveinbjorn</author>
         */
         static public void InsertGroupDescription(bubble_groups gr)
 		{
@@ -66,10 +53,10 @@ namespace Bubblespace.Services
             db.SaveChanges();
 		}
 
-       /* <summary></summary>
-        * <param name="ID"></param>
-        * <returns></returns>
-        * <author></author>
+       /* <summary>Inserts an image for a group</summary>
+        * <param name="gr">Group model</param>
+        * <returns>Nothing</returns>
+        * <author>Sveinbjorn</author>
         */
         static public void InsertGroupProfileImage(bubble_groups gr)
 		{
@@ -80,10 +67,10 @@ namespace Bubblespace.Services
             db.SaveChanges();
 		}
 
-       /* <summary></summary>
-        * <param name="ID"></param>
-        * <returns></returns>
-        * <author></author>
+       /* <summary>Makes a user group admin</summary>
+        * <param name="user">user model</param>
+        * <returns>nothing</returns>
+        * <author>Sveinbjorn</author>
         */
         static public void SetAdminStatus(AspNetUsers user)
 		{
@@ -94,10 +81,10 @@ namespace Bubblespace.Services
             db.SaveChanges();
 		}
 
-       /* <summary></summary>
-        * <param name="ID"></param>
-        * <returns></returns>
-        * <author></author>
+       /* <summary>Creates a group post</summary>
+        * <param name="newPost">Post model</param>
+        * <returns>Nothing</returns>
+        * <author>Sveinbjorn</author>
         */
         static public void CreateGroupPost(posts newPost)
 		{
@@ -106,6 +93,11 @@ namespace Bubblespace.Services
             db.SaveChanges();			
 		}
 
+        /* <summary>Gets a list of posts in group</summary>
+        * <param name="bubbleGroup">Group model</param>
+        * <returns>List of posts in the group</returns>
+        * <author>Sveinbjorn</author>
+        */
         static public List<posts> GetAllGroupPosts(bubble_groups bubbleGroup)
         {
             var db = new VERK2015_H17Entities1();
@@ -115,6 +107,11 @@ namespace Bubblespace.Services
             return groupPosts;
         }
 
+        /* <summary>Gets a list of users in the group</summary>
+         * <param name="bubbleGroup">Group model</param>
+         * <returns>List of users in the group</returns>
+         * <author>Sveinbjorn</author>
+         */
         static public List<group_users> GetAllGroupUsers(bubble_groups bubbleGroup)
         {
             var db = new VERK2015_H17Entities1();
@@ -123,10 +120,10 @@ namespace Bubblespace.Services
             return groupUsers;
         }
 
-       /* <summary></summary>
-        * <param name="ID"></param>
-        * <returns></returns>
-        * <author></author>
+       /* <summary>Gets all groups</summary>
+        * <param name=""></param>
+        * <returns>A list of all groups</returns>
+        * <author>Sveinbjorn</author>
         */
         static public List<bubble_groups> GetAllGroups()
 		{
@@ -136,16 +133,6 @@ namespace Bubblespace.Services
 			return groups;
 		}
         
-        /* <summary>Gets all the groups a specified user is in</summary>
-         * <param name="email">Takes in the email/username of the user</param>
-         * <returns>list of groups for the user</returns>
-         * <author></author>
-         */
-        static public List<bubble_groups> GetAllUserGroups(string email)
-        {
-            return null;
-        }
-
         /*
          * <summary>Gets a bubble_group by id</summary>
          * <param name="id"></param>
