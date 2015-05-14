@@ -238,8 +238,8 @@ function newsFeed() {
             }
 
             var image = "";
-            if (results[7][i] != "") {
-                image = "<img src='/Images/Posts/" + results[7][i] + "' />";
+            if (results[7][i]) {
+                image = "<img class = 'post-image' src='/Images/Posts/" + results[7][i] + "' />";
             }
 
             // The post itself.
@@ -264,7 +264,6 @@ function newsFeed() {
                 + "<i class='fa fa-comment'></i>"
                 + "</div>"
             );
-            console.log(results[7][i]);
         }
     })
 
@@ -296,22 +295,47 @@ function friendMain(id) {
        mainView.empty();
 
        // We populate the view with the newest posts on top.
-       for (var i = results["posts"].length - 1; i >= 0; i--) {
+       for (var i = results["postBody"].length - 1; i >= 0; i--) {
+
+           // If the post has 10 bursts (dislikes) the post gets a red border.
+           // If the post has 10 likes the post gets a green border.
+           // If both are above 10 the higher one wins, if they are the same red wins.
+           var post_class;
+           var likes = results["postLikeCount"][i];
+           var dislikes = results["postBurstcount"][i];
+
+           if (dislikes >= 10) {
+               post_class = "burst-feed-post";
+           }
+           else {
+               post_class = "feed-post";
+           }
+
+           var image = "";
+           if (results["postImage"][i]) {
+               image = "<img class = 'post-image' src='/Images/Posts/" + results["postImage"][i] + "' />";
+           }
+
            // The post info:
            mainView.append(
-                   "<li class='feed-post'>"
+                    "<li class=\"" + post_class + "\">"
                  + "<img class='post-profile-image' src='/Images/Users/" + results["profileImage"] + "' />"
                  +     "<div class='post-user-name'>"
                  +         "<a onclick='friendMain(\"" + results["Id"] + "\"); return false;'>" + results["userName"] + "</a>"
-                 +     "</div>"
-                 + "<p class='post-text'>" + results["posts"][i] + "</p>"
+                  + "</div>"
+                  + image
+                 + "<p class='post-text'>" + results["postBody"][i] + "</p>"
                  + "</li>"
              );
-           // The post like / burst / comment feature.
+           // Feedback to the post.
            mainView.append(
-                 "<div class='post-feedback'><i class='fa fa-thumbs-up'></i>"
-               + "<i class='fa fa-thumb-tack'></i>"
-               + "<i class='fa fa-comment'></i></div>"
+                 "<div class='post-feedback'>"
+               + "<div class='like-count' id=\"like-post-id-" + results["postId"][i] + "\">" + results["postLikeCount"][i] + "</div>"
+               + "<div class='burst-count' id=\"burst-post-id-" + results["postId"][i] + "\">" + results["postBurstcount"][i] + "</div>"
+               + "<i onclick=\"likePost(" + results["postId"][i] + "); return false;\" class='fa fa-thumbs-up'></i>"
+               + "<i onclick=\"burstPost(" + results["postId"][i] + "); return false;\" class='fa fa-thumb-tack'></i>"
+               + "<i class='fa fa-comment'></i>"
+               + "</div>"
            );
        }       
     });
@@ -441,24 +465,27 @@ function eventMain(id) {
 // Chat Main
 // This takes in a chat ID and returns a main view with that chats content.
 function chatMain(id) {
-    $.ajax({
-        method: "POST",
-        url: "/Chat/GetAllMessagesFromChat",
+        $.ajax({
+            method: "POST",
+            url: "/Chat/GetAllMessagesFromChat",
         data: { chatId: id }
     })
     .success(function (results) {
 
         var mainView = $("#main-view");
-        var chatBox = $("#chatBox");
 
         mainView.empty();
         mainView.append("<div id=\"chatBox\"></div>");
-        
+
+        var chatBox = $("#chatBox");
+
         // We populate the chat with names and messages.
         for (var i = 0; i < results["sender"].length; i++) {
-            //Friendly Reminder
-            console.log("TODO: ADD TIMESTAMP TO CHAT? @chatMain()");
-            mainView.append(
+            console.log("message from: " + results["sender"][i]);
+            if (chatBox === 0) {
+                console.log("chatbox not found");
+            }
+            chatBox.append(
                   "<li>"
                 +     "<p class='post-text'> " + results["sender"][i] + ": " + results["message"][i] + "</p>"
                 + "</li>"
@@ -646,28 +673,43 @@ function newPost(type, id) {
     @JANUS -- Vantar að commenta þetta almennilega!
 */
 
+// Update Or Create Last Insert Id
+// Updates or creates a hidden input type so we know what messages we've displayed in the chat
 function updateOrCreateLastInsertId(id) {
+
+    // Try to find the hidden input
     var lastMessageId = document.getElementById("lastMessageId");
+
+    // If it isn't found we add it.
     if (lastMessageId.length === 0) {
         mainView.append(
                 "<input type=\"hidden\" name=\"lastMessageId\" id=\"lastMessageId\" value=\"" + id + "\">"
             );
         alert("lastMessageId Not Found");
-    } else {
+    }
+    // Else we update the value
+    else {
         lastMessageId.value = id;
         alert("lastMessageId Found");
     }
 }
 
+// Send Message
+// This function sends message and on success takes the info about the sent message and adds it to the chat
 function sendMessage(chatId) {
     var message = document.getElementById("messageBox").value;
+    $("#messageBox").val('');
     var view = $("#chatBox");
     $.ajax({
         method: "POST",
         url: "/Chat/Send",
         data: { chatId: chatId, message: message }
     }).success(function (message) {
-        appendMessageToView(view, message["timeStamp"], message["sender"], message["message"]);
+        view.append(
+        "<li>"
+        + "<p class='post-text'> " + message["sender"] + ": " + message["message"]
+        + "</p></li>"
+    );
     });
 }
 

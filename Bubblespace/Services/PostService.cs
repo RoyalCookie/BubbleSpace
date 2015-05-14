@@ -118,7 +118,14 @@ namespace Bubblespace.Services
             var db = new VERK2015_H17Entities1();
             return db.posts.ToList();
         }
-
+        static public Byte IsYoutubeVideo(string url)
+        {
+            if(Regex.IsMatch(url, @"(https:\/\/)*(www|m).youtube.com\/watch\?v=.+"))
+            {
+                return 1;
+            }
+            return 0;
+        }
         static public List<posts> GetAllPosts(string orderByField) 
         {
             List<posts> allPosts = PostService.GetAllPosts();

@@ -9,6 +9,17 @@ namespace Bubblespace.Controllers
 {
     public class ChatController : Controller
     {
+
+        /* <summary>
+        *   Takes a chatId and message string, which it adds to the database
+        *   relating it to the chatId that was given as a parameter
+        * </summary>
+        * <param name="chatId">The id of the chat the message belongs too</param>
+        * <param name="message">Message to save to the server</param>
+        * <returns>JSON object of the message it saved to teh database</returns>
+        * <author>Janus</author>
+        */
+
         [HttpPost]
         public ActionResult Send(FormCollection collection)
         {
@@ -48,10 +59,20 @@ namespace Bubblespace.Controllers
             return Json(retObj);
         }
 
+        /* <summary>
+        *   Takes a chatId and a lastId
+        *   Used to update the chat
+        * </summary>
+        * <param name="chatId">The Id of the chat we're getting messages for</param>
+        * <param name="lastId">the id of the last message a.k.a the hight id in the chat</param>
+        * <returns>JSON object of the messages that have an id higher than lastId and belong to the chat with id equals to chatId</returns>
+        * <author>Janus</author>
+        */
+
         [HttpPost]
         public ActionResult GetLiveMessages(FormCollection collection){
             chats chat = ChatService.GetChatById(Convert.ToInt32(collection["chatId"]));
-            List<messages> retMessages = ChatService.GetMessages(chat).Where(x => x.C_ID > Convert.ToInt32(collection["lastId"])).ToList();
+            List<messages> retMessages = ChatService.GetMessages    (chat).Where(x => x.C_ID > Convert.ToInt32(collection["lastId"])).ToList();
             var retObj = new
             {
                 id =        (from message in retMessages
@@ -65,7 +86,15 @@ namespace Bubblespace.Controllers
             };
             return Json(retObj);
         }
-        
+
+        /* <summary>
+        *   Gets all messages in the database that belong to the chat with the id equaling chatId parameter
+        * </summary>
+        * <param name="chatId">The id of the chat the message belongs too</param>
+        * <returns>JSON object of the messages </returns>
+        * <author>Janus</author>
+        */
+
         [HttpPost]
         public ActionResult GetAllMessagesFromChat(FormCollection collection) 
         {
@@ -84,6 +113,14 @@ namespace Bubblespace.Controllers
             };
             return Json(retObj);
         }
+
+        /* <summary>
+        * Gets all chats the user is a part of
+        * </summary>
+        * <param name="chatId"The i</param>
+        * <returns>JSON object of the users </returns>
+        * <author>Janus</author>
+        */
 
         [HttpPost]
         public ActionResult GetUserChats()
@@ -115,6 +152,14 @@ namespace Bubblespace.Controllers
             return Json(retObj);
         }
 
+        /* <summary>
+        *   Gets all messages in the database that belong to the chat with the id equaling chatId parameter
+        * </summary>
+        * <param name="chatId">The id of the chat the message belongs too</param>
+        * <returns>JSON object of the messages </returns>
+        * <author>Janus</author>
+        */
+
         [HttpPost]
         public ActionResult GetChatUsers(FormCollection collection) 
         {
@@ -133,6 +178,8 @@ namespace Bubblespace.Controllers
             return Json(retObj);
         }
 
+
+        // Doesn't work atm
         public ActionResult Create(FormCollection fc)
         {
             chats chat = new chats();
@@ -149,6 +196,8 @@ namespace Bubblespace.Controllers
             return View();
         }
 
+
+        // Hasn't been implemented
         public ActionResult Rename(FormCollection fc)
         {
         	chats chat = new chats();

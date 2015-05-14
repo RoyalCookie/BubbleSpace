@@ -116,10 +116,19 @@ namespace Bubblespace.Controllers
             var userInformation = new
             {
                 userName = user.NickName,
-                profileImage = user.profile_image,               
-                posts = (from post in userPosts
+                profileImage = user.profile_image,
+                postBody = (from post in userPosts
                          select post.content_text).ToList(),
+                postId = (from post in userPosts
+                          select post.C_ID.ToString()).ToList(),
+                postLikeCount = (from post in userPosts
+                        select post.post_likes.Where(y => y.post_like == true).Count().ToString()).ToList(),
+                postBurstcount = (from post in userPosts
+                                  select post.post_likes.Where(y => y.post_burst == true).Count().ToString()).ToList(),
+                postImage = (from post in userPosts
+                            select post.content_picture),
                 Id = user.Id
+
             };
             return Json(userInformation);
         }
