@@ -119,7 +119,7 @@ namespace Bubblespace.Controllers
             likeToInsert.post_like = false;
             try
             {
-                PostService.SaveLikePost(likeToInsert);
+                PostService.SaveBurstPost(likeToInsert);
             }
             catch (Exception)
             {
