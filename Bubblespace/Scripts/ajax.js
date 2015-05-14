@@ -224,9 +224,25 @@ function newsFeed() {
         // We populate the news feed with relevant posts to the logged in user.
         for (var i = results[0].length - 1; i >= 0; i--) {
 
+            // If the post has 10 bursts (dislikes) the post gets a red border.
+            // If the post has 10 likes the post gets a green border.
+            // If both are above 10 the higher one wins, if they are the same red wins.
+            var post_class;
+            var likes = results[5][i];
+            var dislikes = results[6][i];
+
+            console.log("likes: " + likes);
+            console.log("dislikes: " + dislikes);
+            if (dislikes >= 10) {
+                post_class = "burst-feed-post";
+            }
+            else {
+                post_class = "feed-post";
+            }
+
             // The post itself.
-            mainView.append(
-                    "<li class='feed-post'>"
+            mainView.append(                    
+                    "<li class=\"" + post_class + "\">"
                   + "<img class='post-profile-image' src='/Images/Users/" + results[2][i] + "' />"
                   + "<div class='post-user-name'>"
                   + "<a onclick='friendMain(\"" + results[3][i] + "\"); return false;'>" + results[0][i] + "</a>"
@@ -491,7 +507,7 @@ function burstPost(id) {
         data: { postId: id }
     })
     .success(function (data) {
-        console.log(data);
+        $("#burst-post-id-" + id).empty().append(data);
     });
 }
 
