@@ -69,7 +69,7 @@ namespace Bubblespace.Services
         static public List<post_likes> GetBurstCount(posts postBurst)
         {
             var db = new VERK2015_H17Entities1();
-            var burstCount = (from x in db.post_likes.Where(y => y.posts.C_ID == postBurst.C_ID || y.post_burst == true)
+            var burstCount = (from x in db.post_likes.Where(y => y.posts.C_ID == postBurst.C_ID && y.post_burst == true)
                         select x).ToList();
 
             return burstCount;
@@ -77,7 +77,7 @@ namespace Bubblespace.Services
         static public List<post_likes> GetBurstCount(post_comments postComment)
         {
             var db = new VERK2015_H17Entities1();
-            var burstCount = (from x in db.post_likes.Where(y => y.posts.C_ID == postComment.C_ID || y.post_burst == true)
+            var burstCount = (from x in db.post_likes.Where(y => y.posts.C_ID == postComment.C_ID && y.post_burst == true)
                               select x).ToList();
 
             return burstCount;
@@ -92,7 +92,7 @@ namespace Bubblespace.Services
         static public void SaveLikeComment(like_comments commentLike)
         {
             var db = new VERK2015_H17Entities1();
-            int allowUserToLike = (from x in db.post_likes.Where(y => y.FK_group_post_like_users == commentLike.AspNetUsers.UserName || y.FK_group_post_likes_group_posts == commentLike.FK_like_comments_post_comments)
+            int allowUserToLike = (from x in db.post_likes.Where(y => y.FK_group_post_like_users == commentLike.AspNetUsers.UserName && y.FK_group_post_likes_group_posts == commentLike.FK_like_comments_post_comments)
                                    select x).Count();
             if(allowUserToLike == 0)
             {
