@@ -238,9 +238,9 @@ function newsFeed() {
             // Feedback to the post.
             mainView.append(
                   "<div class='post-feedback'>"
-                + "<div id=\"post-id-" + results[4][i] + "\">" + results[5][i] + "</div>"
+                + "<div id=\"like-post-id-" + results[4][i] + "\">" + results[5][i] + "</div>"
                 + "<i onclick=\"likePost(" + results[4][i] + "); return false;\" class='fa fa-thumbs-up'></i>"
-                + "<i class='fa fa-thumb-tack'></i>"
+                + "<i onclick=\"burstPost(" + result[3][i] + "); return false;\" class='fa fa-thumb-tack'></i>"
                 + "<i class='fa fa-comment'></i>"
                 + "</div>"
             );
@@ -476,7 +476,7 @@ function likePost(id) {
         data: { postId: id }
     })
     .success(function (data) {
-        $("#post-id-" + id).empty().append(data);
+        $("#like-post-id-" + id).empty().append(data);
     });
 }
 
