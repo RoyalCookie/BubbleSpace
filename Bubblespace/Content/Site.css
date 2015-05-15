@@ -302,6 +302,7 @@
         margin-bottom: 5px;
         width: calc(100% + 50px); 
         margin-left: -46px;
+        font-size: 10px;
     }
 
     .bootstrap-filestyle{
@@ -448,7 +449,7 @@
         padding-left: 50px;
         padding-top: 10px;
         padding-bottom: 10px;
-        height: 400px;
+        height: 300px;
         width: auto;
     }
 
@@ -463,7 +464,11 @@
     #chatBox{
         background-color: rgb(222,222,222);
         z-index: 5;
-        margin-top: 0px !important;
+        margin-top: -30px !important;
+        margin-bottom: 10px;
+
+        height: 50vh;
+        overflow-y: scroll;
     }
 
     #post-content{

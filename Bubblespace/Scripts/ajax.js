@@ -437,7 +437,7 @@ function groupMain(id) {
                }
 
                var image = "";
-               if (results[7][i] != "") {
+               if (results[7][i]) {
                    image = "<img class='post-image' src='/Images/Posts/" + results[7][i] + "' />";
                }
 
@@ -711,7 +711,7 @@ function sendMessage(chatId) {
                 chatBox.append("<input type=\"hidden\" id=\"lastMessageId\" value=\"" + results["highestId"] + "\">");
         } else {
             $("#lastMessageId").val(message["id"]);
-            $("#main-view").scrollTop(1E10);
+            $("#chatBox").scrollTop(1E10);
         }
 
     });
@@ -779,10 +779,11 @@ function chatMain(id) {
         // The input box.
         mainView.append(
                 "<input type=\"text\" name=\"messageBox\" id=\"messageBox\">"
-            + "<button type=\"button\" onClick=\"sendMessage(" + id + ")\">Click Me!</button>"
+            + "<button type=\"button\" onClick=\"sendMessage(" + id + ")\">Send</button>"
         );
 
         chatInterval = setInterval(chatUpdate, 400);
+        $("#chatBox").scrollTop(1E10);
     });
 }
 
@@ -832,7 +833,7 @@ function chatUpdate() {
                 } else {
                     temp.val(results["id"][0]);
                 }
-                $("#main-view").scrollTop(1E10);
+                $("#chatBox").scrollTop(1E10);
             }
         });
     }
