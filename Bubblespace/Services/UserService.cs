@@ -228,6 +228,7 @@ namespace Bubblespace.Services
         {
             return PostService.GetAllPosts(user);
         }
+        
         static public bool UpdateUserProfileImage(AspNetUsers user)
         {
             var db = new VERK2015_H17Entities1();
@@ -236,6 +237,8 @@ namespace Bubblespace.Services
             if(usr != null)
             {
                 usr.profile_image = user.profile_image;
+                db.SaveChanges();
+                
                 return true;
             }
             return false;
