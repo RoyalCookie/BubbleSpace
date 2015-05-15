@@ -229,6 +229,12 @@ namespace Bubblespace.Services
             return PostService.GetAllPosts(user);
         }
         
+        
+         /* <summary>Updates profile img for specified user</summary>
+         * <param name="user">Takes in obj of user</param>
+         * <returns>returns bool, true for success</returns>
+         * <author></author>
+         */
         static public bool UpdateUserProfileImage(AspNetUsers user)
         {
             var db = new VERK2015_H17Entities1();
