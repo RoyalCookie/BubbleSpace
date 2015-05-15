@@ -122,9 +122,12 @@
     }
 
     #chatBox{
-        background-color: rgb(222,222,222);
+       background-color: rgb(222,222,222);
         z-index: 5;
-        margin-top: 0px !important;
+        margin-top: -30px !important;
+        margin-bottom: 10px;
+        height: 50vh;
+        overflow-y: scroll;
     }
 
     #post-content{
@@ -235,12 +238,12 @@
     }
 
     .feed-post{
-        list-style: none;
-        
+       list-style: none;
         padding-bottom: 10px;
         border-radius: 2%;
         margin-top: 15px;
         margin-bottom: 15px;
+        border: 2px solid rgb(186,228,229) !important;
     }
 
     .list-name, .post-user-name{
@@ -277,7 +280,7 @@
     }
 
     .feed-post, .burst-feed-post{
-        background-color: rgb(0,233,233);
+        background-color: rgb(233,233,233);
         margin-bottom: 20px;
     }
 
@@ -467,7 +470,6 @@
         z-index: 5;
         margin-top: -30px !important;
         margin-bottom: 10px;
-
         height: 50vh;
         overflow-y: scroll;
     }
