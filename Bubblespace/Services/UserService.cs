@@ -134,14 +134,14 @@ namespace Bubblespace.Services
             if(friendRemoved != null && friendAddeRemoved != null)
             {
                 //If the friend was added by you, then change friended = false
-                if(friendRemoved.C_ID != 0 && friendRemoved.FK_friends_added_users_Added != null)
+                if(friendRemoved.FK_friends_added_users_Added != null)
                 {
                     friendRemoved.friended = false;
                     db.SaveChanges();
                     return true;
                 }
                 //If the friend added you, then change friended to false
-                else if(friendAddeRemoved.C_ID != 0 && friendAddeRemoved.FK_friends_added_users_Added != null)
+                else if(friendAddeRemoved.FK_friends_added_users_Added != null)
                 {
                     friendAddeRemoved.friended = false;
                     db.SaveChanges();

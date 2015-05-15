@@ -40,7 +40,6 @@ namespace Bubblespace.Controllers
             AspNetUsers currentUser = UserService.GetUserByEmail(User.Identity.Name);
             AspNetUsers possibleFriend = UserService.GetUserById(fc["user_id"]);
 
-
             return Json(UserService.RemoveFriend(currentUser, possibleFriend));
         }
 
