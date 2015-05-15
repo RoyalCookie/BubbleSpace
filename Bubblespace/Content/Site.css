@@ -1,341 +1,322 @@
 ﻿
-/* Regular size screens */
 
-@media (min-width: 768px) {
-
-    /* Body */
-    body {
-        background-color: rgb(237,237,237);
-        padding-bottom: 20px;
-        overflow: hidden;
-    }
+/* Body */
+body {
+    background-color: rgb(237,237,237);
+    padding-bottom: 20px;
+    overflow: hidden;
+}
     
-    .body-content {
-        padding-top: 50px;
-        margin-left: 65px;
-        padding-right: 15px;
-    }
+.body-content {
+    padding-top: 50px;
+    padding-right: 15px;
+    margin-left: 65px;
+}
 
-    /* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-    .dl-horizontal dt {
-        white-space: normal;
-    }
+/* Input boxes */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
 
-    /* Set width on the form input elements since they're 100% wide by default */
-    input,
-    select,
-    textarea {
-        max-width: 280px;
-    }
+/* Line above the copyright on the front page */
+hr {
+    border-top-color: rgb(166,140,105);
+}
 
-    hr {
-        border-top-color: rgb(166,140,105);
-    }
+/* main colour of the top of the page */
+.navbar, .register-now, .register-now:hover, register-now:focus, #sidebar-wrapper{
+    background-color: rgb(0,126,229) !important;
+}
 
-    /* main colour of the top of the page */
-    .navbar {
-        padding-right: 5%;
-        background-color: rgb(0,126,229);
-    }
+/* (B) Logo */
+.navbar-inverse .navbar-brand {
+    color: white;
+    font-size: 30px;
+}
 
-    /* (B) Logo */
-    .navbar-inverse .navbar-brand {
-        color: white;
-        font-size: 30px;
-    }
+/* (B) Logo on hover/focus */
+.navbar-inverse .navbar-brand:hover,
+.navbar-inverse .navbar-brand:focus {
+    color: rgb(166,140,105);
+    background-color: transparent;
+}
 
-    /* (B) Logo on hover/focus */
-    .navbar-inverse .navbar-brand:hover,
-    .navbar-inverse .navbar-brand:focus {
-        color: rgb(166,140,105);
-        background-color: transparent;
-    }
+/* The navigational links at the top of the page */
+.navbar-inverse .navbar-nav > li > a {
+    color: rgb(89,68,51);
+    font-family: 'Lato', sans-serif;
+    font-weight: bold;
+    color: white;
+}
 
-    /* The navigational links at the top of the page */
-    .navbar-inverse .navbar-nav > li > a {
-        color: rgb(89,68,51);
-        font-family: 'Lato', sans-serif;
-        font-weight: bold;
-        color: white;
-    }
+/* The navigational links during hover/focus at the top of the page */
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+    color: rgb(166,140,105);
+    background-color: transparent;
+}
 
-    /* The navigational links during hover/focus at the top of the page */
-    .navbar-inverse .navbar-nav > li > a:hover,
-    .navbar-inverse .navbar-nav > li > a:focus {
-        color: rgb(166,140,105);
-        background-color: transparent;
-    }
+.register-now a {
+    color: rgb(89,68,51);
+    text-decoration: none;
+}
 
-    .register-now, .register-now:hover, register-now:focus {
-        background-color: rgb(0,126,229);
-    }
+.register-now a:hover,
+.register-now a:focus {
+    color: rgb(166,140,105);
+}
 
-    .register-now a {
-        color: rgb(89,68,51);
-        text-decoration: none;
-    }
+#list-view {
+    border-radius: 2%;
+    height: 85vh;
+    top: 5px;
+    left: 5px;
+}
 
-    .register-now a:hover,
-    .register-now a:focus {
-        color: rgb(166,140,105);
-    }
+#main-view {
+    margin-top: 100px !important;
+    height: 55vh;
+    left: 10px; 
+    top: 5px;
+    margin-top: 10vh;
+    overflow-y:scroll;
+    border-radius: 2%;
+}
 
-    #list-view {
-        border-radius: 2%;
-        height: 85vh;
-        top: 5px;
-        left: 5px;
-    }
+.post-image{
+    padding-left: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: 400px;
+    width: auto;
+}
 
-    #main-view {
-        margin-top: 100px !important;
-        height: 55vh;
-        left: 10px; 
-        top: 5px;
-        margin-top: 10vh;
-        overflow-y:scroll;
-        border-radius: 2%;
-    }
+#head-view {
+    padding-top: 10px;
+    height: 19vh;
+    min-height: 120px;
+    left: 10px;
+    top: 5px;
+}
 
-    .post-image{
-        padding-left: 50px;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        height: 400px;
-        width: auto;
-    }
+#chatBox{
+    background-color: rgb(222,222,222);
+    z-index: 5;
+    margin-top: 0px !important;
+}
 
-    #head-view {
-        padding-top: 10px;
-        height: 19vh;
-        min-height: 120px;
-        left: 10px;
-        top: 5px;
-    }
+#post-content{
+    border: rgb(145, 199, 244) 2px solid;
+    box-shadow: 0 0 1px #719ECE;
+    resize: none;
+}
 
-    #chatBox{
-        background-color: rgb(222,222,222);
-        z-index: 5;
-        margin-top: 0px !important;
-    }
+#nav-button-friends, #nav-button-groups, #nav-button-events, #nav-button-chat, #nav-button-settings{
+    height: 50px;
+    width: 50px;
+}
 
-    #post-content{
-        border: rgb(145, 199, 244) 2px solid;
-        box-shadow: 0 0 1px #719ECE;
-        resize: none;
-    }
-
-    #nav-button-friends, #nav-button-groups, #nav-button-events, #nav-button-chat, #nav-button-settings{
-        height: 50px;
-        width: 50px;
-    }
-
-    #nav-button-friends{
-        background:transparent url('/Content/Assets/friends.png') center top no-repeat;
-    }
+#nav-button-friends{
+    background:transparent url('/Content/Assets/friends.png') center top no-repeat;
+}
     
-    #nav-button-groups{
-        background:transparent url('/Content/Assets/groups.png') center top no-repeat;
-    }
+#nav-button-groups{
+    background:transparent url('/Content/Assets/groups.png') center top no-repeat;
+}
 
-    #nav-button-events{
-        background:transparent url('/Content/Assets/events.png') center top no-repeat;
-    }
+#nav-button-events{
+    background:transparent url('/Content/Assets/events.png') center top no-repeat;
+}
 
-    #nav-button-chat{
-        background:transparent url('/Content/Assets/chat.png') center top no-repeat;
-    }
+#nav-button-chat{
+    background:transparent url('/Content/Assets/chat.png') center top no-repeat;
+}
 
-    #nav-button-settings{
-        position: fixed;
-        bottom: 0px;
-        left: 7px;
-        background:transparent url('/Content/Assets/settings.png') center top no-repeat;
-    }
+#nav-button-settings{
+    position: fixed;
+    bottom: 0px;
+    left: 7px;
+    background:transparent url('/Content/Assets/settings.png') center top no-repeat;
+}
 
-    #nav-button-friends:hover{
-        background:transparent url('/Content/Assets/friends-hover.png') center top no-repeat;
-    }
+#nav-button-friends:hover{
+    background:transparent url('/Content/Assets/friends-hover.png') center top no-repeat;
+}
     
-    #nav-button-groups:hover{
-        background:transparent url('/Content/Assets/groups-hover.png') center top no-repeat;
-    }
+#nav-button-groups:hover{
+    background:transparent url('/Content/Assets/groups-hover.png') center top no-repeat;
+}
 
-    #nav-button-events:hover{
-        background:transparent url('/Content/Assets/events-hover.png') center top no-repeat;
-    }
+#nav-button-events:hover{
+    background:transparent url('/Content/Assets/events-hover.png') center top no-repeat;
+}
 
-    #nav-button-chat:hover{
-        background:transparent url('/Content/Assets/chat-hover.png') center top no-repeat;
-    }
+#nav-button-chat:hover{
+    background:transparent url('/Content/Assets/chat-hover.png') center top no-repeat;
+}
 
-    #nav-button-settings:hover{
-        background:transparent url('/Content/Assets/settings-hover.png') center top no-repeat;
-    }
+#nav-button-settings:hover{
+    background:transparent url('/Content/Assets/settings-hover.png') center top no-repeat;
+}
 
-    .sidebar-nav {
-        position: absolute;
-        right: 7px;
-    }
+.sidebar-nav {
+    position: absolute;
+    right: 7px;
+}
 
-    #sidebar-wrapper{
-        background-color: rgb(0,126,229) !important;
-    }
+.list-item, .content-item {
+    list-style: none;
+    font-size: 12px;
+    left: -55px;
+    background-color: rgb(233,233,233);
+    border-radius: 2%;
+    margin-left: -45px;
+    margin-top: 5px;  
+}
 
-    .list-item, .content-item {
-        list-style: none;
-        font-size: 12px;
-        left: -55px;
-        background-color: rgb(233,233,233);
-        border-radius: 2%;
-        margin-left: -45px;
-        margin-top: 5px;  
-    }
+.post-profile-image, .list-item img{
+    height: 50px;
+    width: auto;
+}
 
-    .post-profile-image, .list-item img{
-        height: 50px;
-        width: auto;
-    }
+.profile-header-image{
+    height: 100px;
+    width: auto;
+}
 
-    .profile-header-image{
-        height: 100px;
-        width: auto;
-    }
+.profile-header{
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 20px;
+}
 
-    .profile-header{
-        display: inline-block;
-        vertical-align: top;
-        margin-left: 20px;
-    }
+.profile-description, .profile-description-time{
+    font-size: 10px;
+    margin-left: 140px;
+    bottom: 100px;
+}
 
-    .profile-description, .profile-description-time{
-        font-size: 10px;
-        margin-left: 140px;
-        bottom: 100px;
-    }
+.profile-description-time{
+    font-weight: bold;
+}
 
-    .profile-description-time{
-        font-weight: bold;
-    }
+#registerLink, #loginLink{
+    color: white;
+}
 
-    #registerLink, #loginLink{
-        color: white;
-    }
+.feed-post{
+    list-style: none;
+    padding-bottom: 10px;
+    border-radius: 2%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
 
-    .feed-post{
-        list-style: none;
-        padding-bottom: 10px;
-        border-radius: 2%;
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
+.list-name, .post-user-name{
+    margin-left: 10px;
+}
 
-    .list-name, .post-user-name{
-        margin-left: 10px;
-    }
+.post-user-name{
+    display: inline;
+    color: rgb(26,18,2);
+    font-weight: bold;
+}
+.fa{
+    margin-left: 10px;
+}
 
-   .post-user-name{
-        display: inline;
-        color: rgb(26,18,2);
-        font-weight: bold;
-    }
-    .fa{
-        margin-left: 10px;
-    }
+.post-text{
+    margin-left: 80px;
+    margin-bottom: 25px;
+}
 
-    .post-text{
-        margin-left: 80px;
-        margin-bottom: 25px;
-    }
+.new-post{
+    float: right;
+    margin-top: -60px;
+}
 
-    .new-post{
-        float: right;
-        margin-top: -60px;
-    }
+.like-count{
+    color: green;
+}
 
-    .like-count{
-        color: green;
-    }
+.burst-count{
+    color: red;
+    position:absolute;
+    left: 33px;
+    top: 0px;
+}
 
-    .burst-count{
-        color: red;
-        position:absolute;
-        left: 33px;
-        top: 0px;
-    }
+.feed-post, .burst-feed-post, .liked-feed-post{
+    background-color: rgb(233,233,233);
+    margin-bottom: 20px;
+}
 
-    .feed-post, .burst-feed-post, .liked-feed-post{
-        background-color: rgb(233,233,233);
-        margin-bottom: 20px;
-    }
+.liked-feed-post{
+    border: 1px solid green;
+}
 
-    .liked-feed-post{
-        border: 1px solid green;
-    }
+.burst-feed-post{
+    border: 1px solid red;
+}
 
-    .burst-feed-post{
-        border: 1px solid red;
-    }
+.bootstrap-filestyle{
+    display: inline;
+    left: 140px;
+}
 
-    .bootstrap-filestyle{
-        display: inline;
-        left: 140px;
-    }
+.btn{
+    margin-top: 2px;
+}
 
-    .btn{
-        margin-top: 2px;
-    }
+li{
+    list-style-type: none;
+}
 
-    li{
-        list-style-type: none;
-    }
+#search-bar, .create-button{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: calc(100% + 50px); 
+    margin-left: -46px;
+}
 
-    #search-bar, .create-button{
-        margin-top: 5px;
-        margin-bottom: 5px;
-        width: calc(100% + 50px); 
-        margin-left: -46px;
-    }
+.bootstrap-filestyle{
+    left: 5px;
+}
 
-    .bootstrap-filestyle{
-        left: 5px;
-    }
+.btn-create{
+    position: absolute;
+    left: 230px !important;
+}
 
-    .btn-create{
-        position: absolute;
-        left: 230px !important;
-    }
+.add-friend-img{
+    position: relative;
+    margin-left: 90%;
+    top: -25px;
+}
 
-    .add-friend-img{
-        position: relative;
-        margin-left: 90%;
-        top: -25px;
-    }
+.friendrequest-icon-container{
+    display: inline;
+    padding-bottom: -50px;
+}
 
-    .friendrequest-icon-container{
-        display: inline;
-        padding-bottom: -50px;
-    }
-
-    a{ 
-        cursor: pointer; 
-    }
+a{ 
+    cursor: pointer; 
+}
     
-    .post-feedback{
-        position: absolute;
-        margin-top: -60px;
-        padding-left: 5px !important;
-    }
+.post-feedback{
+    position: absolute;
+    margin-top: -60px;
+    padding-left: 5px !important;
+}
 
-    .search-header{
-        margin-left: -45px;
-        padding-left: 10px;
-        margin-top: 20px;
-        padding-bottom: 10px;
-        background-color: rgb(145, 199, 244);
-    }
+.search-header{
+    margin-left: -45px;
+    padding-left: 10px;
+    margin-top: 20px;
+    padding-bottom: 10px;
+    background-color: rgb(145, 199, 244);
 }
 
 /* Animation Logic */
