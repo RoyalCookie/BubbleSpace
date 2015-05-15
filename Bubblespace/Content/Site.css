@@ -2,12 +2,12 @@
 /* Regular size screens */
 
 @media (min-width: 768px) {
+
+    /* Body */
     body {
         background-color: rgb(237,237,237);
         padding-bottom: 20px;
-        height: 100%;
-        overflow-x: hidden;
-        overflow-y: hidden;
+        overflow: hidden;
     }
     
     .body-content {

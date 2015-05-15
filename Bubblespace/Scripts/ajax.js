@@ -219,7 +219,7 @@ function settingsTab() {
     settingsList.empty();
     settingsList.append(
             "<li class='list-item'>"
-        +   "<a onclick='profilePicture(); return false;'>Profile Image</a>"
+        +   "<a onclick='profilePictureMain(); return false;'>Profile Image</a>"
         +   "</li>"
     );
 
@@ -563,13 +563,10 @@ function profilePictureMain() {
     var mainView = $("#main-view");
     mainView.empty();
     mainView.append(
-                 "<form method='post' action='/Group/Create' enctype='multipart/form-data'>"
-               + "<label for='group-name'>Group Name</label>"
-               + "<input type='text' class='form-control' id='groupName' name='group-name'><br>"
-               + "<label for='group-description'>Group Description</label>"
-               + "<textarea class='form-control' name='group-description'></textarea>"
+                 "<form method='post' action='/User/UpdateProfileImage' enctype='multipart/form-data'>"
+               + "<label for='contentImage'>Upload a new profile image</label>"
                + "<input type='file' id='image-upload' name='contentImage' accept='image/*'>"
-               + "<input type='submit' class='btn btn-default btn-create' value='Create'>"
+               + "<input type='submit' class='btn btn-default btn-create' value='Update'>"
                + "</form>"
             );
 }
