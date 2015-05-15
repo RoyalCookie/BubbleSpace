@@ -7,12 +7,12 @@ TODO: Check authentication before loading the main view!
 
 /*
     Script Index:
-
     1. Tab Content
         a. friends
         b. groups
         c. events
         d. chats
+        e. settings
     2. Main View Content
         a. news feed
         b. friend
@@ -22,11 +22,13 @@ TODO: Check authentication before loading the main view!
     3. Create
         a. group
         b. event
-    4. Minor Functional Calls
+    4. Setting Pages
+        a. profile image
+    5. Minor Functional Calls
         a. like
         b. follow
         c. unfollow
-    5. Helper Functions
+    6. Helper Functions
         a. style the file picker
         b. new post form
 */
@@ -159,7 +161,6 @@ function friendsTab() {
     })
 }
 
-
 // Groups Tab
 function groupsTab() {
     var groupList = $("#list-view-items");
@@ -211,6 +212,20 @@ function chatTab() {
     })
 }
 
+// Settings Tab
+function settingsTab() {
+    // We get the friends list container and empty it.
+    var settingsList = $("#list-view-items");
+    settingsList.empty();
+    settingsList.append(
+            "<li class='list-item'>"
+        +   "<a onclick='profilePicture(); return false;'>Profile Image</a>"
+        +   "</li>"
+    );
+
+
+}
+
 // Main View Content:
 // These functions populate the main view with ajax return content.
 // We also populate the head view with basica content relative to the main view.
@@ -250,14 +265,14 @@ function newsFeed() {
             // The post itself.
             mainView.append(
                     "<li class=\"" + post_class + "\">"
-                  + "<img class='post-profile-image' src='/Images/Users/" + results[2][i] + "' />"
-                  + "<div class='post-user-name'>"
-                  + "<a onclick='friendMain(\"" + results[3][i] + "\"); return false;'>" + results[0][i] + "</a>"
-                  + "</div>"
-                  + image
-                  + "<p class='post-text'>" + results[1][i] + "</p>"
-                  + "</li>"
-              );
+                    + "<img class='post-profile-image' src='/Images/Users/" + results[2][i] + "' />"
+                    + "<div class='post-user-name'>"
+                    + "<a onclick='friendMain(\"" + results[3][i] + "\"); return false;'>" + results[0][i] + "</a>"
+                    + "</div>"
+                    + image
+                    + "<p class='post-text'>" + results[1][i] + "</p>"
+                    + "</li>"
+                );
 
             // Feedback to the post.
             mainView.append(
@@ -536,6 +551,28 @@ function createEventMain() {
 }
 
 
+// Setting pages:
+
+function profilePictureMain() {
+    // We get the head view container and display a header message.
+    var headView = $("#head-view");
+    headView.empty();
+    headView.append("<h1>Profile Image Setting</h1>")
+
+    // We append the form.
+    var mainView = $("#main-view");
+    mainView.empty();
+    mainView.append(
+                 "<form method='post' action='/Group/Create' enctype='multipart/form-data'>"
+               + "<label for='group-name'>Group Name</label>"
+               + "<input type='text' class='form-control' id='groupName' name='group-name'><br>"
+               + "<label for='group-description'>Group Description</label>"
+               + "<textarea class='form-control' name='group-description'></textarea>"
+               + "<input type='file' id='image-upload' name='contentImage' accept='image/*'>"
+               + "<input type='submit' class='btn btn-default btn-create' value='Create'>"
+               + "</form>"
+            );
+}
 
 // Minor functional calls.
 
