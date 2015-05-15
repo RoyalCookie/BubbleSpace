@@ -144,6 +144,7 @@ namespace Bubblespace.Controllers
             returnJson.Add(image);
             return Json(returnJson);
         }
+        
         [HttpPost]
         public ActionResult UpdateProfileImage(HttpPostedFileBase contentImage)
         {
@@ -152,9 +153,9 @@ namespace Bubblespace.Controllers
             {
                 user.profile_image = FileUploadService.UploadImage(contentImage, "Users");
                 UserService.UpdateUserProfileImage(user);
-                return Json(UserService.UpdateUserProfileImage(user));
+                return RedirectToAction("Home", "Home");
             }
-            return Json(false);
+            return RedirectToAction("Home", "Home");
         }
 	}
 }
