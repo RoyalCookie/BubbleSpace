@@ -70,19 +70,26 @@ namespace Bubblespace.Controllers
         */
 
         [HttpPost]
-        public ActionResult GetLiveMessages(FormCollection collection){
+        public ActionResult GetChatUpdates(FormCollection collection){
+            System.Diagnostics.Debug.WriteLine("LastId: " + collection["lastId"]);
             chats chat = ChatService.GetChatById(Convert.ToInt32(collection["chatId"]));
             List<messages> retMessages = ChatService.GetMessages    (chat).Where(x => x.C_ID > Convert.ToInt32(collection["lastId"])).ToList();
+
+            int highestId = (from x in retMessages
+                             orderby x.C_ID descending
+                             select x.C_ID).FirstOrDefault();
             var retObj = new
             {
                 id =        (from message in retMessages
-                            select message.C_ID).ToList(),
+                             select message.C_ID).ToList(),
                 sender =    (from message in retMessages
                             select message.AspNetUsers.NickName).ToList(),
                 message =   (from message in retMessages
                             select message.message).ToList(),
                 timeStamp = (from message in retMessages
-                            select message.time_stamp).ToList()
+                            select message.time_stamp).ToList(),
+                highest = highestId
+                
             };
             return Json(retObj);
         }
@@ -100,17 +107,25 @@ namespace Bubblespace.Controllers
         {
             chats chat = ChatService.GetChatById(Convert.ToInt32(collection["chatId"]));
             List<messages> messages = ChatService.GetMessages(chat);
-            var retObj = new 
+
+
+            int highestId = (from x in messages
+                             orderby x.C_ID descending
+                             select x.C_ID).First();
+
+            var retObj = new
             {
                 id =        (from message in messages
-                            select message.C_ID).ToList(),
+                                select message.C_ID).ToList(),
                 sender =    (from message in messages
                             select message.AspNetUsers.NickName).ToList(),
                 message =   (from message in messages
                             select message.message).ToList(),
                 timeStamp = (from message in messages
-                            select message.time_stamp).ToList()
+                             select message.time_stamp).ToList(),
+                highestId = highestId
             };
+           
             return Json(retObj);
         }
 
