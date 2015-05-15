@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -44,7 +45,21 @@ namespace Bubblespace.Services
             var eve = (from x in db.events.Where(x => x.C_ID == id)
                             select x).SingleOrDefault();
             return eve;
-        }	
+        }
+      /* <summary>Helper function to parse datetime string</summary>
+       * <param name="date">Takes an string</param>
+       * <returns>Datetime object</returns>
+       * <author>Janus þór</author>
+       */
+        public static DateTime? ParseDate(string date)
+        {
+            if(date == String.Empty)
+            {
+                return null;
+            }
+            DateTime dt = DateTime.ParseExact(date, "MM/dd/yyyy", CultureInfo.InvariantCulture);
+            return dt;
+        }
 	}
 	
 }

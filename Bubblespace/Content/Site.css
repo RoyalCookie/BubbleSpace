@@ -8,6 +8,10 @@
         overflow: hidden;
     }
     
+    .profile-header{
+        font-size: 12px;
+    }
+
     .body-content {
         padding-top: 50px;
         margin-left: 65px;
@@ -118,9 +122,12 @@
     }
 
     #chatBox{
-        background-color: rgb(222,222,222);
+       background-color: rgb(222,222,222);
         z-index: 5;
-        margin-top: 0px !important;
+        margin-top: -30px !important;
+        margin-bottom: 10px;
+        height: 50vh;
+        overflow-y: scroll;
     }
 
     #post-content{
@@ -231,11 +238,12 @@
     }
 
     .feed-post{
-        list-style: none;
+       list-style: none;
         padding-bottom: 10px;
         border-radius: 2%;
         margin-top: 15px;
         margin-bottom: 15px;
+        border: 2px solid rgb(186,228,229) !important;
     }
 
     .list-name, .post-user-name{
@@ -271,17 +279,13 @@
         top: 0px;
     }
 
-    .feed-post, .burst-feed-post, .liked-feed-post{
+    .feed-post, .burst-feed-post{
         background-color: rgb(233,233,233);
         margin-bottom: 20px;
     }
 
-    .liked-feed-post{
+    .liked-feed-post {
         border: 1px solid green;
-    }
-
-    .burst-feed-post{
-        border: 1px solid red;
     }
 
     .bootstrap-filestyle{
@@ -466,7 +470,6 @@
         z-index: 5;
         margin-top: -30px !important;
         margin-bottom: 10px;
-
         height: 50vh;
         overflow-y: scroll;
     }
@@ -580,6 +583,7 @@
         border-radius: 2%;
         margin-top: 15px;
         margin-bottom: 15px;
+        border: 2px solid rgb(186,228,229) !important;
     }
 
     .list-name, .post-user-name{

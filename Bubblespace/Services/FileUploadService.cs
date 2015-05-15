@@ -8,6 +8,11 @@ namespace Bubblespace.Services
 {
     public class FileUploadService
     {
+        /* <summary>Encapsulates fileupload</summary>
+        * <param>HttpPostedFileBase</param>
+        * <returns>Returns name of image/file</returns>
+        * <author>Sveinbjörn / Janus</author>
+        */
         public static string UploadImage(HttpPostedFileBase contentImage, string folder)
         {
             // Inside this if statement we handle the image if one is uploaded
@@ -40,7 +45,6 @@ namespace Bubblespace.Services
                 // Return the image name
                 return result;
             }
-            
             else
             {
                 return string.Empty;
