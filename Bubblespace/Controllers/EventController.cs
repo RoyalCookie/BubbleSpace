@@ -61,8 +61,9 @@ namespace Bubblespace.Controllers
                 // Setting the image name
                 eventToAdd.event_profile_image = result;
             }
+            EventService.CreateEvent(eventToAdd);
 
-            return Json(EventService.CreateEvent(eventToAdd));
+            return RedirectToAction("Home", "Home");
         }
 
         public ActionResult PostToEvent()

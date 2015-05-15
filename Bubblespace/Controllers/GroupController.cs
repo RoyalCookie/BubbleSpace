@@ -30,7 +30,7 @@ namespace Bubblespace.Controllers
             }
             var newGroup = GroupService.CreateGroup(bGroup);
 
-            return Json(newGroup);
+            return RedirectToAction("Home", "Home");;
         }
 
         public ActionResult Join()
