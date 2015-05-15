@@ -716,7 +716,7 @@ function chatHead(id) {
                   + "</p></div>"
               );
         }
-        chatUsers.append("<button onClick=\"renameChat\" value=\"rename\">");
+        chatUsers.append("<button onClick=\"renameChat()\" >Rename Chat</button>");
         chatMain(id);
     });
 }
@@ -762,41 +762,58 @@ function chatMain(id) {
             + "<button type=\"button\" onClick=\"sendMessage(" + id + ")\">Click Me!</button>"
         );
 
-        chatInterval = setInterval(chatUpdate, 100);
+        chatInterval = setInterval(chatUpdate, 400);
     });
 }
 
-function chatUpdate() {
+function renameChat() {
 
     var chatId = $("#chatId").val();
-    var lastId = $("#lastMessageId").val();
-
-    var chatBox = $("#chatBox");
-
-    $.ajax({
-        method: "POST",
-        url: "/Chat/GetChatUpdates",
-        data: { chatId: chatId, lastId: lastId}
-    }).success(function (results) {
-        for (var i = 0; i < results["sender"].length; i++) {
-            if (chatBox === 0) {
-                console.log("chatbox not found");
-            }
-            chatBox.append(
-                  "<li>"
-                + "<p class='post-text'> " + results["sender"][i] + ": " + results["message"][i] + "</p>"
-                + "</li>"
-            );
-        }
-        if (results["id"].length > 0) {
-            var temp = $("#lastMessageId");
-            if (temp === 0) {
-                console.log("This shouldn't happen in chatUpdate()");
-                chatBox.append("<input type=\"hidden\" id=\"lastMessageId\" value=\"" + results["id"][0] + "\">");
-            } else {
-                temp.val(results["id"][0]);
-            }
-           $("#main-view").scrollTop(1E10);
-        }
-    });
+    var newName = prompt("New name: ");
+    
+    if (newName.length != 0) {
+        $.ajax({
+            method: "POST",
+            url: "/Chat/Rename",
+            data: { chatId: chatId, newName : newName }
+        }).success(function () {
+            setTimeout(chatTab, 5000);
+            chatHead(chatId);
+        });
+    }
 }
+
+    function chatUpdate() {
+
+        var chatId = $("#chatId").val();
+        var lastId = $("#lastMessageId").val();
+
+        var chatBox = $("#chatBox");
+
+        $.ajax({
+            method: "POST",
+            url: "/Chat/GetChatUpdates",
+            data: { chatId: chatId, lastId: lastId}
+        }).success(function (results) {
+            for (var i = 0; i < results["sender"].length; i++) {
+                if (chatBox === 0) {
+                    console.log("chatbox not found");
+                }
+                chatBox.append(
+                      "<li>"
+                    + "<p class='post-text'> " + results["sender"][i] + ": " + results["message"][i] + "</p>"
+                    + "</li>"
+                );
+            }
+            if (results["id"].length > 0) {
+                var temp = $("#lastMessageId");
+                if (temp === 0) {
+                    console.log("This shouldn't happen in chatUpdate()");
+                    chatBox.append("<input type=\"hidden\" id=\"lastMessageId\" value=\"" + results["id"][0] + "\">");
+                } else {
+                    temp.val(results["id"][0]);
+                }
+                $("#main-view").scrollTop(1E10);
+            }
+        });
+    }
