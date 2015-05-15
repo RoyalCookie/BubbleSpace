@@ -779,7 +779,7 @@ function chatMain(id) {
             + "<button type=\"button\" onClick=\"sendMessage(" + id + ")\">Send</button>"
         );
 
-        chatInterval = setInterval(chatUpdate, 400);
+        chatInterval = setInterval(chatUpdate, 1000);
         $("#chatBox").scrollTop(1E10);
     });
 }

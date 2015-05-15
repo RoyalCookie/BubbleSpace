@@ -112,7 +112,7 @@ namespace Bubblespace.Controllers
             int? highestId = (from x in messages
                              orderby x.C_ID descending
                              select x.C_ID).FirstOrDefault();
-            if (highestId.HasValue) {
+            if (!highestId.HasValue) {
                 highestId = 1;
             }
 
