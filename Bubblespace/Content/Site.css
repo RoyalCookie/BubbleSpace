@@ -8,6 +8,10 @@
         overflow: hidden;
     }
     
+    .profile-header{
+        font-size: 12px;
+    }
+
     .body-content {
         padding-top: 50px;
         margin-left: 65px;
