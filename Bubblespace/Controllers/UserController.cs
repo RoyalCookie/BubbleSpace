@@ -9,6 +9,14 @@ namespace Bubblespace.Controllers
 {   
     public class UserController : Controller
     {
+
+        /* <summary>
+         * adds a given user as a friend of the current user
+        * </summary>
+        * <param name="user_id">user to add as friend</param>
+        * <author>Sveinbjörn</author>
+        */
+        [HttpPost]
         public ActionResult FriendRequest(FormCollection fc)
         {
             AspNetUsers currentUser = UserService.GetUserByEmail(User.Identity.Name);
@@ -18,6 +26,14 @@ namespace Bubblespace.Controllers
             return Json(UserService.ToggleFriendship(currentUser, possibleFriend));
         }
 
+        /* <summary>
+        * Removes a given friend from the current users friendlist
+        * </summary>
+        * <param name="user_id">the user to be removed</param>
+        * <returns>json object true or false</returns>
+        * <author>Sveinbjörn</author>
+        */
+        [HttpPost]
         public ActionResult FriendRemove(FormCollection fc)
         {
             AspNetUsers currentUser = UserService.GetUserByEmail(User.Identity.Name);
@@ -26,6 +42,12 @@ namespace Bubblespace.Controllers
             return Json(UserService.RemoveFriend(currentUser, possibleFriend));
         }
 
+        /* <summary>
+        * Get all friends of the current user
+        * </summary>
+        * <returns>JSON object of all information on friends of the user</returns>
+        * <author>Sveinbjörn</author>
+        */
         [HttpPost]
         public ActionResult GetFriends()
         {
@@ -51,32 +73,25 @@ namespace Bubblespace.Controllers
             return Json(returnJson);
         }
 
-        // Should remain here for testing misc code
-        [HttpPost]
-        public ActionResult Test()
-        {
-            AspNetUsers user = UserService.GetUserByEmail(User.Identity.Name);
-            AspNetUsers userToAdd = UserService.GetUserByEmail("j@h.com");
-            System.Diagnostics.Debug.WriteLine(userToAdd.Id);
-            var chats = ChatService.GetAllChats(user);
-            foreach (chats chat in chats) {
-                System.Diagnostics.Debug.WriteLine(chat.chat_name);
-            }
-            chats chatter = (from chate in chats
-                         where chate.C_ID == 1
-                         select chate).Single();
-            ChatService.AddChatUsers(chatter, userToAdd);
-            return Json("It Ran");
-        }
+        /* <summary>
+        * gets information from the userId given
+        * </summary>
+        * <param name="userId">The id of the user to get information about</param>
+        * <returns>JSON object of the information related to the user</returns>
+        * <author>Janus</author>
+        */
 
         [HttpPost]
         public ActionResult GetUserInformation(FormCollection collection) 
         {
+            // Gets all the user information
             AspNetUsers user = UserService.GetUserById(collection["userId"]);
             List<posts> allUserPosts = UserService.GetUsersPosts(user);
             List<posts> userPosts = (from pst in allUserPosts
                                          where pst.FK_posts_bubble_groups == null
                                          select pst).ToList();
+           
+            // puts all the information into a single object
             var userInformation = new
             {
                 userName = user.NickName,
@@ -94,8 +109,17 @@ namespace Bubblespace.Controllers
                 Id = user.Id
 
             };
+
+            // Returns that object as a Json string
             return Json(userInformation);
         }
+
+        /* <summary>
+        * Gets all info about the logged in user
+        * </summary>
+        * <returns>JSON object of thelogged in user</returns>
+        * <author>Sveinbjörn</author>
+        */
 
         [HttpPost]
         public ActionResult GetLoggedInUserInfo()
@@ -109,6 +133,14 @@ namespace Bubblespace.Controllers
             returnJson.Add(image);
             return Json(returnJson);
         }
+
+        /* <summary>
+        * Updates the profileImage of the logged in user
+        * </summary>
+        * <param name="contentImage">the image to replace the current image</param>
+        * <returns>Redirects</returns>
+        * <author>Sveinbjörn</author>
+        */
         
         [HttpPost]
         public ActionResult UpdateProfileImage(HttpPostedFileBase contentImage)
