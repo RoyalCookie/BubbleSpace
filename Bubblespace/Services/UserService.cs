@@ -51,7 +51,7 @@ namespace Bubblespace.Services
         /* <summary>Toggles friendship</summary>
          * <param name="friends">object of the model friends_added</param>
          * <returns>bool</returns>
-         * <author>Valgeir/Sveinbjörn</author>
+         * <author>Valgeir/Sveinbjï¿½rn</author>
          */
         static public bool ToggleFriendship(AspNetUsers userAdder, AspNetUsers userFriended)
         {
@@ -240,6 +240,5 @@ namespace Bubblespace.Services
             }
             return false;
         }
-
     }
 }

@@ -40,7 +40,12 @@ namespace Bubblespace.Services
                 // Return the image name
                 return result;
             }
-            return string.Empty;
+            
+            else
+            {
+                return string.Empty;
+            }
+            
         }
     }
 }

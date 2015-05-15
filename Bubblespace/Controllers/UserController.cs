@@ -152,6 +152,7 @@ namespace Bubblespace.Controllers
             if(contentImage != null)
             {
                 user.profile_image = FileUploadService.UploadImage(contentImage, "Users");
+                UserService.UpdateUserProfileImage(user);
                 return Json(UserService.UpdateUserProfileImage(user));
             }
             return Json(false);
