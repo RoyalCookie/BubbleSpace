@@ -216,7 +216,8 @@ namespace Bubblespace.Controllers
         public ActionResult Rename(FormCollection fc)
         {
         	chats chat = new chats();
-            chat.chat_name = fc["new_chat_name"];
+            chat.chat_name = fc["newName"];
+            chat.C_ID = Convert.ToInt32(fc["chatId"]);
 
             try
             {
