@@ -200,7 +200,6 @@ function eventsTab() {
 
 // Chat Tab
 function chatTab() {
-    console.log("Chat Tah Called");
     var chatlist = $("#list-view-items");
     chatlist.empty();
     $.post("/Chat/GetUserChats", function (results) {
@@ -210,7 +209,6 @@ function chatTab() {
                 + "<a onclick='chatHead(\"" + results["chatId"][i] + "\"); return false;'>" + results["chatName"][i] + "</a>"
                 + "</li>"
             );
-            console.log(results["chatName"][i]);
         }
     })
 }
@@ -469,8 +467,6 @@ function groupMain(id) {
 
        });
 
-       // Friendly reminders.
-       console.log("TODO: DISPLAY GROUP POSTS. @groupMain()");
        // We append the appropriate version of the new post form to the head view.
        newPost("groupPage", id);
    });
@@ -733,7 +729,6 @@ function chatHead(id) {
         for (var i = users["profileImage"].length - 1; i >= 0; i--) {
             chatUsers.append(
                     "<div class=\"col-md-3\">"
-                  + "<img class='post-profile-image' src='/Images/Users/" + users["profileImage"][i] + "' />"
                   + "<div class='post-user-name'>" + users["userName"][i] + "</div>"
                   + "</p></div>"
               );
@@ -766,7 +761,6 @@ function chatMain(id) {
         // We populate the chat with names and messages.
         for (var i = 0; i < results["sender"].length; i++) {
             if (chatBox === 0) {
-                console.log("chatbox not found");
             }
             chatBox.append(
                   "<li>"
@@ -803,7 +797,6 @@ function renameChat() {
             url: "/Chat/Rename",
             data: { chatId: chatId, newName : newName }
         }).success(function (retObj) {
-            console.log("Hey im in success in rename");
             chatTab();
             chatHead(chatId);
         });
@@ -813,7 +806,6 @@ function renameChat() {
 function chatUpdate() {
     // If the interval is null this won't run.
     if (chatInterval) {
-        console.log("works");
         var chatId = $("#chatId").val();
         var lastId = $("#lastMessageId").val();
 
@@ -826,7 +818,6 @@ function chatUpdate() {
         }).success(function (results) {
             for (var i = 0; i < results["sender"].length; i++) {
                 if (chatBox === 0) {
-                    console.log("chatbox not found");
                 }
                 chatBox.append(
                         "<li>"
@@ -837,7 +828,6 @@ function chatUpdate() {
             if (results["id"].length > 0) {
                 var temp = $("#lastMessageId");
                 if (temp === 0) {
-                    console.log("This shouldn't happen in chatUpdate()");
                     chatBox.append("<input type=\"hidden\" id=\"lastMessageId\" value=\"" + results["id"][0] + "\">");
                 } else {
                     temp.val(results["id"][0]);

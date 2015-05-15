@@ -201,6 +201,10 @@
         width: auto;
     }
 
+    .post-profile-image{
+        display: none;
+    }
+
     .profile-header-image{
         height: 70px;
         width: auto;
@@ -239,10 +243,9 @@
     }
 
    .post-user-name{
-        display: inline;
-        color: rgb(26,18,2);
         font-weight: bold;
     }
+
     .fa{
         margin-left: 10px;
     }
