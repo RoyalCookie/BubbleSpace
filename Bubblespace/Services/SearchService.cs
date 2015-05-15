@@ -7,9 +7,9 @@ namespace Bubblespace.Services
 {
     public class SearchService
     {
-        /* <summary></summary>
-         * <param name="ID"></param>
-         * <returns></returns>
+        /* <summary>Searches for a user in the chat</summary>
+         * <param name="user"></param>
+         * <returns>A list of users that match the search</returns>
          * <author></author>
          */
         public static List<chats> SearchChatByUser(AspNetUsers user)
@@ -19,6 +19,12 @@ namespace Bubblespace.Services
                          select x).ToList();
             return chats;
         }
+
+        /* <summary></summary>
+         * <param name="ID"></param>
+         * <returns></returns>
+         * <author></author>
+         */
         public static List<AspNetUsers> SearchUsersByName(AspNetUsers user)
         {
             var db = new VERK2015_H17Entities1();
@@ -26,6 +32,12 @@ namespace Bubblespace.Services
                          select x).ToList();
             return users;
         }
+
+        /* <summary></summary>
+         * <param name="ID"></param>
+         * <returns></returns>
+         * <author></author>
+         */
         public static List<bubble_groups> SearchGroupByName(bubble_groups gr)
         {
             var db = new VERK2015_H17Entities1();
@@ -33,6 +45,12 @@ namespace Bubblespace.Services
                           select x).ToList();
             return groups;
         }
+
+        /* <summary></summary>
+         * <param name="ID"></param>
+         * <returns></returns>
+         * <author></author>
+         */
         public static List<events> SearchEventsByName(events eventName)
         {
             var db = new VERK2015_H17Entities1();
@@ -40,6 +58,12 @@ namespace Bubblespace.Services
                           select x).ToList();
             return bEvent;
         }
+
+        /* <summary></summary>
+         * <param name="ID"></param>
+         * <returns></returns>
+         * <author></author>
+         */
         public static List<chats> SearchChatByName(chats chat)
         {
             var db = new VERK2015_H17Entities1();
