@@ -11,7 +11,7 @@ namespace Bubblespace.Services
         static public chats GetChatById(int id)
         {
             var db = new VERK2015_H17Entities1();
-            return db.chats.Where(x => x.C_ID == id).Single();
+            return db.chats.Where(x => x.C_ID == id).SingleOrDefault();
         }
 
         static public void CreateMessage(messages message)

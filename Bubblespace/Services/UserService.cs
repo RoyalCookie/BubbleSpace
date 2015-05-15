@@ -48,48 +48,70 @@ namespace Bubblespace.Services
             return user;
         }
         
-        /* <summary>user adds a friend</summary>
+        /* <summary>Toggles friendship</summary>
          * <param name="friends">object of the model friends_added</param>
          * <returns>bool</returns>
-         * <author>Valgeir</author>
+         * <author>Valgeir/Sveinbjörn</author>
          */
-        static public bool AddFriend(AspNetUsers userAdder, AspNetUsers userFriended)
+        static public bool ToggleFriendship(AspNetUsers userAdder, AspNetUsers userFriended)
         {
-            //TODO: Add trigger function for if the friend was a friend before and then removed
-              var db = new VERK2015_H17Entities1();
-             
-             //Checks if you have added that user
-             var friendExist = (from x in db.friends_added.Where(y => y.FK_friends_added_users_Added == userAdder.Id).Where(z => z.FK_friends_added_users_Addee == userFriended.Id)
-                                select x).SingleOrDefault();
-             //Checks if the user added you
-             var friendExistOther = (from x in db.friends_added.Where(y => y.FK_friends_added_users_Added == userFriended.Id).Where(z => z.FK_friends_added_users_Addee == userAdder.Id)
-                                select x).SingleOrDefault();
-             //Else create a new record of friendship
+            var db = new VERK2015_H17Entities1();
+
+            //Checks if you have added that user
+            var friendExist = (from x in db.friends_added.Where(y => y.FK_friends_added_users_Added == userAdder.Id).Where(z => z.FK_friends_added_users_Addee == userFriended.Id)
+                               select x).SingleOrDefault();
+            //Checks if the user added you
+            var friendExistOther = (from x in db.friends_added.Where(y => y.FK_friends_added_users_Added == userFriended.Id).Where(z => z.FK_friends_added_users_Addee == userAdder.Id)
+                                    select x).SingleOrDefault();
+            //Else create a new record of friendship
             if(friendExist == null && friendExistOther == null)
             {
                 friends_added addFriend = new friends_added();
                 addFriend.FK_friends_added_users_Added = userAdder.Id;
                 addFriend.FK_friends_added_users_Addee = userFriended.Id;
                 addFriend.friended = true;
-             
+
                 db.friends_added.Add(addFriend);
                 db.SaveChanges();
                 return true;
-             }
-             //If there already exist a record of your friendship where you added him, change friended to true                  
-             else if(friendExist.C_ID != 0 && friendExist.FK_friends_added_users_Added != null)
-             {
-                friendExist.friended = true;
-                db.SaveChanges();
-                return true;
-             }
-             //If there exists a record of your friendship where user added you, change friended to true
-             else if(friendExistOther.C_ID != 0 && friendExistOther.FK_friends_added_users_Added != null)
-             {
-                 friendExistOther.friended = true;
-                 db.SaveChanges();
-                 return true;
-             }
+            }
+            if(friendExist != null)
+            {
+                if(friendExist.C_ID != 0 && friendExist.FK_friends_added_users_Added != null)
+                {
+                    if(friendExist.friended == true)
+                    {
+                        friendExist.friended = false;
+                        db.SaveChanges();
+                        return false;
+                    }
+                    else
+                    {
+                        friendExist.friended = true;
+                        db.SaveChanges();
+                        return true;
+                    }
+                }
+            }
+            else if(friendExistOther != null)
+            {
+                if(friendExistOther.C_ID != 0 && friendExistOther.FK_friends_added_users_Added != null)
+                {
+                    if(friendExistOther.friended == true)
+                    {
+                        friendExistOther.friended = false;
+                        db.SaveChanges();
+                        return false;
+                    }
+                    else
+                    {
+                        friendExistOther.friended = true;
+                        db.SaveChanges();
+                        return true;
+                    }
+                }
+                return false;
+            }
             return false;
         }
 
@@ -192,10 +214,10 @@ namespace Bubblespace.Services
             var db = new VERK2015_H17Entities1();
             
             //Gets a list of friends that user added
-            List<AspNetUsers>friendsAdded = (from friend in db.friends_added.Where(y => y.FK_friends_added_users_Added == user.Id)
+            List<AspNetUsers>friendsAdded = (from friend in db.friends_added.Where(y => y.FK_friends_added_users_Added == user.Id && y.friended == true)
                                 select friend.AspNetUsers1).ToList(); 
             //Gets a list of friends that added the user
-            List<AspNetUsers> friendsAddee = (from friend in db.friends_added.Where(y => y.FK_friends_added_users_Addee == user.Id)
+            List<AspNetUsers> friendsAddee = (from friend in db.friends_added.Where(y => y.FK_friends_added_users_Addee == user.Id && y.friended == true)
                                 select friend.AspNetUsers).ToList();
             //Combines the two lists together            
             friendsAdded.AddRange(friendsAddee);
@@ -205,6 +227,18 @@ namespace Bubblespace.Services
         static public List<posts> GetUsersPosts(AspNetUsers user)
         {
             return PostService.GetAllPosts(user);
+        }
+        static public bool UpdateUserProfileImage(AspNetUsers user)
+        {
+            var db = new VERK2015_H17Entities1();
+            var usr = (from x in db.AspNetUsers.Where(y => y.UserName == user.UserName)
+                       select x).SingleOrDefault();
+            if(usr != null)
+            {
+                usr.profile_image = user.profile_image;
+                return true;
+            }
+            return false;
         }
 
     }

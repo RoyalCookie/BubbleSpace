@@ -254,6 +254,7 @@ namespace Bubblespace.Controllers
             return Json(likeToInsert);
         }
 
+        // Hasn't Been Implemented
         [HttpPost]
         public ActionResult Delete()
         {
@@ -268,6 +269,7 @@ namespace Bubblespace.Controllers
 
             return Json(PostService.GetBurstCount(post));
         }
+
         [HttpPost]
         public ActionResult PostBurstCount(FormCollection fc)
         {
@@ -303,6 +305,12 @@ namespace Bubblespace.Controllers
             return View();
         }
 
+        /* <summary>
+        * Gets all posts in the db
+        * </summary>
+        * <returns>Returns a json object of all posts in the database</returns>
+        * <author>Janus</author>
+        */
         [HttpPost]
         public ActionResult GetAllPosts()
         {
@@ -324,6 +332,12 @@ namespace Bubblespace.Controllers
             return Json(returnJson);
         }
 
+        /* <summary>
+        *   Gets all posts that belong to the user that is logged on
+        * </summary>
+        * <returns>Returns all posts belonging to the user</returns>
+        * <author>Janus</author>
+        */
         [HttpPost]
         public ActionResult GetAllUserPosts()
         {
@@ -345,6 +359,8 @@ namespace Bubblespace.Controllers
                                   select post.post_likes.Where(y => y.post_burst == true).Count().ToString()).ToList();
             var postImage = (from post in allPosts
                                  select post.content_picture).ToList();
+            var postYoutube = (from post in allPosts
+                               select post.content_is_video.ToString()).ToList();
 
             List<List<string>> returnJson = new List<List<string>>();
 
@@ -356,6 +372,7 @@ namespace Bubblespace.Controllers
             returnJson.Add(postLikeCount);
             returnJson.Add(postBurstcount);
             returnJson.Add(postImage);
+            returnJson.Add(postYoutube);
 
             return Json(returnJson);
         }

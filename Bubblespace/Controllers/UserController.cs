@@ -32,7 +32,7 @@ namespace Bubblespace.Controllers
             AspNetUsers possibleFriend = UserService.GetUserById(fc["user_id"]);
 
 
-            return Json(UserService.AddFriend(currentUser, possibleFriend));
+            return Json(UserService.ToggleFriendship(currentUser, possibleFriend));
         }
 
         public ActionResult FriendRemove(FormCollection fc)
@@ -144,6 +144,17 @@ namespace Bubblespace.Controllers
             returnJson.Add(username);
             returnJson.Add(image);
             return Json(returnJson);
+        }
+        [HttpPost]
+        public ActionResult UpdateProfileImage(HttpPostedFileBase contentImage)
+        {
+            AspNetUsers user = UserService.GetUserById(User.Identity.Name);
+            if(contentImage != null)
+            {
+                user.profile_image = FileUploadService.UploadImage(contentImage, "Users");
+                return Json(UserService.UpdateUserProfileImage(user));
+            }
+            return Json(false);
         }
 	}
 }
