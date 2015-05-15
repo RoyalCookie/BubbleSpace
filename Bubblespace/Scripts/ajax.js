@@ -697,6 +697,8 @@ function sendMessage(chatId) {
         + "<p class='post-text'> " + message["sender"] + ": " + message["message"]
         + "</p></li>");
         $("#lastMessageId").val(message["id"]);
+        $("#main-view").scrollTop(1E10);
+
     });
 }
 
@@ -717,6 +719,7 @@ function chatHead(id) {
                   + "</p></div>"
               );
         }
+        chatUsers.append("<button onClick=\"renameChat\" value=\"rename\">");
         chatMain(id);
     });
 }
@@ -796,9 +799,7 @@ function chatUpdate() {
             } else {
                 temp.val(results["id"][0]);
             }
-            $(function () {
-                $("#main-view").scrollTop(1E10);
-            });
+           $("#main-view").scrollTop(1E10);
         }
     });
 }
