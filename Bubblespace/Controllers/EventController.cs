@@ -75,7 +75,7 @@ namespace Bubblespace.Controllers
         * Gets all information about an event from the given id
         * </summary>
         * <param name="eventId">The description of the event</param>
-        * <returns>JSON object of the event with all relevant information</returns>
+        * <returns>JSON object of the event with all relevant information   </returns>
         * <author>Sveinbjörn</author>
         */
 
