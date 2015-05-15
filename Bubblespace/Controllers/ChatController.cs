@@ -103,15 +103,19 @@ namespace Bubblespace.Controllers
         */
 
         [HttpPost]
-        public ActionResult GetAllMessagesFromChat(FormCollection collection) 
+        public ActionResult GetAllMessagesFromChat(FormCollection collection)
         {
+
             chats chat = ChatService.GetChatById(Convert.ToInt32(collection["chatId"]));
             List<messages> messages = ChatService.GetMessages(chat);
 
 
-            int highestId = (from x in messages
+            var highestId = (from x in messages
                              orderby x.C_ID descending
-                             select x.C_ID).First();
+                             select x.C_ID).FirstOrDefault();
+            if (highestId == null) {
+                highestId = 1;
+            }
 
             var retObj = new
             {
@@ -197,18 +201,16 @@ namespace Bubblespace.Controllers
         // Doesn't work atm
         public ActionResult Create(FormCollection fc)
         {
-            chats chat = new chats();
-            chat.chat_name = fc["chat_name"];
+            AspNetUsers user = UserService.GetUserByEmail(User.Identity.Name);
+            AspNetUsers friend = UserService.GetUserById(fc["friendId"]);
 
-            try
-            {
-                ChatService.CreateChat(chat);
-            }
-            catch(Exception)
-            {
+            
+            chats chat = ChatService.CreateChat(user, friend);
 
-            }
-            return View();
+            return Json(new 
+            { 
+                chatId = chat.C_ID
+            });
         }
 
 
@@ -228,7 +230,7 @@ namespace Bubblespace.Controllers
 
             }
 
-            return View();
+            return Json("");
         }
 	}
 }

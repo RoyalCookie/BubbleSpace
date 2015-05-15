@@ -20,11 +20,22 @@ namespace Bubblespace.Services
             db.messages.Add(message);
             db.SaveChanges();
         }
-        static public void CreateChat(chats chat)
+        static public chats CreateChat(AspNetUsers user, AspNetUsers friend)
         {
             var db = new VERK2015_H17Entities1();
-            db.chats.Add(chat);
+
+            chats newChat = new chats();
+            newChat.chat_name = friend.NickName;
+            db.chats.Add(newChat);
+
+            // Add User
+            //public string FK_chat_members_user { get; set; }
+            //public int FK_chat_members_chat { get; set; }
+            db.chat_members.Add(new chat_members { FK_chat_members_user = user.Id, FK_chat_members_chat = newChat.C_ID });
+            db.chat_members.Add(new chat_members { FK_chat_members_user = friend.Id, FK_chat_members_chat = newChat.C_ID });
+            
             db.SaveChanges();
+            return newChat;
         }
         static public void RenameChat(chats chat)
         {

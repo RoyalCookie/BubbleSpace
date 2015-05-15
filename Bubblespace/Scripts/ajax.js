@@ -199,6 +199,7 @@ function eventsTab() {
 
 // Chat Tab
 function chatTab() {
+    console.log("Chat Tah Called");
     var chatlist = $("#list-view-items");
     chatlist.empty();
     $.post("/Chat/GetUserChats", function (results) {
@@ -208,6 +209,7 @@ function chatTab() {
                 + "<a onclick='chatHead(\"" + results["chatId"][i] + "\"); return false;'>" + results["chatName"][i] + "</a>"
                 + "</li>"
             );
+            console.log(results["chatName"][i]);
         }
     })
 }
@@ -372,9 +374,24 @@ function friendMain(id) {
         headView.append(
                 "<img class='profile-header-image' src='/Images/Users/" + results["profileImage"] + "'/>"
             + "<h1 class='profile-header'>" + results["userName"] + "</h1>"
+            + "<a onClick='createChat(\"" + results["Id"] + "\")'> <img class='profile-header-image' src='/Images/System/startChat.png'/></a> "
         );
     });
 }
+
+function createChat(friendId) {
+    $.ajax({
+        method: "POST",
+        url: "/Chat/Create",
+        data: { friendId: friendId }
+    }).success(function (results) {
+        if (results != undefined) {
+            chatTab();
+            chatHead(results["chatId"]);
+        }
+    });
+}
+
 // Group Main
 // This takes in a group ID and returns a main view with that groups content.
 function groupMain(id) {
@@ -693,8 +710,12 @@ function sendMessage(chatId) {
         "<li>"
         + "<p class='post-text'> " + message["sender"] + ": " + message["message"]
         + "</p></li>");
-        $("#lastMessageId").val(message["id"]);
-        $("#main-view").scrollTop(1E10);
+        if ($("#lastMessageId") === 0) {
+                chatBox.append("<input type=\"hidden\" id=\"lastMessageId\" value=\"" + results["highestId"] + "\">");
+        } else {
+            $("#lastMessageId").val(message["id"]);
+            $("#main-view").scrollTop(1E10);
+        }
 
     });
 }
@@ -717,6 +738,8 @@ function chatHead(id) {
               );
         }
         chatUsers.append("<button onClick=\"renameChat()\" >Rename Chat</button>");
+        // Add User Button
+        //chatUsers.append("<a onclick='renameChat()'><img class='post-profile-image' src='/Images/System/addUser.png'></a>");
         chatMain(id);
     });
 }
@@ -754,6 +777,8 @@ function chatMain(id) {
         // We store the id of the newest message, this is usefull for looking up and appending newer messages later.
         if (results["id"].length > 0) {
             chatBox.append("<input type=\"hidden\" id=\"lastMessageId\" value=\"" + results["highestId"] + "\">");
+        } else {
+            chatBox.append("<input type=\"hidden\" id=\"lastMessageId\" value=\"0\">");
         }
 
         // The input box.
@@ -776,8 +801,9 @@ function renameChat() {
             method: "POST",
             url: "/Chat/Rename",
             data: { chatId: chatId, newName : newName }
-        }).success(function () {
-            setTimeout(chatTab, 5000);
+        }).success(function (retObj) {
+            console.log("Hey im in success in rename");
+            chatTab();
             chatHead(chatId);
         });
     }
