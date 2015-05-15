@@ -72,11 +72,14 @@ namespace Bubblespace.Controllers
         [HttpPost]
         public ActionResult GetChatUpdates(FormCollection collection){
             chats chat = ChatService.GetChatById(Convert.ToInt32(collection["chatId"]));
+            // Select all messages with that fulfill the requirement -> id > lastId | and belong to the chat that has the id == chatId
             List<messages> retMessages = ChatService.GetMessages(chat).Where(x => x.C_ID > Convert.ToInt32(collection["lastId"])).ToList();
+
 
             int highestId = (from x in retMessages
                              orderby x.C_ID descending
                              select x.C_ID).FirstOrDefault();
+            // Create a new anonymous object with all message info to turn into a json string
             var retObj = new
             {
                 id =        (from message in retMessages
@@ -105,10 +108,11 @@ namespace Bubblespace.Controllers
         public ActionResult GetAllMessagesFromChat(FormCollection collection)
         {
 
+            // Here we get all messeages from the chat with the id chatId
             chats chat = ChatService.GetChatById(Convert.ToInt32(collection["chatId"]));
             List<messages> messages = ChatService.GetMessages(chat);
 
-
+            // Get highest value
             int? highestId = (from x in messages
                              orderby x.C_ID descending
                              select x.C_ID).FirstOrDefault();
@@ -116,6 +120,7 @@ namespace Bubblespace.Controllers
                 highestId = 1;
             }
 
+            // Create an anonymous object to return as a json string
             var retObj = new
             {
                 id =        (from message in messages
@@ -143,21 +148,19 @@ namespace Bubblespace.Controllers
         [HttpPost]
         public ActionResult GetUserChats()
         {
+            // Identity Check
             if (!User.Identity.IsAuthenticated){
                 return Json("No Authentication");
             }
 
+            
             AspNetUsers user = UserService.GetUserByEmail(User.Identity.Name);
+            
+            // Get all chats 
             List<chats> usersChats;
-            try 
-            {
-                usersChats = ChatService.GetAllChats(user);
-            }
-            catch(Exception)
-            {
-                return Json("Error");
-            }
-            System.Diagnostics.Debug.WriteLine("Line 1");
+            usersChats = ChatService.GetAllChats(user);
+
+            // Create a anonymous object to return as a json string
             var retObj = new
             {
                 chatName = (from chat in usersChats
@@ -166,7 +169,7 @@ namespace Bubblespace.Controllers
                           select chat.C_ID).ToList()
             };
 
-            System.Diagnostics.Debug.WriteLine("Line 2");
+
             return Json(retObj);
         }
 
@@ -183,7 +186,11 @@ namespace Bubblespace.Controllers
         {
             int id = Convert.ToInt32(collection["chatId"]);
             chats chat = ChatService.GetChatById(id);
+            
+            //Get the users belonging to the chat we querried above
             List<AspNetUsers> chatUsers = ChatService.GetChatUsers(chat);
+            
+            // Create a anonymous object and return it as a json string
             var retObj = new
             {   
                 userId = (from user in chatUsers
@@ -197,23 +204,40 @@ namespace Bubblespace.Controllers
         }
 
 
-        // Doesn't work atm
+        /* <summary>
+        * Creates a chat between to individuals
+        * </summary>
+        * <param name="friendId">The id of the friend in the chat</param>
+        * <returns>JSON object of the chatId </returns>
+        * <author>Janus</author>
+        */
+
+        [HttpPost]
         public ActionResult Create(FormCollection fc)
         {
+            // Get both users as AspNetUsers, as required by the CreateChat function in ChatService
             AspNetUsers user = UserService.GetUserByEmail(User.Identity.Name);
             AspNetUsers friend = UserService.GetUserById(fc["friendId"]);
 
-            
+            // Create a chat with the users and we get the new chat returned to us
             chats chat = ChatService.CreateChat(user, friend);
 
+            // Return the chatId as an Json object
             return Json(new 
             { 
                 chatId = chat.C_ID
             });
         }
 
+        /* <summary>
+        * Renames the chat in the database that has the given chatId
+        * </summary>
+        * <param name="chatId">The id of the chat to rename </param>
+        * <returns>returns Nothing</returns>
+        * <author>Janus</author>
+        */
 
-        // Hasn't been implemented
+        [HttpPost]
         public ActionResult Rename(FormCollection fc)
         {
         	chats chat = new chats();
