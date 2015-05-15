@@ -10,13 +10,6 @@ namespace Bubblespace.Controllers
 {
     public class GroupController : Controller
     {
-        //
-        // GET: /Group/
-        public ActionResult Index()
-        {
-            return View();
-        }
-        
         [HttpPost]
         public ActionResult Create(FormCollection fc, HttpPostedFileBase contentImage)
         {

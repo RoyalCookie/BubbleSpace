@@ -9,23 +9,6 @@ namespace Bubblespace.Controllers
 {   
     public class UserController : Controller
     {
-        //
-        // GET: /User/
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        public ActionResult Ban()
-        {
-            return View();
-        }
-
-        public ActionResult Promote()
-        {
-            return View();
-        }
-
         public ActionResult FriendRequest(FormCollection fc)
         {
             AspNetUsers currentUser = UserService.GetUserByEmail(User.Identity.Name);
@@ -41,26 +24,6 @@ namespace Bubblespace.Controllers
             AspNetUsers possibleFriend = UserService.GetUserById(fc["user_id"]);
 
             return Json(UserService.RemoveFriend(currentUser, possibleFriend));
-        }
-
-        public ActionResult Edit()
-        {
-            return View();
-        }
-
-        public ActionResult Events()
-        {
-            return View();
-        }
-
-        public ActionResult Groups()
-        {
-            return View();
-        }
-
-        public ActionResult Chats()
-        {
-            return View();
         }
 
         [HttpPost]

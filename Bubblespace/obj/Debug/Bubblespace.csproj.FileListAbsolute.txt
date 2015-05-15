@@ -217,3 +217,4 @@ C:\Users\Andri\Desktop\BubbleSpace\Bubblespace\bin\Microsoft.Owin.Security.Twitt
 C:\Users\Andri\Desktop\BubbleSpace\Bubblespace\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\Andri\Desktop\BubbleSpace\Bubblespace\obj\Debug\Bubblespace.dll
 C:\Users\Andri\Desktop\BubbleSpace\Bubblespace\obj\Debug\Bubblespace.pdb
+C:\Users\Andri\Desktop\BubbleSpace\Bubblespace\obj\Debug\Bubblespace.csprojResolveAssemblyReference.cache

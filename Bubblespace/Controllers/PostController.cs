@@ -11,13 +11,6 @@ namespace Bubblespace.Controllers
 {
     public class PostController : Controller
     {
-        //
-        // GET: /Post/
-
-
-       
-
-
         /* <summary>
          * Takes a few parameters and creates a post
          * </summary>
@@ -254,13 +247,6 @@ namespace Bubblespace.Controllers
             return Json(likeToInsert);
         }
 
-        // Hasn't Been Implemented
-        [HttpPost]
-        public ActionResult Delete()
-        {
-            return View();
-        }
-
         [HttpPost]
         public ActionResult CommentBurstCount(FormCollection fc) 
         {
@@ -296,13 +282,6 @@ namespace Bubblespace.Controllers
             };
 
             return Json(returnObject);
-        }
-
-        [HttpPost]
-        public ActionResult GetPostLikes(FormCollection collection)
-        {
-
-            return View();
         }
 
         /* <summary>
