@@ -8,10 +8,10 @@ namespace Bubblespace.Services
 {
 	public class GroupService
 	{
-       /* <summary></summary>
-        * <param name="ID"></param>
-        * <returns></returns>
-        * <author></author>
+       /* <summary>Creates a group</summary>
+        * <param name="group">bubble group model</param>
+        * <returns>New group</returns>
+        * <author>Sveinbjorn</author>
         */
         static public bubble_groups CreateGroup(bubble_groups group)
 		{
@@ -21,11 +21,12 @@ namespace Bubblespace.Services
             return group;
 		}
 
-       /* <summary></summary>
-        * <param name="ID"></param>
-        * <returns></returns>
-        * <author></author>
-        */
+        /* <summary>User joins a group</summary>
+         * <param name="gr">group model</param>
+         * <param name="user">user</param>
+         * <returns>nothing</returns>
+         * <author>Sveinbjorn</author>
+         */
         static public void UserJoinGroup(bubble_groups gr, AspNetUsers user)
 		{
             var db = new VERK2015_H17Entities1();

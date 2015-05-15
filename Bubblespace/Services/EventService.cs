@@ -19,10 +19,10 @@ namespace Bubblespace.Services
             return db.events.ToList();
 		}
 
-       /* <summary></summary>
-        * <param name="ID"></param>
-        * <returns></returns>
-        * <author></author>
+       /* <summary>Creates an Event</summary>
+        * <param name="ev">Event model</param>
+        * <returns>New Event</returns>
+        * <author>Sveinbjorn</author>
         */
         static public events CreateEvent(events ev)
 		{
@@ -33,11 +33,12 @@ namespace Bubblespace.Services
             return ev;
 		}
 
-       /* <summary></summary>
-        * <param name="ID"></param>
-        * <returns></returns>
-        * <author></author>
-        */
+        /* <summary>User joins event</summary>
+         * <param name="user">User model</param>
+         * <param name="ev">Event model</param>
+         * <returns>nothing</returns>
+         * <author>Sveinbjorn</author>
+         */
         static public void JoinEvent(AspNetUsers user, events ev)
 		{
             var db = new VERK2015_H17Entities1();
@@ -53,10 +54,10 @@ namespace Bubblespace.Services
             db.SaveChanges();
 		}
 
-       /* <summary></summary>
-        * <param name="ID"></param>
-        * <returns></returns>
-        * <author></author>
+       /* <summary>Enables a user to edit the information in an event</summary>
+        * <param name="ev">event model</param>
+        * <returns>nothing</returns>
+        * <author>Sveinbjorn</author>
         */
         static public void EditEvent(events ev)
 		{

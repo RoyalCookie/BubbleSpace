@@ -243,8 +243,8 @@ function newsFeed() {
             }
 
             var image = "";
-            if (results[7][i] != "") {
-                image = "<img src='/Images/Posts/" + results[7][i] + "' />";
+            if (results[7][i]) {
+                image = "<img class = 'post-image' src='/Images/Posts/" + results[7][i] + "' />";
             }
 
             // The post itself.
@@ -269,7 +269,6 @@ function newsFeed() {
                 + "<i class='fa fa-comment'></i>"
                 + "</div>"
             );
-            console.log(results[7][i]);
         }
     })
 
@@ -290,8 +289,6 @@ function newsFeed() {
 // Friend Main
 // This takes in a user ID and returns a main view with that users content.
 function friendMain(id) {
-    clearInterval(chatInterval);
-    chatInterval = null;
     $.ajax({
         method: "POST",
         url: "/User/GetUserInformation",
@@ -303,22 +300,47 @@ function friendMain(id) {
        mainView.empty();
 
        // We populate the view with the newest posts on top.
-       for (var i = results["posts"].length - 1; i >= 0; i--) {
+       for (var i = results["postBody"].length - 1; i >= 0; i--) {
+
+           // If the post has 10 bursts (dislikes) the post gets a red border.
+           // If the post has 10 likes the post gets a green border.
+           // If both are above 10 the higher one wins, if they are the same red wins.
+           var post_class;
+           var likes = results["postLikeCount"][i];
+           var dislikes = results["postBurstcount"][i];
+
+           if (dislikes >= 10) {
+               post_class = "burst-feed-post";
+           }
+           else {
+               post_class = "feed-post";
+           }
+
+           var image = "";
+           if (results["postImage"][i]) {
+               image = "<img class = 'post-image' src='/Images/Posts/" + results["postImage"][i] + "' />";
+           }
+
            // The post info:
            mainView.append(
-                   "<li class='feed-post'>"
+                    "<li class=\"" + post_class + "\">"
                  + "<img class='post-profile-image' src='/Images/Users/" + results["profileImage"] + "' />"
                  + "<div class='post-user-name'>"
                  + "<a onclick='friendMain(\"" + results["Id"] + "\"); return false;'>" + results["userName"] + "</a>"
-                 + "</div>"
-                 + "<p class='post-text'>" + results["posts"][i] + "</p>"
+                  + "</div>"
+                  + image
+                 + "<p class='post-text'>" + results["postBody"][i] + "</p>"
                  + "</li>"
              );
-           // The post like / burst / comment feature.
+           // Feedback to the post.
            mainView.append(
-                 "<div class='post-feedback'><i class='fa fa-thumbs-up'></i>"
-               + "<i class='fa fa-thumb-tack'></i>"
-               + "<i class='fa fa-comment'></i></div>"
+                 "<div class='post-feedback'>"
+               + "<div class='like-count' id=\"like-post-id-" + results["postId"][i] + "\">" + results["postLikeCount"][i] + "</div>"
+               + "<div class='burst-count' id=\"burst-post-id-" + results["postId"][i] + "\">" + results["postBurstcount"][i] + "</div>"
+               + "<i onclick=\"likePost(" + results["postId"][i] + "); return false;\" class='fa fa-thumbs-up'></i>"
+               + "<i onclick=\"burstPost(" + results["postId"][i] + "); return false;\" class='fa fa-thumb-tack'></i>"
+               + "<i class='fa fa-comment'></i>"
+               + "</div>"
            );
        }
    });
@@ -338,7 +360,6 @@ function friendMain(id) {
         );
     });
 }
-
 // Group Main
 // This takes in a group ID and returns a main view with that groups content.
 function groupMain(id) {

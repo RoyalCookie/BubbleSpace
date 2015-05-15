@@ -44,7 +44,7 @@ namespace Bubblespace.Controllers
             posts postToInsert = new posts();
 
             postToInsert.content_text = Regex.Replace(collection["content_text"], "janus", "#TakkJanus", RegexOptions.IgnoreCase);
-            postToInsert.content_is_video = Convert.ToByte(0);
+            postToInsert.content_is_video = PostService.IsYoutubeVideo(collection["content_text"]);
             postToInsert.time_inserted = DateTime.Now;
             postToInsert.FK_posts_users = userModel.Id;
 
@@ -331,7 +331,6 @@ namespace Bubblespace.Controllers
             returnJson.Add(posterId);
             return Json(returnJson);
         }
-        [HttpPost]
 
         /* <summary>
         *   Gets all posts that belong to the user that is logged on
@@ -339,6 +338,7 @@ namespace Bubblespace.Controllers
         * <returns>Returns all posts belonging to the user</returns>
         * <author>Janus</author>
         */
+        [HttpPost]
         public ActionResult GetAllUserPosts()
         {
             AspNetUsers user = UserService.GetUserByEmail(User.Identity.Name);
@@ -373,6 +373,5 @@ namespace Bubblespace.Controllers
 
             return Json(returnJson);
         }
-
     }
 }
