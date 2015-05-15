@@ -282,7 +282,6 @@ function newsFeed() {
                 + "<div class='burst-count' id=\"burst-post-id-" + results[4][i] + "\">" + results[6][i] + "</div>"
                 + "<i onclick=\"likePost(" + results[4][i] + "); return false;\" class='fa fa-thumbs-up'></i>"
                 + "<i onclick=\"burstPost(" + results[4][i] + "); return false;\" class='fa fa-thumb-tack'></i>"
-                + "<i class='fa fa-comment'></i>"
                 + "</div>"
             );
         }
@@ -355,7 +354,6 @@ function friendMain(id) {
                + "<div class='burst-count' id=\"burst-post-id-" + results["postId"][i] + "\">" + results["postBurstcount"][i] + "</div>"
                + "<i onclick=\"likePost(" + results["postId"][i] + "); return false;\" class='fa fa-thumbs-up'></i>"
                + "<i onclick=\"burstPost(" + results["postId"][i] + "); return false;\" class='fa fa-thumb-tack'></i>"
-               + "<i class='fa fa-comment'></i>"
                + "</div>"
            );
        }
@@ -460,7 +458,6 @@ function groupMain(id) {
                    + "<div class='burst-count' id=\"burst-post-id-" + results[4][i] + "\">" + results[6][i] + "</div>"
                    + "<i onclick=\"likePost(" + results[4][i] + "); return false;\" class='fa fa-thumbs-up'></i>"
                    + "<i onclick=\"burstPost(" + results[4][i] + "); return false;\" class='fa fa-thumb-tack'></i>"
-                   + "<i class='fa fa-comment'></i>"
                    + "</div>"
                );
            }
