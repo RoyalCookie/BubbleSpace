@@ -437,7 +437,7 @@ function groupMain(id) {
                }
 
                var image = "";
-               if (results[7][i] != "") {
+               if (results[7][i]) {
                    image = "<img class='post-image' src='/Images/Posts/" + results[7][i] + "' />";
                }
 
