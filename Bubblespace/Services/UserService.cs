@@ -228,6 +228,18 @@ namespace Bubblespace.Services
         {
             return PostService.GetAllPosts(user);
         }
+        static public bool UpdateUserProfileImage(AspNetUsers user)
+        {
+            var db = new VERK2015_H17Entities1();
+            var usr = (from x in db.AspNetUsers.Where(y => y.UserName == user.UserName)
+                       select x).SingleOrDefault();
+            if(usr != null)
+            {
+                usr.profile_image = user.profile_image;
+                return true;
+            }
+            return false;
+        }
 
     }
 }

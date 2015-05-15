@@ -145,5 +145,16 @@ namespace Bubblespace.Controllers
             returnJson.Add(image);
             return Json(returnJson);
         }
+        [HttpPost]
+        public ActionResult UpdateProfileImage(HttpPostedFileBase contentImage)
+        {
+            AspNetUsers user = UserService.GetUserById(User.Identity.Name);
+            if(contentImage != null)
+            {
+                user.profile_image = FileUploadService.UploadImage(contentImage, "Users");
+                return Json(UserService.UpdateUserProfileImage(user));
+            }
+            return Json(false);
+        }
 	}
 }
