@@ -66,26 +66,6 @@ namespace Bubblespace.Controllers
             return RedirectToAction("Home", "Home");
         }
 
-        public ActionResult PostToEvent()
-        {
-            return View();
-        }
-
-        public ActionResult Join()
-        {
-            return View();
-        }
-
-        public ActionResult Edit()
-        {
-            return View();
-        }
-
-        public ActionResult Delete()
-        {
-            return View();
-        }
-
         [HttpPost]
         public ActionResult Events()
         { 
