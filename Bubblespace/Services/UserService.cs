@@ -151,44 +151,6 @@ namespace Bubblespace.Services
             return false;
         }
 
-        /* <summary>Admin bans a user from BubbleSpace</summary>
-         * <param name="user">takes in obj of the user</param>
-         * <returns>no return</returns>
-         * <author>Valgeir</author>
-         */
-        static public void BanUser(AspNetUsers user)
-        {
-            var db = new VERK2015_H17Entities1();
-            var userBan = (from x in db.AspNetUsers.Where(y => y.Id == user.Id)
-                           select x).SingleOrDefault();
-            if (userBan.user_status == false)
-            {
-                userBan.user_status = true;
-                db.SaveChanges();
-            }
-            else
-            {
-                userBan.user_status = false;
-                db.SaveChanges();
-            } 
-        }
-
-        /* <summary>Upgrade a user to admin of BubbleSpace</summary>
-         * <param name="email">Takes in the email of user</param>
-         * <returns>no return</returns>
-         * <author>Valgeir</author>
-         */
-        static public void UpgradeUserToAdmin(AspNetUsers user)
-        {
-            var db = new VERK2015_H17Entities1();
-
-            var userToAdmin = (from x in db.AspNetUsers.Where(y => y.Id == user.Id) 
-                               select x).SingleOrDefault();
-            userToAdmin.FK_users_userrank = 2;
-            
-            db.SaveChanges();
-        }
-
         /* <summary>Gets all events a specified user created</summary>
          * <param name="email">Takes in the email/username of user</param>
          * <returns>list of events created by user</returns>
@@ -197,7 +159,6 @@ namespace Bubblespace.Services
         static public List<events> GetAllEventsCreatedByUser(AspNetUsers user)
         {
             var db = new VERK2015_H17Entities1();
-
             var userEvents = (from events in db.events.Where(x => x.FK_events_owner == user.Id)
                               select events).ToList();
 

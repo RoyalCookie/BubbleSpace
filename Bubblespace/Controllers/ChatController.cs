@@ -71,7 +71,6 @@ namespace Bubblespace.Controllers
 
         [HttpPost]
         public ActionResult GetChatUpdates(FormCollection collection){
-            System.Diagnostics.Debug.WriteLine("LastId: " + collection["lastId"]);
             chats chat = ChatService.GetChatById(Convert.ToInt32(collection["chatId"]));
             List<messages> retMessages = ChatService.GetMessages    (chat).Where(x => x.C_ID > Convert.ToInt32(collection["lastId"])).ToList();
 
@@ -110,10 +109,10 @@ namespace Bubblespace.Controllers
             List<messages> messages = ChatService.GetMessages(chat);
 
 
-            var highestId = (from x in messages
+            int? highestId = (from x in messages
                              orderby x.C_ID descending
                              select x.C_ID).FirstOrDefault();
-            if (highestId == null) {
+            if (highestId.HasValue) {
                 highestId = 1;
             }
 

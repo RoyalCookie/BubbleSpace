@@ -94,22 +94,8 @@ namespace Bubblespace.Services
                 db.chat_members.Add(member);
                 db.SaveChanges();
             }
-
         }
 
-        /* <summary>Gets messeages from a certain date</summary>
-         * <param name="chat">Chat model</param>
-         * <param name="date">Datetime object</param>
-         * <returns>list of messages</returns>
-         * <author>Sveinbjorn</author>
-         */
-        static public List<messages> GetMessagesSince(chats chat, DateTime date)
-		{
-            var db = new VERK2015_H17Entities1();
-            var messages = (from x in db.messages.Where(y => y.FK_messages_chat_id == chat.C_ID && y.time_stamp >= date)
-                            select x).ToList();
-			return messages;
-		}
         /* <summary>Gets all the chats for a specified user</summary>
          * <param name="user">Takes in obj of user</param>
          * <returns>list of chats for the user</returns>

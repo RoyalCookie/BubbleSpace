@@ -7,19 +7,6 @@ namespace Bubblespace.Services
 {
     public class SearchService
     {
-        /* <summary>Searches for a user in the chat</summary>
-         * <param name="user"></param>
-         * <returns>A list of users that match the search</returns>
-         * <author></author>
-         */
-        public static List<chats> SearchChatByUser(AspNetUsers user)
-        {
-            var db = new VERK2015_H17Entities1();
-            var chats = (from x in db.chats.Where(y => y.chat_members == user)
-                         select x).ToList();
-            return chats;
-        }
-
         /* <summary></summary>
          * <param name="ID"></param>
          * <returns></returns>
