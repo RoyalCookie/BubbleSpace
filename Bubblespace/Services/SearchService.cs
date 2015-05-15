@@ -7,9 +7,9 @@ namespace Bubblespace.Services
 {
     public class SearchService
     {
-        /* <summary></summary>
-         * <param name="ID"></param>
-         * <returns></returns>
+        /* <summary>Searches for users by username</summary>
+         * <param name="user">Takes in obj of a user</param>
+         * <returns>list of users</returns>
          * <author></author>
          */
         public static List<AspNetUsers> SearchUsersByName(AspNetUsers user)
