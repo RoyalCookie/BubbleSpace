@@ -47,7 +47,11 @@ namespace Bubblespace.Services
             return totalPostLikes;
         }
 
-
+        /* <summary>Counts the burst on the bubble</summary>
+         * <param name="burst">Post like model</param>
+         * <returns>The number of bubble bursts</returns>
+         * <author>Sveinbjorn</author>
+         */
         static public int SaveBurstPost(post_likes burst)
         {
             var db = new VERK2015_H17Entities1();
@@ -64,10 +68,10 @@ namespace Bubblespace.Services
             return burstCount;
         }
 
-        /* <summary></summary>
-         * <param name="ID"></param>
-         * <returns></returns>
-         * <author></author>
+        /* <summary>Saves a comment by a user on a post</summary>
+         * <param name="comment">Post comment model</param>
+         * <returns>Nothing</returns>
+         * <author>Sveinbjorn</author>
          */
         static public void SaveCommentOnPost(post_comments comment)
         {
@@ -76,6 +80,11 @@ namespace Bubblespace.Services
             db.SaveChanges();
         }
 
+        /* <summary></summary>
+         * <param name="ID"></param>
+         * <returns></returns>
+         * <author></author>
+         */
         static public List<post_likes> GetBurstCount(posts postBurst)
         {
             var db = new VERK2015_H17Entities1();
