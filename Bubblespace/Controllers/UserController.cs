@@ -148,7 +148,7 @@ namespace Bubblespace.Controllers
         [HttpPost]
         public ActionResult UpdateProfileImage(HttpPostedFileBase contentImage)
         {
-            AspNetUsers user = UserService.GetUserById(User.Identity.Name);
+            AspNetUsers user = UserService.GetUserByEmail(User.Identity.Name);
             if(contentImage != null)
             {
                 user.profile_image = FileUploadService.UploadImage(contentImage, "Users");
