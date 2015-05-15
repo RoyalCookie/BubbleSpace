@@ -220,8 +220,8 @@ function settingsTab() {
     settingsList.empty();
     settingsList.append(
             "<li class='list-item'>"
-        +   "<a onclick='profilePictureMain(); return false;'>Profile Image</a>"
-        +   "</li>"
+        + "<a onclick='profilePictureMain(); return false;'>Profile Image</a>"
+        + "</li>"
     );
 
 
@@ -497,6 +497,53 @@ function eventMain(id) {
 }
 
 
+// Chat Main
+// This takes in a chat ID and returns a main view with that chats content.
+function chatMain(id) {
+    $.ajax({
+        method: "POST",
+        url: "/Chat/GetAllMessagesFromChat",
+        data: { chatId: id }
+    })
+    .success(function (results) {
+
+        var mainView = $("#main-view");
+
+        mainView.empty();
+        mainView.append("<div id=\"chatBox\">"
+                        + "<input type=\"hidden\" id=\"chatId\" value=\"" + id + "\""
+                        + "</div>");
+        var chatBox = $("#chatBox");
+
+        // We populate the chat with names and messages.
+        for (var i = 0; i < results["sender"].length; i++) {
+            if (chatBox === 0) {
+            }
+            chatBox.append(
+                  "<li>"
+                + "<p class='post-text'> " + results["sender"][i] + ": " + results["message"][i] + "</p>"
+                + "</li>"
+            );
+        }
+
+        // We store the id of the newest message, this is usefull for looking up and appending newer messages later.
+        if (results["id"].length > 0) {
+            chatBox.append("<input type=\"hidden\" id=\"lastMessageId\" value=\"" + results["highestId"] + "\">");
+        } else {
+            chatBox.append("<input type=\"hidden\" id=\"lastMessageId\" value=\"0\">");
+        }
+
+        // The input box.
+        mainView.append(
+                "<input type=\"text\" name=\"messageBox\" id=\"messageBox\">"
+            + "<button type=\"button\" onClick=\"sendMessage(" + id + ")\">Send</button>"
+        );
+
+        chatInterval = setInterval(chatUpdate, 1000);
+        $("#chatBox").scrollTop(1E10);
+    });
+}
+
 
 // Here we have Create views for groups and events.
 
@@ -683,12 +730,6 @@ function newPost(type, id) {
 }
 
 
-
-
-/*
-    @JANUS -- Vantar að commenta þetta almennilega!
-*/
-
 // Send Message
 // This function sends message and on success takes the info about the sent message and adds it to the chat
 function sendMessage(chatId) {
@@ -705,7 +746,7 @@ function sendMessage(chatId) {
         + "<p class='post-text'> " + message["sender"] + ": " + message["message"]
         + "</p></li>");
         if ($("#lastMessageId") === 0) {
-                chatBox.append("<input type=\"hidden\" id=\"lastMessageId\" value=\"" + results["highestId"] + "\">");
+            chatBox.append("<input type=\"hidden\" id=\"lastMessageId\" value=\"" + results["highestId"] + "\">");
         } else {
             $("#lastMessageId").val(message["id"]);
             $("#chatBox").scrollTop(1E10);
@@ -737,63 +778,19 @@ function chatHead(id) {
     });
 }
 
-// Chat Main
-// This takes in a chat ID and returns a main view with that chats content.
-function chatMain(id) {
-    $.ajax({
-        method: "POST",
-        url: "/Chat/GetAllMessagesFromChat",
-        data: { chatId: id }
-    })
-    .success(function (results) {
 
-        var mainView = $("#main-view");
-
-        mainView.empty();
-        mainView.append("<div id=\"chatBox\">"
-                        + "<input type=\"hidden\" id=\"chatId\" value=\"" + id + "\""
-                        + "</div>");
-        var chatBox = $("#chatBox");
-
-        // We populate the chat with names and messages.
-        for (var i = 0; i < results["sender"].length; i++) {
-            if (chatBox === 0) {
-            }
-            chatBox.append(
-                  "<li>"
-                + "<p class='post-text'> " + results["sender"][i] + ": " + results["message"][i] + "</p>"
-                + "</li>"
-            );
-        }
-
-        // We store the id of the newest message, this is usefull for looking up and appending newer messages later.
-        if (results["id"].length > 0) {
-            chatBox.append("<input type=\"hidden\" id=\"lastMessageId\" value=\"" + results["highestId"] + "\">");
-        } else {
-            chatBox.append("<input type=\"hidden\" id=\"lastMessageId\" value=\"0\">");
-        }
-
-        // The input box.
-        mainView.append(
-                "<input type=\"text\" name=\"messageBox\" id=\"messageBox\">"
-            + "<button type=\"button\" onClick=\"sendMessage(" + id + ")\">Send</button>"
-        );
-
-        chatInterval = setInterval(chatUpdate, 1000);
-        $("#chatBox").scrollTop(1E10);
-    });
-}
-
+// Function called form the renameButton in the friendHead
+// Sends a ajax request to rename the chat
 function renameChat() {
 
     var chatId = $("#chatId").val();
     var newName = prompt("New name: ");
-    
+
     if (newName.length != 0) {
         $.ajax({
             method: "POST",
             url: "/Chat/Rename",
-            data: { chatId: chatId, newName : newName }
+            data: { chatId: chatId, newName: newName }
         }).success(function (retObj) {
             chatTab();
             chatHead(chatId);
@@ -801,28 +798,32 @@ function renameChat() {
     }
 }
 
+
+// Updating chat at an interval, get all messages with an id higher than that of lastMessageId hidden Input value
 function chatUpdate() {
     // If the interval is null this won't run.
     if (chatInterval) {
+        // Document selections
         var chatId = $("#chatId").val();
         var lastId = $("#lastMessageId").val();
 
         var chatBox = $("#chatBox");
 
+        // Ajax request to the server to get any new messages 
         $.ajax({
             method: "POST",
             url: "/Chat/GetChatUpdates",
             data: { chatId: chatId, lastId: lastId }
         }).success(function (results) {
+            // For every item in the answer from the server we run this loop to add to add the messages to the chat
             for (var i = 0; i < results["sender"].length; i++) {
-                if (chatBox === 0) {
-                }
                 chatBox.append(
                         "<li>"
                     + "<p class='post-text'> " + results["sender"][i] + ": " + results["message"][i] + "</p>"
                     + "</li>"
                 );
             }
+            // Updating the lastMessageId, used to store the highest id of the messages so we're not getting the same messages from the server
             if (results["id"].length > 0) {
                 var temp = $("#lastMessageId");
                 if (temp === 0) {
