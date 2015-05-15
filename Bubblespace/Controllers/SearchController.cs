@@ -9,6 +9,14 @@ namespace Bubblespace.Controllers
 {
     public class SearchController : Controller
     {
+        /* <summary>
+        * Grabs all users, groups and events based on a search string
+        * and returns it to the user.
+        * </summary>
+        * <param name="event-name">search string</param>
+        * <returns>Json object containing the search results</returns>
+        * <author>Andri Rafn</author>
+        */
         [HttpPost]
         public ActionResult GetResults(FormCollection fc)
         {            
@@ -70,39 +78,5 @@ namespace Bubblespace.Controllers
 
             return Json(returnJson);
         }
-
-        [HttpPost]
-        public ActionResult Groups(FormCollection fc)
-        {
-            bubble_groups bGroup = new bubble_groups();
-            bGroup.group_name = fc["group_name"];
-            var groups = SearchService.SearchGroupByName(bGroup);
-
-            return Json(groups);
-        }
-        [HttpPost]
-        public ActionResult Posts(FormCollection fc)
-        {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult Events(FormCollection fc)
-        {
-            events sEvent = new events();
-            sEvent.event_name = fc["event_name"];
-            var eventRes = SearchService.SearchEventsByName(sEvent);
-
-            return Json(eventRes);
-        }
-        [HttpPost]
-        public ActionResult Chat(FormCollection fc)
-        {
-            chats ch = new chats();
-            ch.chat_name = fc["chat_name"];
-            var chats = SearchService.SearchChatByName(ch);
-
-            return Json(chats);
-        }
-
     }
 }
