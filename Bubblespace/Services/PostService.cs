@@ -94,6 +94,11 @@ namespace Bubblespace.Services
             return burstCount;
         }
 
+        /* <summary></summary>
+         * <param name="ID"></param>
+         * <returns></returns>
+         * <author></author>
+         */
         static public List<post_likes> GetBurstCount(post_comments postComment)
         {
             var db = new VERK2015_H17Entities1();
@@ -122,11 +127,22 @@ namespace Bubblespace.Services
             }
         }
 
+        /* <summary></summary>
+         * <param name="ID"></param>
+         * <returns></returns>
+         * <author></author>
+         */
         static public List<posts> GetAllPosts()
         {
             var db = new VERK2015_H17Entities1();
             return db.posts.ToList();
         }
+
+        /* <summary>Checks if URL is a youtube video with regex</summary>
+         * <param name="url">URL string</param>
+         * <returns>1 if the URL is a youtuve video, 0 if not</returns>
+         * <author>Sveinbjorn</author>
+         */
         static public Byte IsYoutubeVideo(string url)
         {
             if(Regex.IsMatch(url, @"(https:\/\/)*(www|m).youtube.com\/watch\?v=.+"))
@@ -135,6 +151,12 @@ namespace Bubblespace.Services
             }
             return 0;
         }
+
+        /* <summary></summary>
+         * <param name="ID"></param>
+         * <returns></returns>
+         * <author></author>
+         */
         static public List<posts> GetAllPosts(string orderByField) 
         {
             List<posts> allPosts = PostService.GetAllPosts();
@@ -166,6 +188,11 @@ namespace Bubblespace.Services
             return sortedPosts;
         }
 
+        /* <summary></summary>
+         * <param name="ID"></param>
+         * <returns></returns>
+         * <author></author>
+         */
         static public List<posts> GetAllPosts(AspNetUsers user) 
         {
             List<posts> userPosts = (from post in GetAllPosts()
@@ -174,6 +201,11 @@ namespace Bubblespace.Services
             return userPosts;
         }
 
+        /* <summary></summary>
+         * <param name="ID"></param>
+         * <returns></returns>
+         * <author></author>
+         */
         static public List<posts> GetAllUserPosts(AspNetUsers user)
         {
             var db = new VERK2015_H17Entities1();
