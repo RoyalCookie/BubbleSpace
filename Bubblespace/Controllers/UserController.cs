@@ -110,8 +110,10 @@ namespace Bubblespace.Controllers
         public ActionResult GetUserInformation(FormCollection collection) 
         {
             AspNetUsers user = UserService.GetUserById(collection["userId"]);
-            List<posts> userPosts = UserService.GetUsersPosts(user);
-
+            List<posts> allUserPosts = UserService.GetUsersPosts(user);
+            List<posts> userPosts = (from pst in allUserPosts
+                                         where pst.FK_posts_bubble_groups == null
+                                         select pst).ToList();
             var userInformation = new
             {
                 userName = user.NickName,
