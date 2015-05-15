@@ -133,6 +133,7 @@ namespace Bubblespace.Controllers
             {
                 return Json("{\"Error\": \"Couldn't Insert Into Database\",\"Code\": 2}");
             }
+<<<<<<< HEAD
         }
 
         /* <summary>
@@ -303,6 +304,8 @@ namespace Bubblespace.Controllers
             returnJson.Add(profileImage);
             returnJson.Add(posterId);
             return Json(returnJson);
+=======
+>>>>>>> 8d749caba80869d8554645ef4d8e9e530b62e527
         }
 
         /* <summary>
