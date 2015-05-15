@@ -37,7 +37,7 @@ TODO: Check authentication before loading the main view!
 var chatInterval;
 
 $(document).ready(function () {
-    $("#list-view-item").append("<input type='text' id='search-bar' class='form-control' placeholder='search..' />");
+    $("#list-view-search").append("<input type='text' id='search-bar' class='form-control' placeholder='search..' />");
     $("#right-view").append('<div id="main-view" class="col-xs-8"><ul></ul></div>');
     refresh();
     // Replacing the default scrollbar look with perfect scrollbar.
@@ -373,9 +373,9 @@ function friendMain(id) {
         var headView = $("#head-view");
         headView.empty();
         headView.append(
-                "<img class='profile-header-image' src='/Images/Users/" + results["profileImage"] + "'/>"
+              "<img class='profile-header-image' src='/Images/Users/" + results["profileImage"] + "'/>"
             + "<h1 class='profile-header'>" + results["userName"] + "</h1>"
-            + "<a onClick='createChat(\"" + results["Id"] + "\")'> <img class='profile-header-image' src='/Images/System/startChat.png'/></a> "
+            + "<a title='Start Chat!' onClick='createChat(\"" + results["Id"] + "\")'> <img class='profile-header-image' src='/Images/System/startChat.png'/></a> "
         );
     });
 }
@@ -810,8 +810,10 @@ function renameChat() {
     }
 }
 
-    function chatUpdate() {
-
+function chatUpdate() {
+    // If the interval is null this won't run.
+    if (chatInterval) {
+        console.log("works");
         var chatId = $("#chatId").val();
         var lastId = $("#lastMessageId").val();
 
@@ -820,14 +822,14 @@ function renameChat() {
         $.ajax({
             method: "POST",
             url: "/Chat/GetChatUpdates",
-            data: { chatId: chatId, lastId: lastId}
+            data: { chatId: chatId, lastId: lastId }
         }).success(function (results) {
             for (var i = 0; i < results["sender"].length; i++) {
                 if (chatBox === 0) {
                     console.log("chatbox not found");
                 }
                 chatBox.append(
-                      "<li>"
+                        "<li>"
                     + "<p class='post-text'> " + results["sender"][i] + ": " + results["message"][i] + "</p>"
                     + "</li>"
                 );
@@ -844,3 +846,4 @@ function renameChat() {
             }
         });
     }
+}
