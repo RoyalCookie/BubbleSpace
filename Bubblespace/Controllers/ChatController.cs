@@ -72,7 +72,7 @@ namespace Bubblespace.Controllers
         [HttpPost]
         public ActionResult GetChatUpdates(FormCollection collection){
             chats chat = ChatService.GetChatById(Convert.ToInt32(collection["chatId"]));
-            List<messages> retMessages = ChatService.GetMessages    (chat).Where(x => x.C_ID > Convert.ToInt32(collection["lastId"])).ToList();
+            List<messages> retMessages = ChatService.GetMessages(chat).Where(x => x.C_ID > Convert.ToInt32(collection["lastId"])).ToList();
 
             int highestId = (from x in retMessages
                              orderby x.C_ID descending
@@ -226,9 +226,7 @@ namespace Bubblespace.Controllers
             }
             catch(Exception)
             {
-
             }
-
             return Json("");
         }
 	}

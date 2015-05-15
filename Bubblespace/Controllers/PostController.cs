@@ -22,8 +22,6 @@ namespace Bubblespace.Controllers
         [HttpPost]
         public ActionResult Create(FormCollection collection, HttpPostedFileBase contentImage)
         {
-            // TODO: File Handling 
-
             // Check For Authentication
             if (!User.Identity.IsAuthenticated)
             {
@@ -135,11 +133,7 @@ namespace Bubblespace.Controllers
             {
                 return Json("{\"Error\": \"Couldn't Insert Into Database\",\"Code\": 2}");
             }
-
-           
         }
-
-
 
         /* <summary>
         * Adds a comment to a post

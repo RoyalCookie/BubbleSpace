@@ -58,10 +58,13 @@ namespace Bubblespace.Services
             var db = new VERK2015_H17Entities1();
 
             //Checks if you have added that user
-            var friendExist = (from x in db.friends_added.Where(y => y.FK_friends_added_users_Added == userAdder.Id).Where(z => z.FK_friends_added_users_Addee == userFriended.Id)
+            var friendExist = (from x in db.friends_added
+                                   .Where(y => y.FK_friends_added_users_Added == userAdder.Id)
+                                   .Where(z => z.FK_friends_added_users_Addee == userFriended.Id)
                                select x).SingleOrDefault();
             //Checks if the user added you
-            var friendExistOther = (from x in db.friends_added.Where(y => y.FK_friends_added_users_Added == userFriended.Id).Where(z => z.FK_friends_added_users_Addee == userAdder.Id)
+            var friendExistOther = (from x in db.friends_added.Where(y => y.FK_friends_added_users_Added == userFriended.Id)
+                                        .Where(z => z.FK_friends_added_users_Addee == userAdder.Id)
                                     select x).SingleOrDefault();
             //Else create a new record of friendship
             if(friendExist == null && friendExistOther == null)
@@ -126,10 +129,14 @@ namespace Bubblespace.Services
             var db = new VERK2015_H17Entities1();
             
             //Selects friend that you added
-            var friendRemoved = (from x in db.friends_added.Where(y => y.FK_friends_added_users_Added == userAdder.Id).Where(z => z.FK_friends_added_users_Addee == userFriend.Id) 
+            var friendRemoved = (from x in db.friends_added
+                                     .Where(y => y.FK_friends_added_users_Added == userAdder.Id)
+                                     .Where(z => z.FK_friends_added_users_Addee == userFriend.Id) 
                                  select x ).SingleOrDefault();
             //Selects friend that added you
-            var friendAddeRemoved = (from x in db.friends_added.Where (y => y.FK_friends_added_users_Added == userFriend.Id).Where(z => z.FK_friends_added_users_Addee == userAdder.Id)
+            var friendAddeRemoved = (from x in db.friends_added
+                                         .Where(y => y.FK_friends_added_users_Added == userFriend.Id)
+                                         .Where(z => z.FK_friends_added_users_Addee == userAdder.Id)
                                      select x).SingleOrDefault();
             if(friendRemoved != null && friendAddeRemoved != null)
             {
@@ -175,10 +182,12 @@ namespace Bubblespace.Services
             var db = new VERK2015_H17Entities1();
             
             //Gets a list of friends that user added
-            List<AspNetUsers>friendsAdded = (from friend in db.friends_added.Where(y => y.FK_friends_added_users_Added == user.Id && y.friended == true)
+            List<AspNetUsers>friendsAdded = (from friend in db.friends_added
+                                                 .Where(y => y.FK_friends_added_users_Added == user.Id && y.friended == true)
                                 select friend.AspNetUsers1).ToList(); 
             //Gets a list of friends that added the user
-            List<AspNetUsers> friendsAddee = (from friend in db.friends_added.Where(y => y.FK_friends_added_users_Addee == user.Id && y.friended == true)
+            List<AspNetUsers> friendsAddee = (from friend in db.friends_added
+                                                  .Where(y => y.FK_friends_added_users_Addee == user.Id && y.friended == true)
                                 select friend.AspNetUsers).ToList();
             //Combines the two lists together            
             friendsAdded.AddRange(friendsAddee);

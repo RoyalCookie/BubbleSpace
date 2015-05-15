@@ -34,14 +34,17 @@ namespace Bubblespace.Services
         static public int SaveLikePost(post_likes postLike)
         {
             var db = new VERK2015_H17Entities1();
-            int allowUserToLike = (from x in db.post_likes.Where(y => y.FK_group_post_like_users == postLike.FK_group_post_like_users && y.FK_group_post_likes_group_posts == postLike.FK_group_post_likes_group_posts && y.post_like == true)
+            int allowUserToLike = (from x in db.post_likes.Where(y => y.FK_group_post_like_users == postLike.FK_group_post_like_users 
+                                        && y.FK_group_post_likes_group_posts == postLike.FK_group_post_likes_group_posts 
+                                        && y.post_like == true)
                                    select x).Count();
             if(allowUserToLike == 0)
             {
                 db.post_likes.Add(postLike);
                 db.SaveChanges();
             }
-            int totalPostLikes = (from x in db.post_likes.Where(y => y.FK_group_post_likes_group_posts == postLike.FK_group_post_likes_group_posts && y.post_like == true)
+            int totalPostLikes = (from x in db.post_likes.Where(y => y.FK_group_post_likes_group_posts == postLike.FK_group_post_likes_group_posts 
+                                        && y.post_like == true)
                                   select x).Count();
             
             return totalPostLikes;
@@ -55,7 +58,9 @@ namespace Bubblespace.Services
         static public int SaveBurstPost(post_likes burst)
         {
             var db = new VERK2015_H17Entities1();
-            int allowUserToBurst = (from x in db.post_likes.Where(y => y.FK_group_post_like_users == burst.FK_group_post_like_users && y.FK_group_post_likes_group_posts == burst.FK_group_post_likes_group_posts && y.post_burst == true)
+            int allowUserToBurst = (from x in db.post_likes.Where(y => y.FK_group_post_like_users == burst.FK_group_post_like_users 
+                                        && y.FK_group_post_likes_group_posts == burst.FK_group_post_likes_group_posts 
+                                        && y.post_burst == true)
                                     select x).Count(); 
             if(allowUserToBurst == 0)
             {
@@ -63,7 +68,8 @@ namespace Bubblespace.Services
                 db.SaveChanges();
             }
             
-            var burstCount = (from x in db.post_likes.Where(y => y.FK_group_post_likes_group_posts == burst.FK_group_post_likes_group_posts && y.post_burst == true)
+            var burstCount = (from x in db.post_likes.Where(y => y.FK_group_post_likes_group_posts == burst.FK_group_post_likes_group_posts 
+                                        && y.post_burst == true)
                               select x).Count();
             return burstCount;
         }
@@ -118,7 +124,8 @@ namespace Bubblespace.Services
         static public void SaveLikeComment(like_comments commentLike)
         {
             var db = new VERK2015_H17Entities1();
-            int allowUserToLike = (from x in db.post_likes.Where(y => y.FK_group_post_like_users == commentLike.AspNetUsers.UserName && y.FK_group_post_likes_group_posts == commentLike.FK_like_comments_post_comments)
+            int allowUserToLike = (from x in db.post_likes.Where(y => y.FK_group_post_like_users == commentLike.AspNetUsers.UserName 
+                                        && y.FK_group_post_likes_group_posts == commentLike.FK_like_comments_post_comments)
                                    select x).Count();
             if(allowUserToLike == 0)
             {
