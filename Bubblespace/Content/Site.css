@@ -661,6 +661,10 @@
         padding-bottom: -50px;
     }
 
+    #content_text{
+        margin-top: 10px;
+    }
+
     a{ 
         cursor: pointer; 
     }

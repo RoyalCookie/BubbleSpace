@@ -215,6 +215,5 @@ C:\Users\Andri\Desktop\BubbleSpace\Bubblespace\bin\Microsoft.Owin.Security.OAuth
 C:\Users\Andri\Desktop\BubbleSpace\Bubblespace\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\Andri\Desktop\BubbleSpace\Bubblespace\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\Andri\Desktop\BubbleSpace\Bubblespace\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\Andri\Desktop\BubbleSpace\Bubblespace\obj\Debug\Bubblespace.csprojResolveAssemblyReference.cache
 C:\Users\Andri\Desktop\BubbleSpace\Bubblespace\obj\Debug\Bubblespace.dll
 C:\Users\Andri\Desktop\BubbleSpace\Bubblespace\obj\Debug\Bubblespace.pdb
