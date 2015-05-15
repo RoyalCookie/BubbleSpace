@@ -51,10 +51,6 @@ namespace Bubblespace.Controllers
         [HttpPost]
         public ActionResult GetFriends()
         {
-            /*
-             * ToDo: Change JsonList Into A Var Object
-             */
-            
             // For now this returns all users, not just friends.
             // We need to change this to accept an id and return only friends. - Andri
             AspNetUsers currentUser = UserService.GetUserByEmail(User.Identity.Name);
