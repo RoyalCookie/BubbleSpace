@@ -37,8 +37,9 @@ TODO: Check authentication before loading the main view!
 var chatInterval;
 
 $(document).ready(function () {
+    $("#list-view-item").append("<input type='text' id='search-bar' class='form-control' placeholder='search..' />");
+    $("#right-view").append('<div id="main-view" class="col-xs-8"><ul></ul></div>');
     refresh();
-
     // Replacing the default scrollbar look with perfect scrollbar.
     var mainView = $("#main-view");
     mainView.perfectScrollbar();

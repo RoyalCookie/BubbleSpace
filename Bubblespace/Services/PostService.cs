@@ -80,10 +80,10 @@ namespace Bubblespace.Services
             db.SaveChanges();
         }
 
-        /* <summary></summary>
-         * <param name="ID"></param>
-         * <returns></returns>
-         * <author></author>
+        /* <summary>Counts the bursts on a post</summary>
+         * <param name="postBurst">Post model</param>
+         * <returns>Number of bursts on a post</returns>
+         * <author>Sveinbjorn</author>
          */
         static public List<post_likes> GetBurstCount(posts postBurst)
         {
@@ -94,6 +94,11 @@ namespace Bubblespace.Services
             return burstCount;
         }
 
+        /* <summary>Counts the bursts on a comment</summary>
+         * <param name="postComment">Post comment model</param>
+         * <returns>Number of bursts on a comment</returns>
+         * <author>Sveinbjorn</author>
+         */
         static public List<post_likes> GetBurstCount(post_comments postComment)
         {
             var db = new VERK2015_H17Entities1();
@@ -122,11 +127,22 @@ namespace Bubblespace.Services
             }
         }
 
+        /* <summary>Gets a list of all posts</summary>
+         * <param name=""></param>
+         * <returns>A list of all posts</returns>
+         * <author>Sveinbjorn</author>
+         */
         static public List<posts> GetAllPosts()
         {
             var db = new VERK2015_H17Entities1();
             return db.posts.ToList();
         }
+
+        /* <summary>Checks if URL is a youtube video with regex</summary>
+         * <param name="url">URL string</param>
+         * <returns>1 if the URL is a youtuve video, 0 if not</returns>
+         * <author>Sveinbjorn</author>
+         */
         static public Byte IsYoutubeVideo(string url)
         {
             if(Regex.IsMatch(url, @"(https:\/\/)*(www|m).youtube.com\/watch\?v=.+"))
@@ -135,6 +151,12 @@ namespace Bubblespace.Services
             }
             return 0;
         }
+
+        /* <summary>Gets a list of post sorted by either name, date or likes </summary>
+         * <param name="orderByField"></param>
+         * <returns>A list of all posts in eiter name, date or likes order</returns>
+         * <author>Janus</author>
+         */
         static public List<posts> GetAllPosts(string orderByField) 
         {
             List<posts> allPosts = PostService.GetAllPosts();
@@ -166,6 +188,11 @@ namespace Bubblespace.Services
             return sortedPosts;
         }
 
+        /* <summary>Gets a list of posts by ID</summary>
+         * <param name="user">user</param>
+         * <returns>List of posts</returns>
+         * <author>Janus</author>
+         */
         static public List<posts> GetAllPosts(AspNetUsers user) 
         {
             List<posts> userPosts = (from post in GetAllPosts()
@@ -174,6 +201,11 @@ namespace Bubblespace.Services
             return userPosts;
         }
 
+        /* <summary>Gets all posts by a user</summary>
+         * <param name="user">user model</param>
+         * <returns>List of posts by a user</returns>
+         * <author>Sveinbjorn</author>
+         */
         static public List<posts> GetAllUserPosts(AspNetUsers user)
         {
             var db = new VERK2015_H17Entities1();
