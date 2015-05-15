@@ -8,6 +8,10 @@
         overflow: hidden;
     }
     
+    .profile-header{
+        font-size: 12px;
+    }
+
     .body-content {
         padding-top: 50px;
         margin-left: 65px;
@@ -232,6 +236,7 @@
 
     .feed-post{
         list-style: none;
+        
         padding-bottom: 10px;
         border-radius: 2%;
         margin-top: 15px;
@@ -271,17 +276,13 @@
         top: 0px;
     }
 
-    .feed-post, .burst-feed-post, .liked-feed-post{
-        background-color: rgb(233,233,233);
+    .feed-post, .burst-feed-post{
+        background-color: rgb(0,233,233);
         margin-bottom: 20px;
     }
 
-    .liked-feed-post{
+    .liked-feed-post {
         border: 1px solid green;
-    }
-
-    .burst-feed-post{
-        border: 1px solid red;
     }
 
     .bootstrap-filestyle{
@@ -580,6 +581,7 @@
         border-radius: 2%;
         margin-top: 15px;
         margin-bottom: 15px;
+        border: 2px solid rgb(186,228,229) !important;
     }
 
     .list-name, .post-user-name{
